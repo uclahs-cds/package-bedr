@@ -1,0 +1,177 @@
+# The bedtools package is copyright (c) 2013 Ontario Institute for Cancer Research (OICR)
+# This package and its accompanying libraries is free software; you can redistribute it and/or modify it under the terms of the GPL
+# (either version 1, or at your option, any later version) or the Artistic License 2.0.  Refer to LICENSE for the full license text.
+# OICR makes no representations whatsoever as to the SOFTWARE contained herein.  It is experimental in nature and is provided WITHOUT
+# WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE OR ANY OTHER WARRANTY, EXPRESS OR IMPLIED. OICR MAKES NO REPRESENTATION
+# OR WARRANTY THAT THE USE OF THIS SOFTWARE WILL NOT INFRINGE ANY PATENT OR OTHER PROPRIETARY RIGHT.
+# By downloading this SOFTWARE, your Institution hereby indemnifies OICR against any loss, claim, damage or liability, of whatsoever kind or
+# nature, which may arise from your Institution's respective use, handling or storage of the SOFTWARE.
+# If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
+# credit be given to OICR scientists, as scientifically appropriate.
+
+bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NULL, tmpDir = NULL, deleteTmpDir = TRUE, outputDir = NULL, outputFile = NULL, check.chr = TRUE, check.zero.based = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE) {
+
+	# default parameters
+	if (is.null(params)) params <- "";
+	
+	# check binary is in path
+	if(!check_binary(engine, verbose = FALSE)) {
+		catv(paste0("bedr: missing binary/executable ", engine))
+		return(0);
+		}
+
+	# turn off sort merge checking if its the calling methods
+	if  (method == "sort") {
+		check.merge <- FALSE;
+		}
+	if  (method == "merge") {
+		check.sort <- FALSE;
+		}
+
+	# parse indices and create temp files
+	if (engine == "bedops") {
+		input.files <- processInput(input, tmpDir = tmpDir, include.names = FALSE, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = verbose);
+		}
+	else {
+		input.files <- processInput(input, tmpDir = tmpDir, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = verbose);
+		}
+
+	# do not capture output if help requested
+	intern  <- ifelse(grepl("help", params), FALSE, TRUE);
+
+	# engine specific parsing
+	if (engine == "bedops") {
+		if (method == "sort" ) {
+			engine <- "sort-bed";
+			method <- "";
+			}
+		else if (nchar(method)==1) {
+			method <- paste0("-", method);
+			}
+		else {
+			method <- paste0("--", method);
+			}
+		}
+
+	# the command
+	command <- paste(engine, method, attr(input.files,"commandString"), params, sep = " ");
+
+	# print the command
+	catv(paste0(command,"\n"));
+
+	# capture output R object or send to a file
+	if (is.null(outputFile)) {
+		output <- try(system(command , wait = TRUE, intern = intern, ignore.stdout = FALSE, ignore.stderr = FALSE));
+		}
+	else {
+		if (is.null(outputDir)) outputDir <- getwd();
+		command <- paste(command, ">", paste(outputDir, "/", outputFile, sep = ""));
+		intern  <- FALSE;
+		output  <- try(system(command , wait = TRUE, intern = intern, ignore.stdout = FALSE, ignore.stderr = FALSE));
+		}
+
+	# check for output
+	if (length(output) == 0 || (!is.null(attr(output,"status")) && attr(output,"status") == 1) || output==127) {
+		for (i in 1:length(input)) {
+			if (attr(input.files[[i]], "is.file")) {
+				catv(paste("head of file", names(input)[i],"...\n"));
+				system(paste("head ", input.files[[i]]));
+				}
+			else if (!is.null(attr(output,"status")) && attr(output,"status") == 139) {
+				catv("This could be a memory problem.  \nDecrease the size of the data or get more memory!\n");
+				}
+			else {
+				catv(paste("head of file", names(input)[i],"...\n"));
+				print(head(input[[i]]));
+				}
+			}
+#		try(system(paste(engine, ifelse(engine=="bedops", "", method), "--help")));
+		catv(paste0("ERROR: Looks like ", engine, " had a problem\n"));
+		stop();
+		}
+	
+	# parse output into columns if not stdout
+	if (intern) {
+		output <- strsplit2matrix(output, split = "\t");
+		}
+
+	# col and row numbers
+	nrow.output <- nrow(output);
+	ncol.output <- ncol(output);
+
+	# generate the index from the bed style input
+	if (ncol.output >= 3) {
+		chr.column  <- which(grepl("chr", output[1,]))[1];
+		if (is.na(chr.column)) {chr.column <- 1}
+		
+		old.scipen <- getOption("scipen")
+		options(scipen = 999);
+		new.index   <- paste(output[,chr.column],":",output[,chr.column+1],"-",output[,chr.column+2], sep="");
+		options(scipen = old.scipen)
+		}
+	else {
+		chr.column <- 1;
+		new.index <- output[,1];
+		}
+
+	if (ncol.output == 3 && attr(input.files[[1]], "is.index")) {
+		# replace output with index if input was index
+		output <- new.index;
+		
+		}
+	else if (ncol.output > 3 && attr(input.files[[1]],"is.index")) {
+		# if index specifed delete added chr, start, stop
+		output <- data.frame(index = new.index, output[,-c(chr.column:(chr.column+2)), drop = FALSE], stringsAsFactors = FALSE);
+		}
+	else {
+		# add rownames to the output if a unique index can be formed from the regions (groupby not first col)
+		if (length(new.index) == length(unique(new.index))) {rownames(output) <- new.index;}
+		# try and add column names when the ouptut is the same number of columns as the first input
+		if (!attr(input.files[[1]], "is.file") && ncol.output == ncol(data.frame(input[[1]]))) {
+			if (engine == "bedtools" && method == "groupby") {
+				# groups coluns are moved to front of dataset so need to move some things around
+				group.columns    <- as.numeric(gsub(" ", "",gsub(".*-g(.*?)-.*", "\\1" , params)));
+				group.colnames   <- c(colnames(input[[1]])[group.columns], colnames(input[[1]])[-group.columns]);
+				colnames(output) <- group.colnames;
+				}
+			else {
+				colnames(output) <- colnames(input[[1]]);
+				}
+			}
+
+		# try and add columns names to a bedtools join
+		if (engine == "bedtools" && method == "intersect" && !grepl("-c", params) ) {
+			if (!attr(input.files[[1]], "is.file") & !attr(input.files[[1]], "is.index")) {
+				a.colnames <- c(colnames(input[[1]]));
+				colnames(output)[1:length(a.colnames)] <- a.colnames;
+				}
+			else {
+				colnames(output)[1:3] <- c("chr","start", "end");
+				}
+
+			if (!attr(input.files[[2]], "is.file") & !attr(input.files[[2]], "is.index")) {
+				b.colnames <- c(colnames(input[[2]]));
+				b.colnames <- gsub("chr", "chr.b", b.colnames);
+				b.colnames <- gsub("start", "start.b", b.colnames);
+				b.colnames <- gsub("end", "end.b", b.colnames);
+				colnames(output)[(ncol(output)-length(b.colnames)+1):ncol(output)] <- b.colnames;
+				}
+			else {
+				#b.col.start <- ;
+				#colnames(output)[b.col.start:b.col.start+2] <- c("chr","start", "end");
+				}
+
+			}
+
+		}
+	
+	# only delete tmp files if they exist
+	input.files <- Filter(function(x){grepl("Rtmp",x)}, input.files);
+
+	if (length(input.files) != 0 && all(input.files != "" && deleteTmpDir == TRUE)) {
+		file.remove(unlist(input.files));
+		}
+
+	return(output);
+	}
+

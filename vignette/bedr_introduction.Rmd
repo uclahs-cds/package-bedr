@@ -1,0 +1,263 @@
+<!--
+%\VignetteEngine{knitr::docco_linear}
+%\VignetteIndexEntry{An Introduction to the **bedr** package}
+-->
+
+An Introduction to **bedr***package
+=======================================
+
+
+```{r setup, include=FALSE}
+library(knitr)
+opts_chunk$set(out.extra='style="display:block; margin: auto"', fig.align="center")
+```
+
+
+Introduction
+------------
+
+
+The  **bedr** package is a suite of tools for genomic interval processing.  The philosophy is to wrap existing best practice bioinformatic software in order to provide a unifying analysis environment within R.  **bedr** should be considered complimentary to native implementations of interval processing such genomicRanges.  
+
+The advantages to this approach include:
+
+* **Speed.**  Algorithms such as intersections have been heavily optimized in other software.
+* **Size.** The operations happen outside of R and therefore are not constrained by memory to the same extent that R is.  Moreover, **bedr** allows for a hybrid analysis incorporating both R objects and huge on disk files
+* **Consistency.** A vast number of standardized pipelines already use these tools, therefore simplifying implementation and integration.
+* **Variety.**  Multiple tools *"engines"* are wrapped allowing for flexibility in choosing the ideal operation or cryptic functionality.
+* **Visualization.** Need I say more.
+* **Abstraction.** The existing utilities are only a subset of the native functionality found within each of the engines.  To directly access the full extent of options one can directly call the `bedr` including the required methods and parameters.  
+
+
+Documentation
+----------------------------
+
+The current implementation focuses on three excellent tools.  For specifics on functionality please visit there online documentation, primary citation and [biostar](http://www.biostars.org/show/tag/bedtools/) posts.  To gain the functionality of these analytical engines you will need to have the programs installed and in your default PATH.  In future versions the source code for these dependencies may be distributed together.
+
+
+1. bedtools [docs](http://bedtools.readthedocs.org/en/latest/) and [source](https://github.com/arq5x/bedtools2)
+2. bedops [docs](https://bedops.readthedocs.org/en/latest/) and [source](https://github.com/alexpreynolds/bedops)
+3. tabix [docs]() and [source](/oicr/local/analysis/sw/tabix/tabix-0.2.6)
+
+General Region Utilities
+----------------------------
+
+* sort_region & is_sorted_region
+* merge_region & is_merged_region
+* in_region & order_region
+* subtract_region
+* flank_region & grow_region
+* intersectRegion
+* join_region & join_multiple_region
+* get.RegionSize
+* get_fastaRegion
+* jaccard & reldist
+
+
+For example:
+
+First check if the regions are valid.  This involves checking for "chr" prefix, data types, end > start position and for compliance to bed formats zero based start position.  All checks can be turned off as required.  The "chr" check is useful due to various human reference formats (NCBI vs UCSC) having different standards.  This can result in unexpected results if comapring across specifications.  Similarly, bed format uses a zero based start postion, but vcf's use a one based position.  Therefore, a snp at position 100 would be chr1:100-100 in one based but chr1:99-100 in zero based format.  Another common mistake relates to overlaps between adjacent intervals, for example in zero based setups chr1:10-100 does not intersect with chr1:100-110. 
+
+```{r}
+### region validation
+
+index <- get_example_regions();
+a <- index[[1]];
+b <- index[[2]];
+
+is.a.valid  <- is_valid_region(a);
+is.b.valid  <- is_valid_region(b);
+a <- a[is.a.valid];
+b <- b[is.b.valid];
+
+```
+
+Generally, it's a good idea to confirm that you've sorted your inputs to avoid unexpected results and take advantage of optimized algorithms.  For example merging and clustering require adjacent intervals.  `is_sorted_region` is convenient for explicit evaluation although it's done internally for core operations.
+
+
+```{r}
+### sort
+is.sorted <- is_sorted_region(a);
+
+a.sort <- sort_region(a);
+
+b.sort <- bedr(engine = "bedtools", input = list(i = b), method = "sort", params = "");
+
+```
+
+Similarly, merging adjacent or overlapping regions is often required to avoid redundancy.  Doing an intersection/join with when you have redundant regions can cause unexpected results.
+
+```{r}
+### merge or cluster
+is.merged <- is_merged_region(a.sort);
+is.merged <- is_merged_region(b.sort);
+
+a.merge <- merge_region(a.sort);
+
+# the explicit call uses the bedr function
+b.merge <- bedr(engine = "bedtools", input = list(i = b.sort), method = "merge", params = "");
+
+```
+
+```{r}
+### subtract
+a.sub1 <- bedr(input = list(a = a.merge1, b = b.merge1), method = "subtract", params="");
+a.sub2 <- subtract_region(a.merge1, b.merge1);
+
+### flank
+
+
+### grow
+
+```
+
+```{r}
+### jaccard & relative distance
+```
+
+```{r}
+### in
+is.region <- in_region(a.merge1, b.merge1);
+# or alternatively
+is.region <- a.merge1 %in.region% b.merge1
+```
+
+```{r}
+### intersect / join
+a.int3 <- join_region(a.merge1, b.merge1);
+a.int1 <- bedr(input = list(a = a.sort1, b = b.sort1), method = "intersect", params = "-loj -sorted");
+
+### multiple join
+d <- get_random_regions(100, chr="chr1", sort = TRUE);
+a.mult <- join_multiple_region(x = list(a.merge1,b.merge1,sort_region(d)));
+```
+
+```{r}
+### groupby 
+# note the "g" column number is based on bed format i.e. first three columns chr, start, stop
+# note the use of first, first, last on the region columns i.e. the union of the regions
+# note currently missing values are note dealt with in bedtools.  also the 5th column is assumed to be "score" and gets a default "-1" not a "."
+#cnv.gene <- bedr(input = list(i=cnv.gene), method = "groupby", params = paste("-g 16 -c ", paste(1:15, collapse = ","), " -o ", "first,first,last,", paste(rep("sum",12), collapse = ","), sep = ""));
+
+```
+
+```
+
+Visualization Methods
+----------------------------
+
+There are several approaches to visualization of genomic ranges including venn diagrams and genome viewers.  Several examples on how to use venn diagrams include.
+
+* VennDiagram
+* Barplots
+* UCSC
+
+
+Other Utilities
+----------------------------
+
+These tools are in development and will be documented at a later time. 
+
+* read_vcf
+* gene name validation.
+* ensembl query.  
+* ucsc query.
+* cbio query. 
+
+
+Statistics
+----------------------------
+
+These tools are in development and will be documented at a later time. 
+
+Hypergeometric test
+Proportion test
+
+
+
+Example 1: Exome Target Processing
+----------------------------
+
+Download target BED, RefGene
+
+Validate the gene names
+
+check & Sort & Merge
+
+Add some slop
+
+Adding gene names via join
+
+Candidate gene list extract with in.region
+
+identify regions with overlapping features ":"
+
+Filter for non overlapping features and try again
+
+Plot distribution of capture sizes
+
+Plot venn of capture bed vs gene
+
+```
+### example 1
+###  workflow adding gene names to exome sequencing target file
+# download refseq genes from ucsc or query biomart for ensemble gene names.  format them in basic bed format.
+# sort, merge target
+# sort, merge -nms target.  Overlapping genes/features get merged.  this may not be ideal if there are some really big features.
+# intersect -loj target, genes.
+# alternatively, do not merge the target and apply the merge after the intersect.  this will provide precision a the level of the exon.
+```
+
+Example 2: Copy Number Recurrence
+----------------------------
+
+check 
+
+Merge multiple samples
+
+Filter problematic regions (telomeres, centromeres, encode blacklist)
+
+merge to gene and then merge different platforms
+
+Add some flank and calculate the similarity via jaccard
+
+plot a heatmap with jaccard as the intersample distance metric
+
+calculate reldist kw.test. multiple line plot for outliers.
+
+summarize genes with highest proportion of CN gain/loss
+
+calculate the pga and do a barplot.
+
+
+Example 3. ClinVar Summarizing
+----------------------------
+
+tabix to get some bed data i.e. acmg genes
+
+read_vcf to load some clinical data annotation
+
+read_vcf to load some variants, 1kg??
+
+summarize counts, type, consequence, ti-tv
+
+stacked barplot
+
+
+Example 4. Cosmic Munging
+----------------------------
+
+read_vcf
+
+getfasta triplet nucleotide around variant
+
+20-20 rule to id some TS and Onc's
+
+
+
+
+
+<div align = "center">
+ <embed width="504" height="504" name="plugin" src="http://animation.r-forge.r-project.org/swf/corrplot-ani.swf" type="application/x-shockwave-flash"> 
+</div>
+
