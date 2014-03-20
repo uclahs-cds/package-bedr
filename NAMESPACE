@@ -38,3 +38,5 @@ export(
 	'read_vcf',
 	'read_ucsc'
 	);
+
+import('data.table', 'VennDiagram','testthat');

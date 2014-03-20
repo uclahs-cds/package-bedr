@@ -44,8 +44,8 @@ index <- get_example_regions();
 
 a <- index[[1]];
 
-b <- merge_region(a, distance = 0);
-d <- merge_region(a, distance = 100);
+b <- cluster_region(a, distance = 0);
+d <- cluster_region(a, distance = 100);
 
 }
 }

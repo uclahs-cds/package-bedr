@@ -54,7 +54,7 @@ d <- in_region(a,b);
 
 # alternative calling
 
-d <- a \%in.region\% b
+d <- a \%in_region\% b
 
 }
 }

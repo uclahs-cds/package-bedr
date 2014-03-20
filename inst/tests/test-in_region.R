@@ -35,7 +35,7 @@ test_that("check in_region", {
 	expect_equal(in_region(merge_region(regions$a,verbose=F), regions$b, verbose=F), a.b.overlap_merged)
 
 	# %in.region% gives same results
-	expect_equal(in_region(regions$a,regions$b, verbose = F), regions$a %in.region% regions$b)
+	expect_equal(in_region(regions$a,regions$b, verbose = F), regions$a %in_region% regions$b)
 	
 	})
 }	

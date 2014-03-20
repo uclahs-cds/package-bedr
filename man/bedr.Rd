@@ -71,7 +71,7 @@ is.merged <- is_merged_region(a.sort1);
 a.merge1 <- bedr(engine = "bedtools", input = list(i = a.sort1), method = "merge", params = "");
 b.merge1 <- bedr(engine = "bedtools", input = list(i = b.sort1), method = "merge", params = "");
 a.merge2 <- bedr(engine = "bedops",   input = list(i = a.sort1), method = "merge", params = "");
-a.merge3 <- merge_region(a);
+# a.merge3 <- merge_region(a); this will throw an error b/c region is not sorted
 
 ### subtract
 a.sub1 <- bedr(input = list(a = a.merge1, b = b.merge1), method = "subtract", params="");

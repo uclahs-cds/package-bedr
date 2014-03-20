@@ -30,10 +30,10 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 
 	# parse indices and create temp files
 	if (engine == "bedops") {
-		input.files <- processInput(input, tmpDir = tmpDir, include.names = FALSE, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = verbose);
+		input.files <- process_input(input, tmpDir = tmpDir, include.names = FALSE, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = verbose);
 		}
 	else {
-		input.files <- processInput(input, tmpDir = tmpDir, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = verbose);
+		input.files <- process_input(input, tmpDir = tmpDir, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = verbose);
 		}
 
 	# do not capture output if help requested

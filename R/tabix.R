@@ -24,7 +24,7 @@ tabix <- function(region, file.name, params = NULL, tmpDir = NULL, deleteTmpDir 
 		}
 
 	# parse indices and create temp files
-	region.file <- processInput(region, tmpDir = tmpDir, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = verbose);
+	region.file <- process_input(region, tmpDir = tmpDir, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = verbose);
 
 	tabix.output <- NULL;
 

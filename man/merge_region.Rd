@@ -41,7 +41,8 @@ index <- get_example_regions();
 
 a <- index[[1]];
 
-b <- merge_region(a);
+a.sort   <- sort_region(a);
+a.merged <- merge_region(a.sort);
 
 }
 }

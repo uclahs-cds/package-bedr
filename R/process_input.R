@@ -1,4 +1,4 @@
-processInput <- function(input, tmpDir = NULL, include.names = TRUE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE) {
+process_input <- function(input, tmpDir = NULL, include.names = TRUE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE) {
 # takes list of input and creates tmp files for input and returns string of paths
 
 	file.extensions <- c("bed","vcf", "gff","bam", "sam", "csv", "tsv", "txt", "gz")

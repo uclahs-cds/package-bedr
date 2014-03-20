@@ -44,9 +44,16 @@ bedtoolsR 0.1.0
 
 TODO 
 ========================
+* improve read.vcf hash parsing via rcpp and multicore
+* more tests on new functions
+* review plotting functionality
+* check on vcf, bam, bedpe compatability
+* cbio/ensembl/ucsc query functions
+* add some gene/region based tests i.e. burden, c-alpha
+* basic signature estimates
+* generate regions stats and information.  excellent resource for downstream modelling.
+* add homopolymer/gc content estimates
+* get around writing temp files i.e. fifo's or shared library or ramdisk
+* region based queries i.e. pubmed, cosmic, omim.  prioritize by relevance due to keywords
 * plotRegion.ucsc(). use ucsc  getTracks() function so can customize annotation using url
 * bedGraph (continuous tracks) abilities for the ucsc plotting
-* check on vcf, bam, bedpe compatability
-* memory based filesystem mount for tmp files
-* region based queries i.e. pubmed, cosmic, omim.  prioritize by relevance due to keywords
-* cbio/ensembl/ucsc query functions

@@ -99,7 +99,6 @@ is_valid_region <- function(x, check.zero.based = TRUE, check.chr = TRUE, throw.
 		}
 
 	if(throw.error && is.error) {
-		browser()
 		catv("\n    ERROR: Sorry, the program is stopping until problem features are fixed.  \n    You can try using is_valid_region and fix.region functions to debug\n");
 		stop();
 		}

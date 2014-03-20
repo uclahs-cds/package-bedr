@@ -29,7 +29,7 @@ catv("MERGING\n")
 	if (check.sort) {
 		if (!is_sorted_region(x, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.merge = FALSE)) {
 			catv(" * Bedtools requires sorted input for merging!\n");
-			stop();
+			catv("   Your data is being automatically sorted\n");
 			}
 		}
 
