@@ -25,6 +25,7 @@ export(
 	'plot_region',
 	'index2bed',
 	'read_vcf',
+	'write_vcf',
 	'reldist',
 	'jaccard',
 	'cluster_region',

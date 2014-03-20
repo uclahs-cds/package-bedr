@@ -32,7 +32,7 @@ read_vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 
 	# loop over header 
 	while (!end.of.header) {
-		x.header.tmp <- readLines(con, n = 1);	
+		x.header.tmp <- readLines(con, n = 1);
 		if (grepl("^#[Cc]", x.header.tmp)) {
 			end.of.header <- TRUE;
 			x.colnames    <- unlist(strsplit(x.header.tmp, split = "\t| +"));
@@ -99,7 +99,7 @@ read_vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 	attr(x.df, "header") <- x.header;
 
 	# add parsed header as list in item
-	x.header.parsed <- parse.vcf.header(x.header);
+	x.header.parsed <- parse_vcf_header(x.header);
 	x.df <- list(header = x.header.parsed, vcf = x.df);
 	catv("   Done\n");
 
@@ -111,10 +111,10 @@ read_vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 		catv(" * Split info...\n");
 
 		# split the info
-		x.info.split <- lapply(x.df$vcf$INFO, hash2vec, split.char = ";", fill.names = x.header.parsed$INFO[,"ID"]); # slow!
+		x.info.split <- lapply(x.df$vcf$INFO, hash2vec, split.char = ";", fill.names = x.header.parsed$INFO[,"ID"]); # slow! consider mcapply
 
 		# fill in the missing tabs
-		x.info.split <- lapply(x.info.split, fill.vector, fill.names = x.header.parsed$INFO[,"ID"]); # slow!
+		x.info.split <- lapply(x.info.split, fill.vector, fill.names = x.header.parsed$INFO[,"ID"]); # slow! consider mcapply
 
 		# combine into matrix
 		x.info.split <- as.data.frame(do.call(rbind, x.info.split), stringsAsFactors = FALSE);
@@ -169,12 +169,12 @@ read_vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 			}
 		else {
 			# split each sample
-			x.sample.split <- lapply(x.df$vcf[,(ncol(x.df$vcf)-n.samples+1):ncol(x.df$vcf),with = FALSE], split.vcf.sample,  format.string);
+			x.sample.split <- lapply(x.df$vcf[,(ncol(x.df$vcf)-n.samples+1):ncol(x.df$vcf),with = FALSE], split.vcf.sample,  format.string); # consider mcapply
 			x.df$vcf[,(ncol(x.df$vcf)-n.samples+1):ncol(x.df$vcf)] <- NULL;
 			
 			# loop over each tag and merge
 			for (i in 1:length(format.string)) {
-				x.df[[format.string[i]]] <- do.call("cbind", lapply(x.sample.split, "[[", format.string[i]));
+				x.df[[format.string[i]]] <- do.call("cbind", lapply(x.sample.split, "[[", format.string[i])); # consider mcapply
 				
 				# convert "." to NA
 				x.df[[format.string[i]]][x.df[[format.string[i]]] == "."] <- NA
@@ -200,7 +200,7 @@ read_vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 
 ###################################################################################################
 
-parse.vcf.header <- function(x) {
+parse_vcf_header <- function(x) {
 ### return the header as a list of key values 
 
 	if (is.null(x)) {return(NULL)}

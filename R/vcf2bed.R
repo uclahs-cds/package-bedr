@@ -6,8 +6,14 @@
 
 vcf2bed <- function(x, filename = NULL, other = NULL) {
 
-	if (attr(x, "vcf") & length(x)  == 2) {
+	catv("CONVERT VCF TO BED\n")
+
+	if (!is.null(attr(x, "vcf")) && attr(x, "vcf") && all(names(x) == c("header","vcf"))) {
 		x <- x$vcf;
+		}
+	else {
+		catv(" * This is not an vcf!\n")
+		stop();
 		}
 
 
