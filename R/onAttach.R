@@ -8,7 +8,7 @@
 		}
 	if (file.exists(paste0(Sys.getenv("HOME"), "/bedr/config.yml"))) {
 		config_bedr_user <- yaml::yaml.load_file(input = paste0(Sys.getenv("HOME"), "/bedr/config.yml"));
-		config_bedr <- bedr:::modifyList2(config_bedr, config_bedr_user);
+		config_bedr <- modifyList2(config_bedr, config_bedr_user);
 		}
 
 	packageStartupMessage(

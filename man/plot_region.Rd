@@ -62,16 +62,16 @@ f <- get_random_regions(n = 1000, chr = "chr22", size.mean = 10)
 #plot_region(input = list(a=a,b=b,d=d,e=e,f=f))
 
 ### change venn parameters
-plotRegion(input = list(a=a,b=b,d=d), params = list(lty = 2, label.col = "black", main = "Region Overlap"))
+#plot_egion(input = list(a=a,b=b,d=d), params = list(lty = 2, label.col = "black", main = "Region Overlap"))
 
 ### try with different 
-plotRegion(input = list(a=a,b=b), feature = "gene")
-plotRegion(input = list(a=a,b=b), feature = "reference")
-plotRegion(input = list(a=a,b=b), feature = "interval")
-plotRegion(input = list(a=a,b=b), feature = "cluster")
-plotRegion(input = list(a=a,b=b), feature = "bp")
+#plot_region(input = list(a=a,b=b), feature = "gene")
+#plot_region(input = list(a=a,b=b), feature = "reference")
+#plot_region(input = list(a=a,b=b), feature = "interval")
+#plot_region(input = list(a=a,b=b), feature = "cluster")
+#plot_region(input = list(a=a,b=b), feature = "bp")
 
-dev.off()
+#dev.off()
 }
 
 \keyword{ plot }

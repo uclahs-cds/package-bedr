@@ -27,7 +27,7 @@ plot_region <- function(input, filename = NULL, type = "venn", feature = "interv
 		if (feature == "gene") { # gene overlap
 			for (i in 1:n) {
 				#if (!exists(refgene)) {
-					gene.region <- read_ucsc("refGene");
+					gene.region <- query_ucsc("refGene");
 				#	}
 				input.overlap[[names(input)[i]]] <- gene.region[in_region(gene.region, input[[i]]), "symbol"];
 				}

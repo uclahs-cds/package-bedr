@@ -8,7 +8,7 @@ bedr_setup <- function(datasets = "all", data_dir = paste0(Sys.getenv("HOME"),"/
 	config_bedr$data_dir <- data_dir;
 	cat(as.yaml(config_bedr), file = config_file, append = TRUE);
 
-	download_data(datasets, data_dir);
+	download_datasets(datasets, data_dir);
 	
 	return();
 	}

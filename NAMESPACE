@@ -42,4 +42,4 @@ export(
 	'bedr_setup'
 	);
 
-import('data.table', 'VennDiagram','testthat', 'multicore');
+import('data.table', 'VennDiagram','testthat', 'multicore', 'yaml');
