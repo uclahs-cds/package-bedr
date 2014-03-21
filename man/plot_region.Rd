@@ -52,14 +52,27 @@ d <- get_random_regions(n = 1000, chr = "chr22", size.mean = 10)
 e <- get_random_regions(n = 1000, chr = "chr22", size.mean = 10)
 f <- get_random_regions(n = 1000, chr = "chr22", size.mean = 10)
 
-# generate plots
-#pdf("test.pdf")
-#plot_region(input = list(a=a))
+#pdf("plot_region_ex.pdf")
+
+### basic venn diagrams
+#plot_region(input = list(a=a)) # note single inputs compare the original with a merged/collapsed set of regions
 #plot_region(input = list(a=a,b=b))
 #plot_region(input = list(a=a,b=b,d=d))
 #plot_region(input = list(a=a,b=b,d=d,e=e))
 #plot_region(input = list(a=a,b=b,d=d,e=e,f=f))
-#dev.off()
+
+### change venn parameters
+plotRegion(input = list(a=a,b=b,d=d), params = list(lty = 2, label.col = "black", main = "Region Overlap"))
+
+### try with different 
+plotRegion(input = list(a=a,b=b), feature = "gene")
+plotRegion(input = list(a=a,b=b), feature = "reference")
+plotRegion(input = list(a=a,b=b), feature = "interval")
+plotRegion(input = list(a=a,b=b), feature = "cluster")
+plotRegion(input = list(a=a,b=b), feature = "bp")
+
+dev.off()
 }
+
 \keyword{ plot }
 \keyword{ venn }

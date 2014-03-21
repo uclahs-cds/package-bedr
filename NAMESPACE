@@ -37,7 +37,9 @@ export(
 	'vcf2bed',
 	'bed2vcf',
 	'read_vcf',
-	'read_ucsc'
+	'query_ucsc',
+	'download_datasets',
+	'bedr_setup'
 	);
 
-import('data.table', 'VennDiagram','testthat');
+import('data.table', 'VennDiagram','testthat', 'multicore');

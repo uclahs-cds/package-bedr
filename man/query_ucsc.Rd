@@ -1,5 +1,5 @@
-\name{read_ucsc}
-\alias{read_ucsc}
+\name{query_ucsc}
+\alias{query_ucsc}
 \title{
 read a ucsc table into R
 }
@@ -7,7 +7,7 @@ read a ucsc table into R
 read a ucsc table into R
 }
 \usage{
-read_ucsc(x, mirror = "http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database", verbose = TRUE)
+query_ucsc(x, mirror = "http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database", verbose = TRUE)
 }
 \arguments{
   \item{x}{
@@ -33,7 +33,7 @@ Daryl Wagott
 }
 
 \examples{
-# read_ucsc("refGene")
+# query_ucsc("refGene")
 
 }
 

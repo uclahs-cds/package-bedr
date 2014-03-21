@@ -38,23 +38,31 @@ Note that by default the vcf is returned as a data.table not a data.frame.  Ther
 Daryl Waggott
 }
 
-
 \examples{
 
 clinVar_vcf_example      <- system.file("extdata/clinvar_dbSNP138_example.vcf.gz", package = "bedr")
 singleSample_vcf_example <- system.file("extdata/singleSampleOICR_example.vcf.gz", package = "bedr")
 multiSample_vcf_example  <- system.file("extdata/multiSampleOICR_example.vcf.gz", package = "bedr")
 
-# read part of the NCBI clinVar vcf.  Note this has no samples.
+# read a subset of NCBI clinVar vcf.  Note this has no samples.
 vcf1.a <- read_vcf(clinVar_vcf_example)
 vcf1.b <- read_vcf(clinVar_vcf_example, split.info = TRUE)
 vcf1.c <- read_vcf(clinVar_vcf_example, split.info = TRUE, split.sample = TRUE) # same as above b/c no sample
 
-# read part of a single-sample VCF
+# read a single-sample VCF
+system.time(
 vcf2.a <- read_vcf(singleSample_vcf_example, split.info = TRUE, split.sample = TRUE)
+)
 
-# read part of a multi-sample VCF
-vcf3.a <- read_vcf(multiSample_vcf_example, split.info = FALSE, split.sample = TRUE)
+
+#options("cores"=9);
+#system.time(
+#vcf2.a <- read_vcf(singleSample_vcf_example, split.info = TRUE, split.sample = TRUE)
+#)
+#options("cores"=1);
+
+# read  a multi-sample VCF
+vcf3.a <- read_vcf(multiSample_vcf_example, split.info = FALSE, split.sample = TRUE);
 
 # other useful vcfs (cosmic, clinvar, 1kg)
 
