@@ -19,7 +19,7 @@ is_merged_region <- function(x, check.zero.based = TRUE, check.chr = TRUE, check
 		is.merged <- length(x) == length(x.merge);
 		}
 	
-	catv("  * Checking for overlapping 'contiguous' regions... ")
+	catv(" * Checking for overlapping 'contiguous' regions... ")
 	if (is.merged) {
 		catv("PASS\n");
 		}

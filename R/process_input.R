@@ -12,7 +12,7 @@ process_input <- function(input, tmpDir = NULL, include.names = TRUE, check.zero
 	if (length(input) > 0) {
 
 		for (i in 1:length(input)) {
-			catv(paste0("  * Processing input (", i, "): ", names(input)[i], "\n"));
+			catv(paste0(" * Processing input (", i, "): ", names(input)[i], "\n"));
 
 			# check if input is a file
 			is.file  <- is.vector(input[[i]]) && length(input[[i]]) == 1  && tools::file_ext(gsub(".gz", "", input[[i]]) ) %in% file.extensions;
@@ -20,17 +20,17 @@ process_input <- function(input, tmpDir = NULL, include.names = TRUE, check.zero
 			# skip procesing if input is a file
 			if (is.file) {
 				if (!file.exists(input[[i]])) {
-					catv(paste("   ERROR:", input[[i]], "does not exist"));
+					catv(paste("ERROR:", input[[i]], "does not exist"));
 					stop();
 					}
 				input.file  <- input[[i]];
 				}
 			else {
 				# convert to bed format
-				input[[i]] <- convert2bed(input[[i]], check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = verbose);
+				input[[i]] <- convert2bed(input[[i]], set.type = FALSE, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = verbose);
 
 				# create tmp file
-				input.file   <- createTmpBedFile(input[[i]], names(input)[i], tmpDir);
+				input.file   <- create_tmp_bed_file(input[[i]], names(input)[i], tmpDir);
 				}
 
 			attr(input.file, "is.file") <- is.file;

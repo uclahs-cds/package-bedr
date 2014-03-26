@@ -1,44 +1,52 @@
-is_valid_region <- function(x, check.zero.based = TRUE, check.chr = TRUE, throw.error = FALSE ,verbose = TRUE) {
+is_valid_region <- function(x, check.zero.based = TRUE, check.chr = TRUE, throw.error = FALSE , verbose = TRUE) {
 	# vector index (0), bed (1), index in first column (2), rownmames are index (3), unrecognized(4)
 
 	is.error <- FALSE;
-	
 	# check if input type has already been determined
 	input.type <- attr(x, "input.type"); 
 
 	# determine input format
 	if (is.null(input.type)) {
-		input.type <- determineInput(x, verbose = verbose);
-		attr(x, "input.type") <- input.type; 
+		input.type <- determine_input(x, verbose = verbose);
+		attr(x, "input.type") <- input.type;
 		}
 
-	if (input.type == 0) {
+	if (input.type == 0) { # index vector
 		is.index <- TRUE;
 		}
-	else if (input.type == 1) {
-		old.scipen <- getOption("scipen")
+	else if (input.type == 1) { # bed
+		
+		# check the data types.  this can screw up sorting in R
+		is.correct.datatype <- all(sapply(x[,1:3], mode) == c("character", "numeric", "numeric"));
+		if (!is.correct.datatype) {
+			catv(" * Check data types... FAIL\n   Make sure the the chr column is character and the start and end positions are numbers\n");
+			is.error <- TRUE;
+			}
+			
+		old.scipen <- getOption("scipen");
 		options(scipen = 999);
 		x <- paste0(x[,1],":",x[,2],"-",x[,3]);
 		options(scipen = old.scipen);
+
 		}
-	else if (input.type == 2){
+	else if (input.type == 2){ # index tabular
 		x <- x[,1];
 		}
-	else if (input.type == 3) {
+	else if (input.type == 3) { # index tabular as rownames
 		x <- rownames(x);
 		}
 	else {
-		catv("  ERROR: Not sure what the input format is!\n");
+		catv("ERROR: Not sure what the input format is!\n");
 		stop();
 		}
 	
 	is.string <- is.character(x);
 	if (!is.string) {
-		catv("  * Check if index is a string... FAIL\n    Is the input a factor?\n");
+		catv(" * Check if index is a string... FAIL\n   Is the input a factor?\n");
 		is.error <- TRUE;
 		}
 	else {
-		catv("  * Check if index is a string... PASS\n");
+		catv(" * Check if index is a string... PASS\n");
 		}
 
 	if (check.chr) {
@@ -47,15 +55,15 @@ is_valid_region <- function(x, check.zero.based = TRUE, check.chr = TRUE, throw.
 	else {
 		pattern <- "^.*:\\d*-\\d*$";
 		}
-
+	
 	is.valid.pattern <- grepl(pattern, x);
 	if (any(!is.valid.pattern)) {
-		catv("  * Check index pattern... FAIL\n    Use check.chr = FALSE if no 'chr' prefix\n");
+		catv(" * Check index pattern... FAIL\n   Use check.chr = FALSE if no 'chr' prefix\n");
 		if(verbose) print(head(x[!is.valid.pattern]));
 		is.error <- TRUE;
 		}
 	else {
-		catv("  * Check index pattern... PASS\n");
+		catv(" * Check index pattern... PASS\n");
 		}
 	
 	# split for more checks
@@ -67,7 +75,7 @@ is_valid_region <- function(x, check.zero.based = TRUE, check.chr = TRUE, throw.
 		is.error <- TRUE;
 		}
 	else {
-		catv("  * Check for missing values... PASS\n");
+		catv(" * Check for missing values... PASS\n");
 		}
 
 	
@@ -75,12 +83,12 @@ is_valid_region <- function(x, check.zero.based = TRUE, check.chr = TRUE, throw.
 	if (any(is.missing) )  is.valid.position[is.missing] <- TRUE;
 	
 	if (any(!is.valid.position)) {
-		catv("  * Check if start is larger than end position... FAIL.\n");
+		catv(" * Check if start is larger than end position... FAIL.\n");
 		if(verbose) if (sum(!is.valid.position)>5) {print(head(x[!is.valid.position,]))} else {print(x[!is.valid.position,])};
 		is.error <- TRUE;
 		}
 	else {
-		catv("  * Check for larger start position... PASS.\n");
+		catv(" * Check for larger start position... PASS.\n");
 		}
 
 	if (check.zero.based) {
@@ -91,7 +99,7 @@ is_valid_region <- function(x, check.zero.based = TRUE, check.chr = TRUE, throw.
 			if(verbose) if (sum(!is.zero.based)>5) {print(head(x[!is.zero.based,]))}else {print(x[!is.zero.based,])};
 			}
 		else {
-			catv("  * Check if zero based... PASS\n");
+			catv(" * Check if zero based... PASS\n");
 			}
 		}
 	else {
@@ -99,7 +107,7 @@ is_valid_region <- function(x, check.zero.based = TRUE, check.chr = TRUE, throw.
 		}
 
 	if(throw.error && is.error) {
-		catv("\n    ERROR: Sorry, the program is stopping until problem features are fixed.  \n    You can try using is_valid_region and fix.region functions to debug\n");
+		catv("\nERROR: Sorry, the program is stopping until problem features are fixed.  \n    You can try using is_valid_region and fix.region functions to debug\n");
 		stop();
 		}
 

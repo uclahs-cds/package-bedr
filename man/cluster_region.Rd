@@ -12,7 +12,7 @@ cluster_region(x, distance = 0, check.zero.based = TRUE, check.chr = TRUE, check
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{The region}
-  \item{distance}{The distance between features.  Defaults to 0 i.e. overlapping, bookended.}
+  \item{distance}{ maximum distance between regions to be merged.  defaults to 0 which means overlapping or bookended features. note that you can use negative distances to enforce a minimum overlap. }
   \item{check.zero.based}{should 0 based coordinates be checked}
   \item{check.chr}{should chr prefix be checked}
   \item{check.valid}{should the region be checkded for integerity}

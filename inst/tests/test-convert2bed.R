@@ -1,6 +1,6 @@
 context("convert2bed")
 
-if (check_binary("bedtools")) {
+if (check_binary("bedtools", verbose = TRUE)) {
 
 test_that("check converting a region into bed file including file type checking and region verification", {
 	

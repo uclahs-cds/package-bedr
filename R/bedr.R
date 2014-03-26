@@ -16,7 +16,7 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 	
 	# check binary is in path
 	if(!check_binary(engine, verbose = FALSE)) {
-		catv(paste0("bedr: missing binary/executable ", engine))
+		catv(paste0("ERROR: missing binary/executable ", engine))
 		return(0);
 		}
 
@@ -57,7 +57,7 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 	command <- paste(engine, method, attr(input.files,"commandString"), params, sep = " ");
 
 	# print the command
-	catv(paste0(command,"\n"));
+	catv(paste0("   ", command,"\n\n"));
 
 	# capture output R object or send to a file
 	if (is.null(outputFile)) {
@@ -78,7 +78,7 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 				system(paste("head ", input.files[[i]]));
 				}
 			else if (!is.null(attr(output,"status")) && attr(output,"status") == 139) {
-				catv("This could be a memory problem.  \nDecrease the size of the data or get more memory!\n");
+				catv("   This could be a memory problem.  \nDecrease the size of the data or get more memory!\n");
 				}
 			else {
 				catv(paste("head of file", names(input)[i],"...\n"));

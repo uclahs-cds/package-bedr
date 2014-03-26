@@ -1,5 +1,5 @@
-\name{createTmpBedFile}
-\alias{createTmpBedFile}
+\name{create_tmp_bed_file}
+\alias{create_tmp_bed_file}
 
 \title{
 output R objects as tmpfiles
@@ -9,7 +9,7 @@ output R objects as tmpfiles
 
 }
 \usage{
-createTmpBedFile(x, name = "bedr", tmpDir = NULL)
+create_tmp_bed_file(x, name = "bedr", tmpDir = NULL)
 }
 
 \arguments{

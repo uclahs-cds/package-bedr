@@ -1,6 +1,6 @@
 context("is_merged_region")
 
-if (check_binary("bedtools")) {
+if (check_binary("bedtools", verbose = FALSE)) {
 
 test_that("correctly identifies if regions are merged", {	
 	

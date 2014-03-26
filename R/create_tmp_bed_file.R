@@ -9,7 +9,7 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-createTmpBedFile <- function(x, name = "bedr", tmpDir = NULL) {
+create_tmp_bed_file <- function(x, name = "bedr", tmpDir = NULL) {
 	old.scipen <- getOption("scipen")
 	options(scipen = 999);
 

@@ -1,6 +1,6 @@
 context("in_region")
 
-if (check_binary("bedtools")) {
+if (check_binary("bedtools", verbose = FALSE)) {
 
 test_that("check in_region", {
 	
@@ -32,7 +32,7 @@ test_that("check in_region", {
 	expect_equal(in_region(sort_region(regions$a, verbose = FALSE), regions$b, verbose=F), a.b.overlap_sorted)
 
 	# merged
-	expect_equal(in_region(merge_region(regions$a,verbose=F), regions$b, verbose=F), a.b.overlap_merged)
+	expect_equal(in_region(merge_region(regions$a,verbose=F, distance = -1), regions$b, verbose=F), a.b.overlap_merged)
 
 	# %in.region% gives same results
 	expect_equal(in_region(regions$a,regions$b, verbose = F), regions$a %in_region% regions$b)

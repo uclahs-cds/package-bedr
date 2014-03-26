@@ -9,7 +9,7 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-merge_region <- function(x, distance = 0, list.names = TRUE, number = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, verbose = TRUE) {
+merge_region <- function(x, distance = 0, list.names = TRUE, number = FALSE, stratify.by = NULL, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, verbose = TRUE) {
 
 catv("MERGING\n")
 
@@ -24,16 +24,31 @@ catv("MERGING\n")
 	else {
 		n.rec.before <- nrow(x)
 		}
+	
+	# run validation first 
+	is.valid <- is_valid_region(x, check.zero.based = check.zero.based, check.chr = check.chr, throw.error = TRUE, verbose = verbose);
 
 	# need to check sort first to avoid error in bedtools merge
 	if (check.sort) {
-		if (!is_sorted_region(x, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.merge = FALSE)) {
+		if (!is_sorted_region(x, check.zero.based = FALSE, check.chr = FALSE, check.valid = FALSE, check.merge = FALSE, verbose = FALSE)) {
 			catv(" * Bedtools requires sorted input for merging!\n");
 			catv("   Your data is being automatically sorted\n");
+			x <- sort_region(x, check.zero.based = FALSE, check.chr = FALSE, check.valid = FALSE, check.merge = FALSE, verbose = FALSE);
 			}
 		}
 
-	x <- bedr(engine = "bedtools", input = list(i = x), method = "merge", params = paste("-d", distance, list.names.param, number), check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.merge = FALSE, check.sort = check.sort, verbose = verbose);
+	# should the collapsing be done within groups i.e. genes
+	if (is.null(stratify.by)) {
+		x <- bedr(engine = "bedtools", input = list(i = x), method = "merge", params = paste("-d", distance, list.names.param, number), check.zero.based = FALSE, check.chr = FALSE, check.valid = FALSE, check.merge = FALSE, check.sort = FALSE, verbose = verbose);
+		}
+	else {
+		if (!stratify.by %in% colnames(x)) {
+			catv("ERROR: the statified column does not exist \n");
+			return(1);
+			}
+		x <- by(x, x[,stratify.by], function(x) {bedr(engine = "bedtools", input = list(i = x), method = "merge", params = paste("-d", distance, list.names.param, number), check.zero.based = FALSE, check.chr = FALSE, check.valid = FALSE, check.merge = FALSE, check.sort = FALSE, verbose = verbose)});
+		x <- do.call(rbind, x);
+		}
 
 	if(is.vector(x, mode = "character")) {
 		n.rec.after <- length(x)
@@ -42,11 +57,11 @@ catv("MERGING\n")
 		n.rec.after <- nrow(x)
 		}
 
-	catv(paste0("  * Collapsing ", n.rec.before, " --> ", n.rec.after, " regions... NOTE\n"))
+	catv(paste0(" * Collapsing ", n.rec.before, " --> ", n.rec.after, " regions... NOTE\n"))
 
 	# replace repeating merged names
 	if (list.names) {
-		x[,4] <- unlist(lapply(lapply(strsplit(x[,4], split=","), "unique"), paste,collapse=",")); # yuck
+		x[,4] <- unlist(lapply(lapply(strsplit(x[,4], split=","), "unique"), paste, collapse=",")); # yuck
 		}
 
 	return(x);

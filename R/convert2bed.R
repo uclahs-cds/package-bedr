@@ -9,24 +9,24 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-convert2bed <- function(x, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE) {
+convert2bed <- function(x, set.type = TRUE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE) {
 	# vector index (0), bed (1), index in first column (2), rownmames are index (3), unrecognized(4)
 
-	input.type <- determineInput(x, verbose = verbose);
+	input.type <- determine_input(x, verbose = verbose);
 
 	# extract the region and convert to bed
 	if (input.type == 0) {
-		x <- index2bed(x);
+		x <- index2bed(x, set.type = set.type);
 		}
 	else if (input.type == 1) {
 		colnames(x) <- c("chr","start","end");
 		}
 	else if (input.type == 2) {
-		bed <- index2bed(x[,1]);
+		bed <- index2bed(x[,1], set.type = set.type);
 		x <- data.frame(bed, x[,-1,drop=FALSE], stringsAsFactors = FALSE);
 		}
 	else if (input.type == 3) {
-		bed <- index2bed(rownames(x));
+		bed <- index2bed(rownames(x), set.type = set.type);
 		x <- data.frame(bed, x, stringsAsFactors = FALSE);
 		}
 	else {
@@ -42,23 +42,28 @@ convert2bed <- function(x, check.zero.based = TRUE, check.chr = TRUE, check.vali
 	
 	# check if sorted
 	if (check.sort) {
-		is.sorted <- is_sorted_region(x, method = "lexicographical", check.valid = FALSE, check.merge = FALSE, verbose = FALSE);
+		is.sorted <- is_sorted_region(x, method = "lexicographical", check.valid = FALSE, check.zero.based = check.zero.based, check.chr = check.chr, check.merge = FALSE, verbose = FALSE);
 		if (!is.sorted) {
-			catv(paste0("    The input for object is not *lexographically* ordered!\n    This can cause unexpected results for some set operations.\n    try: x <- sort_region(x)\n"));
+			catv(paste0("   The input for object is not *lexographically* ordered!\n   This can cause unexpected results for some set operations.\n   try: x <- sort_region(x)\n"));
 			}
 		}
 	
 	# check if merged
 	if (check.merge) {
-		is.merged <- is_merged_region(x, check.valid = FALSE, check.sort = FALSE, verbose = FALSE);
+		is.merged <- is_merged_region(x, check.valid = FALSE, check.zero.based = check.zero.based, check.chr = check.chr, check.sort = FALSE, verbose = FALSE);
 		if (!is.merged) {
-			catv(paste0("    The input for object has overlapping features!\n    This can cause unexpected results for some set operations.\n    i.e. x <- merge_region(x)\n", sep = ""));
+			catv(paste0("   The input for object has overlapping features!\n   This can cause unexpected results for some set operations.\n   i.e. x <- merge_region(x)\n", sep = ""));
 			}
+		}
+
+	if (set.type) {
+		input.type <- attr(x, "input.type");
 		}
 
 	attr(x, "input.type") <- input.type;
 	attr(x, "is.index")   <- input.type %in% c(0,2,3);
 	attr(x, "is.vector")  <- input.type == 0;
-	return(x)
+
+	return(x);
 	}
 

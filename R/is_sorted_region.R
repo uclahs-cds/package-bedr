@@ -14,7 +14,7 @@ is_sorted_region <- function(x, method = "lex", engine = "unix", check.zero.base
 	x.sort    <- sort_region(x, method = method, engine = engine, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.merge = check.merge, verbose = verbose);
 	is.sorted <- identical(x, x.sort);
 
-	catv("  * Checking sort order... ")
+	catv(" * Checking sort order... ")
 	if (is.sorted) {
 		catv("PASS\n");
 		}

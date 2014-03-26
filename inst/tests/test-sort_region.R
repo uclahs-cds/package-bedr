@@ -1,6 +1,6 @@
 context("sort_region")
 
-if (check_binary("bedtools")) {
+if (check_binary("bedtools", verbose = FALSE)) {
 
 test_that("sort_region handles parameter input", {	
 	
@@ -44,7 +44,7 @@ test_that("sort_region correctly does lexicographical sorting", {
 	expect_equal(sort_region(regions$a, method = "lexicographical", engine = "R", verbose = F), region.a.sorted.lex);
 	# bedtools
 	expect_equal(sort_region(regions$a, method = "lexicographical", engine = "bedtools", verbose = F), region.a.sorted.lex);
-	if (check_binary("bedops")) {
+	if (check_binary("bedops", verbose = FALSE)) {
   # bedops
 	expect_equal(sort_region(regions$a, method = "lexicographical", engine = "bedops", verbose = F), region.a.sorted.lex);
 	}
@@ -60,7 +60,7 @@ test_that("sort_region correctly does natural sorting", {
 	expect_equal(sort_region(regions$a, method = "natural", engine = "R", verbose = F), region.a.sorted.nat);
 	# bedtools
 	expect_equal(sort_region(regions$a, method = "natural", engine = "bedtools", verbose = F), region.a.sorted.nat);
-	if (check_binary("bedops")) {
+	if (check_binary("bedops", verbose = FALSE)) {
   # bedops
 	expect_equal(sort_region(regions$a, method = "natural", engine = "bedops", verbose = F), region.a.sorted.nat);
 	}

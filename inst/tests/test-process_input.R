@@ -1,6 +1,6 @@
 context("process_input")
 
-if (check_binary("bedtools")) {
+if (check_binary("bedtools", verbose = TRUE)) {
 
 test_that("check input processing i.e. converting to bed and sending to a tmp file", {
 	

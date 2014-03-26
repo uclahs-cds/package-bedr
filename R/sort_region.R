@@ -20,8 +20,11 @@ catv("SORTING\n");
 	else {
 		header <- "index";
 		}
-		
-	x       <- convert2bed(x, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = FALSE, check.merge = FALSE, verbose = verbose);
+	
+	# run validation first 
+	is.valid <- is_valid_region(x, check.zero.based = check.zero.based, check.chr = check.chr, throw.error = TRUE, verbose = verbose);
+
+	x       <- convert2bed(x, set.type = FALSE, check.zero.based = FALSE, check.chr = FALSE, check.valid = FALSE, check.sort = FALSE, check.merge = FALSE, verbose = verbose);
 	is.unix <- .Platform$OS.type == "unix";
 	if (is.unix) {sort.version <- as.numeric(strsplit(system("sort --version", intern = TRUE), split = " ")[[1]][4]);}
 
@@ -57,7 +60,7 @@ catv("SORTING\n");
 
 	if (method == "natural") {
 		if (engine == "unix") {
-			tmp.file   <- createTmpBedFile(x, "sort");
+			tmp.file   <- create_tmp_bed_file(x, "sort");
 			command    <- paste("sort -k1,1V -k2,2n", tmp.file);
 			output     <- system(command, intern = TRUE);
 			output     <- strsplit2matrix(output, split = "\t");
@@ -79,7 +82,7 @@ catv("SORTING\n");
 	else if (method %in% c("lexicographical","lex")) {
 
 		if (engine == "unix") {
-			tmp.file   <- createTmpBedFile(x, "sort");
+			tmp.file   <- create_tmp_bed_file(x, "sort");
 			command    <- paste("sort -k1,1 -k2,2n", tmp.file);
 			output     <- system(command, intern = TRUE);
 			output     <- strsplit2matrix(output, split = "\t");
@@ -87,12 +90,12 @@ catv("SORTING\n");
 			output[,3] <- as.numeric(output[,3]);
 			}
 		else if (engine == "bedtools") {
-			output <- bedr(method = "sort", engine = "bedtools", input = list(i=x), check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = FALSE, check.merge = FALSE, verbose = verbose);
+			output <- bedr(method = "sort", engine = "bedtools", input = list(i=x), check.zero.based = FALSE, check.chr = FALSE, check.valid = FALSE, check.sort = FALSE, check.merge = FALSE, verbose = verbose);
 			output[,2] <- as.numeric(output[,2]);
 			output[,3] <- as.numeric(output[,3]);
 			}
 		else if (engine == "bedops") {
-			output <- bedr(method = "sort", engine = "bedops", input = list(i=x), check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = FALSE, check.merge = FALSE, verbose = verbose);
+			output <- bedr(method = "sort", engine = "bedops", input = list(i=x), check.zero.based = FALSE, check.chr = FALSE, check.valid = FALSE, check.sort = FALSE, check.merge = FALSE, verbose = verbose);
 			output[,2] <- as.numeric(output[,2]);
 			output[,3] <- as.numeric(output[,3]);
 			}
@@ -126,8 +129,8 @@ catv("SORTING\n");
 		}
 
 	# check merging after sorting b/c bedtools doesn't work if not sorted!
-	if (check.merge && any(is_merged_region(output, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = FALSE))) {
-		catv("  * Overlapping regions can cause unexpected results.\n")
+	if (check.merge && any(is_merged_region(output, check.zero.based = FALSE, check.chr = FALSE, check.valid = FALSE, check.sort = FALSE))) {
+		catv(" * Overlapping regions can cause unexpected results.\n")
 		}
 
 	if (!is.vector(output)) colnames(output) <- header;
