@@ -9,7 +9,7 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-jaccard <- function(x, proportion.overlap  = 1e-9, reciprocal.overlap = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE){
+jaccard <- function(x, y, proportion.overlap  = 1e-9, reciprocal.overlap = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE){
 
 	catv("JACCARD METRIC\n");
 
@@ -19,9 +19,9 @@ jaccard <- function(x, proportion.overlap  = 1e-9, reciprocal.overlap = FALSE, c
 		params <- paste0(params, " -r");
 		}
 
-	x <- bedr(engine = "bedtools", input = list(a = x[[1]], b=x[[2]]), method = "reldist", params = params, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = TRUE);
+	x <- bedr(engine = "bedtools", input = list(a = x, b=y), method = "jaccard", params = params, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = verbose);
 
-	colnames(x) <- c("intersection", "union", "jaccard", "n_intersections");;
+#	colnames(x) <- c("intersection", "union", "jaccard", "n_intersections");;
 
 	return(x);
 	}

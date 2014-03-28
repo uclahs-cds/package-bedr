@@ -17,8 +17,8 @@ determine_input <- function(x, check.chr = FALSE, verbose = TRUE) {
 		}
 
 	x <- as.data.frame(x);
-	
-	is.bed <- length(colnames(x)>=3) && all(colnames(x)[1:3] == c("chr","start","end"));
+
+	is.bed <- length(colnames(x))>=3 && all(colnames(x)[1:3] == c("chr","start","end"));
 	if (is.bed) {
 		catv("PASS\n   Input is in bed format\n")
 		return(1)

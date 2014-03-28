@@ -116,8 +116,14 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 		chr.column <- 1;
 		new.index <- output[,1];
 		}
-
-	if (ncol.output == 3 && attr(input.files[[1]], "is.index")) {
+browser()
+	# add back the index if it was used as input
+	if (grepl("jaccard", output[1,3]) || grepl("reldist", output[1,1])) {
+		# delete the header
+		colnames(output) <- output[1,]
+		output <- output[-1,];
+		}
+	else if (ncol.output == 3 && attr(input.files[[1]], "is.index")) {
 		# replace output with index if input was index
 		output <- new.index;
 		

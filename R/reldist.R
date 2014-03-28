@@ -9,7 +9,7 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-reldist <- function(x, detail = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE){
+reldist <- function(x, y, detail = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE){
 
 	catv("RELATIVE DISTANCE\n");
 	if (detail) {
@@ -19,9 +19,9 @@ reldist <- function(x, detail = FALSE, check.zero.based = TRUE, check.chr = TRUE
 		params <- "";
 		}
 
-	x <- bedr(engine = "bedtools", input = list(a = x[[1]], b=x[[2]]), method = "reldist", params = params, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = TRUE);
+	x <- bedr(engine = "bedtools", input = list(a = x, b=y), method = "reldist", params = params, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = verbose);
 
-	colnames(x) <- c("reldist", "count", "total", "fraction");;
+#	colnames(x) <- c("reldist", "count", "total", "fraction");;
 
 	return(x);
 	}
