@@ -46,7 +46,7 @@ plot_region <- function(input, filename = NULL, type = "venn", feature = "interv
 			}
 		else if (feature == "bp") {
 			input.overlap <- join_multiple_region(input);
-			size          <- sizeRegion(input.overlap);
+			size          <- size_region(input.overlap);
 			}
 		else {
 			catv("Plot.regin: unrecognized feature type.\n")

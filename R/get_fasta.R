@@ -19,21 +19,33 @@ get_fasta <- function(x, fasta = NULL, bed12 = FALSE, strand = FALSE, output.fas
 		}
 		
 	if (!file.exists(fasta)) {
-		catv("   * Fasta does not exist... FAIL\n")
+		catv(" * Fasta does not exist... FAIL\n")
 		}
 
 	if (!file.exists(paste0(fasta,".fai"))) {
-		catv("   * Fasta index '.fai' does not exist... FAIL\n")
+		catv(" * Fasta index '.fai' does not exist... FAIL\n")
 		}
 
 	params <- paste("-fi", fasta);
 	if (use.name.field) {params <- paste(params, "-name")}
-	if (strand) {params <- paste(params, "-s")}
-	if (bed12) {params <- paste(params, "-split")}
-	if (!output.fasta) {params <- paste(params, "-tab")}
+	if (strand)         {params <- paste(params, "-s")}
+	if (bed12)          {params <- paste(params, "-split")}
+	if (!output.fasta)  {params <- paste(params, "-tab")}
 	params <- paste(params, "-fo stdout");
 
-	x <- bedr(engine = "bedtools", input = list(bed = x), method = "getfasta", params = params, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = TRUE);
+	# run validation first 
+	is.valid <- is_valid_region(x, check.zero.based = check.zero.based, check.chr = check.chr, throw.error = TRUE, verbose = verbose);
+
+	region.size <- size_region(x, check.zero.based = FALSE, check.chr = FALSE, check.valid = FALSE, verbose = FALSE);
+	if (any(region.size>8095)) {
+		outputFile <- tempfile(pattern = paste("get_fasta", sep = ""), fileext = ".bed");
+		}
+	else {
+		outputFile <- NULL;
+		}
+		
+	
+	x <- bedr(engine = "bedtools", input = list(bed = x), method = "getfasta", outputFile = outputFile, params = params, check.zero.based = FALSE, check.chr = FALSE, check.valid = FALSE, check.sort = check.sort, check.merge = check.merge, verbose = TRUE);
 
 	if (!output.fasta) {
 		colnames(x)[1:2] <- c("index","sequence")

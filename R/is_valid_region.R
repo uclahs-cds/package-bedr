@@ -57,6 +57,7 @@ is_valid_region <- function(x, check.zero.based = TRUE, check.chr = TRUE, throw.
 		}
 	
 	is.valid.pattern <- grepl(pattern, x);
+	
 	if (any(!is.valid.pattern)) {
 		catv(" * Check index pattern... FAIL\n   Use check.chr = FALSE if no 'chr' prefix\n");
 		if(verbose) print(head(x[!is.valid.pattern]));

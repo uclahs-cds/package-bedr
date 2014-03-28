@@ -61,13 +61,16 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 
 	# capture output R object or send to a file
 	if (is.null(outputFile)) {
-		output <- try(system(command , wait = TRUE, intern = intern, ignore.stdout = FALSE, ignore.stderr = FALSE));
+		output <- try(system(command , wait = TRUE, intern = intern, ignore.stdout = FALSE, ignore.stderr = FALSE)); 
 		}
 	else {
 		if (is.null(outputDir)) outputDir <- getwd();
+		if (grepl("/", outputFile)) outputDir <- NULL;
 		command <- paste(command, ">", paste(outputDir, "/", outputFile, sep = ""));
+
 		intern  <- FALSE;
 		output  <- try(system(command , wait = TRUE, intern = intern, ignore.stdout = FALSE, ignore.stderr = FALSE));
+		output  <- as.data.frame(fread( paste(outputDir, "/", outputFile, sep = "")));
 		}
 
 	# check for output

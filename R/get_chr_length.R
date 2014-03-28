@@ -1,4 +1,4 @@
-get_chr_length <- function(species = "human", build = "hg19") {
+get_chr_length <- function(chr = NULL, species = "human", build = "hg19") {
 
 	file.name <- paste0("genomes/", species, ".", build, ".genome");
 
@@ -6,6 +6,10 @@ get_chr_length <- function(species = "human", build = "hg19") {
 
 	x <- read.table(file.name, header = FALSE, sep = "\t", as.is = TRUE);
 	colnames(x) <- c("chr", "length");
+
+	if (!is.null(chr)) {
+		x <- x[x$chr %in% chr,];
+		}
 
 	return(x)
 	}
