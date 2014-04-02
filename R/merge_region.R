@@ -59,9 +59,12 @@ catv("MERGING\n")
 
 	catv(paste0(" * Collapsing ", n.rec.before, " --> ", n.rec.after, " regions... NOTE\n"))
 
+	colnames(x)[1:3] <- c("chr","start","end");
+
 	# replace repeating merged names
 	if (list.names) {
 		x[,4] <- unlist(lapply(lapply(strsplit(x[,4], split=","), "unique"), paste, collapse=",")); # yuck
+		colnames(x)[4] <- "names";
 		}
 
 	return(x);

@@ -5,7 +5,8 @@ determine_input <- function(x, check.chr = FALSE, verbose = TRUE) {
 		pattern = "^chr[0-9XYM]{1,2}:\\d*-\\d*$";
 		}
 	else {
-		pattern = "^.*[0-9XYM]{1,2}:\\d*-\\d*$";
+		#pattern = "^.*[0-9XYM]{1,2}:\\d*-\\d*$";
+		pattern <- "^.*:\\d*-\\d*$";
 		}
 
 	catv(" * Checking input type... ");

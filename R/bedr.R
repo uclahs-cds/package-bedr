@@ -57,11 +57,11 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 	command <- paste(engine, method, attr(input.files,"commandString"), params, sep = " ");
 
 	# print the command
-	catv(paste0("   ", command,"\n\n"));
-
+	catv(paste0("   ", command,"\n"));
+	
 	# capture output R object or send to a file
 	if (is.null(outputFile)) {
-		output <- try(system(command , wait = TRUE, intern = intern, ignore.stdout = FALSE, ignore.stderr = FALSE)); 
+		output <- try(system(command , wait = TRUE, intern = intern, ignore.stdout = FALSE, ignore.stderr = FALSE));
 		}
 	else {
 		if (is.null(outputDir)) outputDir <- getwd();
@@ -70,7 +70,7 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 
 		intern  <- FALSE;
 		output  <- try(system(command , wait = TRUE, intern = intern, ignore.stdout = FALSE, ignore.stderr = FALSE));
-		output  <- as.data.frame(fread( paste(outputDir, "/", outputFile, sep = "")));
+		output  <- as.data.frame(fread( paste(outputDir, "/", outputFile, sep = ""), header = FALSE));
 		}
 
 	# check for output
@@ -92,7 +92,7 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 		catv(paste0("ERROR: Looks like ", engine, " had a problem\n"));
 		stop();
 		}
-	
+
 	# parse output into columns if not stdout
 	if (intern) {
 		output <- strsplit2matrix(output, split = "\t");
@@ -102,31 +102,35 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 	nrow.output <- nrow(output);
 	ncol.output <- ncol(output);
 
+	# set the header for a few 
+	if (ncol.output >= 3 && method %in% c("jaccard", "reldist")) {
+		# delete the header
+		colnames(output) <- output[1,]
+		output <- output[-1,];
+		}
+
 	# generate the index from the bed style input
-	if (ncol.output >= 3) {
+	if (ncol.output >= 3 && !method %in% c("jaccard", "reldist")) {
+		output[,2] <- as.integer(output[,2]);
+		output[,3] <- as.integer(output[,3]);
+
 		chr.column  <- which(grepl("chr", output[1,]))[1];
 		if (is.na(chr.column)) {chr.column <- 1}
 		
 		old.scipen <- getOption("scipen")
 		options(scipen = 999);
 		new.index   <- paste(output[,chr.column],":",output[,chr.column+1],"-",output[,chr.column+2], sep="");
-		options(scipen = old.scipen)
+		options(scipen = old.scipen);
 		}
 	else {
 		chr.column <- 1;
 		new.index <- output[,1];
 		}
-browser()
+
 	# add back the index if it was used as input
-	if (grepl("jaccard", output[1,3]) || grepl("reldist", output[1,1])) {
-		# delete the header
-		colnames(output) <- output[1,]
-		output <- output[-1,];
-		}
-	else if (ncol.output == 3 && attr(input.files[[1]], "is.index")) {
+	if (ncol.output == 3 && attr(input.files[[1]], "is.index")) {
 		# replace output with index if input was index
-		output <- new.index;
-		
+		output <- new.index;	
 		}
 	else if (ncol.output > 3 && attr(input.files[[1]],"is.index")) {
 		# if index specifed delete added chr, start, stop
@@ -143,7 +147,7 @@ browser()
 				group.colnames   <- c(colnames(input[[1]])[group.columns], colnames(input[[1]])[-group.columns]);
 				colnames(output) <- group.colnames;
 				}
-			else {
+			else if (engine == "bedtools" && !any(method %in% c("jaccard","reldist"))) {
 				colnames(output) <- colnames(input[[1]]);
 				}
 			}
@@ -174,6 +178,7 @@ browser()
 
 		}
 	
+
 	# only delete tmp files if they exist
 	input.files <- Filter(function(x){grepl("Rtmp",x)}, input.files);
 
