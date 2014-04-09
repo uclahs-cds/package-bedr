@@ -13,8 +13,8 @@ bedr(engine = "bedtools", params = NULL, input = list(), method = NULL,  tmpDir 
 }
 
 \arguments{
-	\item{engine}{What analytical engine to use i.e. bedtools, bedops, tabix, unix}
-	\item{params}{A string that includes all the extra parameters and arguments to the bedtools commmand.  For example if you wanted to do a left outer join you would specificy method as intersect and use params = c("-loj -header"). If you leave input and method as defaults then this is this string represents the full command.}
+  \item{engine}{What analytical engine to use i.e. bedtools, bedops, tabix, unix}
+  \item{params}{A string that includes all the extra parameters and arguments to the bedtools commmand.  For example if you wanted to do a left outer join you would specificy method as intersect and use params = c("-loj -header"). If you leave input and method as defaults then this is this string represents the full command.}
   \item{input}{A list of input items to be used by bedtools.  Each item should be named by its parameter name in bedtools for example input = list(a=xxx, b=yyy, i=zzz).  Items can be R objects or external files.  R objects need to be in bed format i.e. have chr, start, stop as the first three columns, or, have an position index as the first column or rowname i.e. chr1:100-1000.}
   \item{method}{What bedtools method.  This can be intersect, sort, merge etc.  See bedtools documentation for specifcis.}
   \item{tmpDir}{The directory to be used for writing files}

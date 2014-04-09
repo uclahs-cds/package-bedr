@@ -98,6 +98,8 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 		output <- strsplit2matrix(output, split = "\t");
 		}
 
+	### everything below here needs to be reviewed ###
+
 	# col and row numbers
 	nrow.output <- nrow(output);
 	ncol.output <- ncol(output);

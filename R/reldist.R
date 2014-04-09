@@ -9,7 +9,7 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-reldist <- function(x, y, detail = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = FALSE, check.merge = FALSE, verbose = TRUE){
+reldist <- function(x, y, detail = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE){
 
 	catv("RELATIVE DISTANCE\n");
 	if (detail) {

@@ -9,11 +9,12 @@ gets the length of each chromosome for a species/build
 Gets the length of each chromosome for a species/build.  Choices are human (hg18, hg19), mouse(mm9, mm10)
 }
 \usage{
-get_chr_length(species = "human", build = "hg19")
+get_chr_length(chr = NULL, species = "human", build = "hg19")
 
 }
 
 \arguments{
+  \item{chr}{a vector of chromosomes to query. defaults to all.}
   \item{species}{species}
   \item{build}{build}
 }

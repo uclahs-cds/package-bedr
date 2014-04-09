@@ -39,7 +39,9 @@ export(
 	'read_vcf',
 	'query_ucsc',
 	'download_datasets',
-	'bedr_setup'
+	'bedr_setup',
+	'permute_region',
+	'test_region_similarity'
 	);
 
-import('data.table', 'VennDiagram','testthat', 'multicore', 'yaml');
+import('data.table', 'VennDiagram','testthat', 'multicore', 'yaml', 'bit');

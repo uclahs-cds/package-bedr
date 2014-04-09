@@ -7,10 +7,11 @@ calculate the jaccard distance between sets of intervals
 calculate the jaccard distance between sets of intervals
 }
 \usage{
-jaccard(x, proportion.overlap = 1e-09, reciprocal.overlap = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE)
+jaccard(x, y, proportion.overlap = 1e-09, reciprocal.overlap = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE)
 }
 \arguments{
-  \item{x}{two regions in a list}
+  \item{x}{first region to be compared}
+  \item{y}{second region to be compared}
   \item{proportion.overlap}{Defaults 1e-9 which is 1 bp.  See details below for the different interpretation between 0 and 1 based overlap}
   \item{reciprocal.overlap}{Should the proportion.overlap be reciprocal}
   \item{check.zero.based}{should 0 based coordinates be checked}
@@ -38,6 +39,15 @@ Daryl Waggott
 reldist
 }
 \examples{
-# In progress
+if (check_binary("bedtools")) {
+
+index <- get_example_regions();
+
+a <- index[[1]];
+b <- index[[2]];
+jaccard(a,b);
+
+
+}
 }
 \keyword{ distance }

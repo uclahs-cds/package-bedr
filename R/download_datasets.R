@@ -1,7 +1,7 @@
 download_datasets <- function(datasets = "all", data_dir = paste0(Sys.getenv("HOME"),"/bedr/data")) {
 
 	if (datasets == "all") {
-		datasets <- c("refgene","hg19","b37","hugo", "cosmic","clinvar", "agilent", "nimblegen");
+		datasets <- c("refgene","hg19","b37","hugo", "cosmic","clinvar", "agilent", "nimblegen","gap");
 		}
 	
 	old_dir <- getwd();
@@ -38,6 +38,18 @@ download_datasets <- function(datasets = "all", data_dir = paste0(Sys.getenv("HO
 		duplicated.gene <- duplicated(refgene_nm[,4]) | duplicated(rev(refgene_nm[,4]));
 		refgene_nm <- refgene_nm[!duplicated.gene,];
 		write.table(refgene_nm, paste0(data_dir, "/gene_regions.txt"), sep = "\t", quote = FALSE, row.names = FALSE);
+		}
+
+	# centromeres/telomeres and problem regions	
+	if ("gap" %in% datasets && !file.exists(paste0(data_dir, "/gap.txt.gz"))) {
+		download.file("http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/gap.txt.gz", destfile="gap.txt.gz");
+		download.file("http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/gap.sql", destfile="gap.sql");
+		}
+
+	# repeatMasker data
+	if ("repeatmasker" %in% datasets && !file.exists(paste0(data_dir, "/rmsk.txt.gz"))) {
+		download.file("http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/rmsk.txt.gz", destfile="rmsk.txt.gz");
+		download.file("http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/rmsk.sql", destfile="rmsk.sql");
 		}
 
 	# hugo gene names with alias's

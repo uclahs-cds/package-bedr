@@ -1,4 +1,7 @@
-test_region_similarity <- function (x, y, startify.by.chr = FALSE, n = 1e3, verbose = TRUE) {
+test_region_similarity <- function (x, y, startify.by.chr = FALSE, n = 1e3, mask.gaps = FALSE, mask.repeats = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, verbose = TRUE) {
+
+	is_valid_region(x, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, verbose = verbose);
+	is_valid_region(y, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, verbose = verbose);
 
 	jaccard.orig     <- jaccard(x,y, check.chr = FALSE, check.valid = FALSE, check.sort = FALSE, check.merge = FALSE)[1,3]; # larger more similar (0-1)
 	reldist.orig     <- reldist(x,y, check.chr = FALSE, check.valid = FALSE, check.sort = FALSE, check.merge = FALSE);# smaller more similar (0-0.5). should be uniform
@@ -13,32 +16,32 @@ test_region_similarity <- function (x, y, startify.by.chr = FALSE, n = 1e3, verb
 	
 	catv("PERMUTATION TEST\n")
 
-	catv(paste0(" * iterator: 0"))
-	backspace <- "\b";
-	
-	for (i in 1:n) {
-		
-		catv(paste0(backspace, i))
-		backspace <- rep("\b", nchar(i));
+	#catv(paste0(" * iterator: 0"))
+	#backspace <- "\b";
 
-		x.perm <- permute_region(x, is.checked = TRUE);
-		x.perm  <- sort_region(x.perm, check.chr = FALSE, check.valid = FALSE, verbose = FALSE);
-		jaccard.perm <- jaccard(x.perm, y, check.chr = FALSE, check.valid = FALSE, check.sort = FALSE, check.merge = FALSE, verbose = FALSE)[1,3];
-		reldist.perm <- reldist(x.perm,y, check.chr = FALSE, check.valid = FALSE, check.sort = FALSE, check.merge = FALSE, verbose = FALSE);
-		
-		reldist.perm.median   <- tail(reldist.perm[cumsum(reldist.perm$count/sum(reldist.perm$count))  <= 0.5,"reldist"], 1); 
-		reldist.perm.fraction.zero     <- reldist.perm[1,"fraction"];
-		reldist.perm.fraction.fifty    <- reldist.perm[50,"fraction"];
+	batch.size <- 20;
+	n.batches <- ceiling(n/batch.size);
 
-		if (jaccard.perm >= jaccard.orig) jaccard.perm.gt <- jaccard.perm.gt + 1; 
+	if (batch.size > n) batch.size <- n;
+
+	for (i in 1:n.batches) {
+
+		if (i == n.batches) batch <- n %% batch;
+
+	#	catv(paste0(backspace, i));
+	#	backspace <- rep("\b", nchar(i));
+
+		# send batches of permutations
+		perm.results <- mclapply(list(1:n.batches), iterate_perm, x = x, y = y);
+
+		if (jaccard.perm >= jaccard.orig) jaccard.perm.gt <- jaccard.perm.gt + 1;
 		if (reldist.perm.median <= reldist.orig.median)  reldist.perm.median.lt <- reldist.perm.median.lt + 1;
 		if (reldist.perm.fraction.zero >= reldist.orig.fraction.zero)  reldist.perm.fraction.zero.gt <- reldist.perm.fraction.zero.gt + 1;
 		if (reldist.perm.fraction.fifty >= reldist.orig.fraction.fifty)  reldist.perm.fraction.fifty.gt <- reldist.perm.fraction.fifty.gt + 1;
 
-		if (i == 100 ) {
-			if (jaccard.perm.gt > 20 && reldist.perm.median.lt > 20) break;
-			}
-
+#		if (i == 100 ) {
+#			if (jaccard.perm.gt > 20 && reldist.perm.median.lt > 20) break;
+#			}
 		}
 
 	jaccard.p <- jaccard.perm.gt / n;
@@ -51,5 +54,25 @@ test_region_similarity <- function (x, y, startify.by.chr = FALSE, n = 1e3, verb
 	empirical.pvalues <- c(jaccard.p, reldist.median.p, reldist.fraction.zero.p, reldist.fraction.fifty.p);
 	perm.results <- data.frame(test = tests, effect = effect.sizes, p = empirical.pvalues, stringsAsFactors = FALSE);
 
-	return(list(results = perm.results, n = i, relatvit_distance = reldist.orig))
+	return(list(results = perm.results, n = i, relative_distance = reldist.orig))
+	}
+
+
+
+iterate_perm <- function(x.region, y.region) {
+
+	x.perm       <- permute_region(x, mask.gaps = mask.gaps, mask.repeats = mask.repeats, is.checked = TRUE, sort.output = TRUE);
+	jaccard.perm <- jaccard(x.perm, y, check.chr = FALSE, check.valid = FALSE, check.sort = FALSE, check.merge = FALSE, verbose = FALSE)[1,3];
+	reldist.perm <- reldist(x.perm, y, check.chr = FALSE, check.valid = FALSE, check.sort = FALSE, check.merge = FALSE, verbose = FALSE);
+
+	reldist.perm.median   <- tail(reldist.perm[cumsum(reldist.perm$count/sum(reldist.perm$count))  <= 0.5,"reldist"], 1); 
+	reldist.perm.fraction.zero     <- reldist.perm[1,"fraction"];
+	reldist.perm.fraction.fifty    <- reldist.perm[50,"fraction"];
+
+	if (jaccard.perm >= jaccard.orig) jaccard.perm.gt <- TRUE;
+	if (reldist.perm.median <= reldist.orig.median)  reldist.perm.median.lt <- TRUE;
+	if (reldist.perm.fraction.zero >= reldist.orig.fraction.zero)  reldist.perm.fraction.zero.gt <- TRUE;
+	if (reldist.perm.fraction.fifty >= reldist.orig.fraction.fifty)  reldist.perm.fraction.fifty.gt <- TRUE;
+
+	return(jaccard.perm.gt = reldist.perm.median.lt, reldist.perm.median.lt, reldist.perm.fraction.zero.gt, reldist.perm.fraction.fifty.gt)
 	}

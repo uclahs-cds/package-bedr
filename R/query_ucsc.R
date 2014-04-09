@@ -1,4 +1,11 @@
-query_ucsc <- function(x, mirror = "http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database", verbose = TRUE) {
+query_ucsc <- function(x, mirror = "http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database", download = TRUE, overwrite.local = FALSE, verbose = TRUE) {
+
+	# first check if it's already been downloaded
+	bedr.data.path <- paste0(Sys.getenv("HOME"),"/bedr/data");
+	if (!overwrite.local && file.exists(paste0(bedr.data.path, x,".txt.gz"))) {
+		x <- paste0(bedr.data.path, x,".txt.gz");
+		}
+	
 
 	# set the mirror to null if the file has an extension
 	if (grepl(".txt.gz$", x)) {
@@ -22,24 +29,42 @@ query_ucsc <- function(x, mirror = "http://hgdownload.soe.ucsc.edu/goldenPath/hg
 			catv("ERROR: Either the data or sql file do not exist.\n");
 			stop()
 			}
-			
+
+		}
+
+	if (download && !is.null(mirror)) {
+		if (!file.exists(bedr.data.path)) {
+			dir.create(bedr.data.path, recursive = TRUE);
+			}
+
+		new.sql.file  <- paste0(bedr.data.path,  x, ".sql");
+		new.data.file <- paste0(bedr.data.path, x, ".txt.gz");
+		download.file(sql.file, destfile = new.sql.file);
+		download.file(data.file, destfile = new.data.file);
+		
+		# change the file paths to point local
+		sql.file <- new.sql.file;
+		data.file <- new.data.file;
+		
+		mirror <- NULL;
 		}
 
 	# read sql
 	sql      <- readLines(sql.file);
-	
+
 	# parse sql
 	keep <- FALSE;
 	table.names <- NULL;
 	var.types   <- NULL;
+	
 	for ( i in 1:length(sql) ){
+
 		line <- sql[i] 
 		if (grepl("^CREATE",line)) {keep <- TRUE;next;}
-		if (grepl("^  KEY",line)) break;
+		if (grepl("^  KEY|^  UNIQUE",line)) break;
 		if (keep) { 
 			table.name <- gsub("^  `(.*)`.*","\\1", line);
 			table.names <- c(table.names, table.name);
-			
 
 			if(grepl("int", line)){
 				var.type <- "integer";
@@ -49,18 +74,25 @@ query_ucsc <- function(x, mirror = "http://hgdownload.soe.ucsc.edu/goldenPath/hg
 				}
 			var.types <- c(var.types,var.type);
 			}
+		
 		}
 	
 	if (!is.null(mirror)) {
-		data.con <- gzcon(url(data.file));
-		data.raw <- textConnection(readLines(data.con))
+		data.con   <- gzcon(url(data.file));
+		data.raw   <- textConnection(readLines(data.con));
 		ucsc.table <- read.table(data.raw, as.is = TRUE, sep = "\t", col.names = table.names, colClasses = var.types );
 		#ucsc.table <- fread(data.raw, stringsAsFactors = FALSE, sep = "\t",  colClasses = var.types );
 		#setNames(ucsc.table, table.names);
 		}
 	else {
-		ucsc.table <- read.table(data.file, as.is = TRUE, sep = "\t", col.names = table.names, colClasses = var.types );
-		#ucsc.table <- fread(data.file, stringsAsFactors = FALSE, sep = "\t", colClasses = var.types );
+		data.file.basename <- basename(data.file);
+		data.file.tmp      <- tempfile(pattern = paste(data.file.basename, "_", sep = ""));
+		system(paste0("gunzip -c ", data.file, " > ", data.file.tmp));
+		data.file <- data.file.tmp;
+		#ucsc.table <- read.table(data.file, as.is = TRUE, sep = "\t", col.names = table.names, colClasses = var.types );
+		ucsc.table <- fread(data.file, stringsAsFactors = FALSE, sep = "\t", colClasses = var.types );
+		ucsc.table <- setNames(ucsc.table, table.names)
+		ucsc.table <- as.data.frame(ucsc.table);
 		#setNames(ucsc.table, table.names);
 		}
 
