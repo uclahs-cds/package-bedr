@@ -9,7 +9,7 @@ generates a set of random regions
 generates a set of random regions for a specific species/build.  Choices are human (hg18, hg19), mouse(mm9, mm10). regions are sampled from a log-normal distribution.
 }
 \usage{
-get_random_regions(n = 10, chr = "chr22", species = "human", build = "hg19", size.mean = 5, size.sd = 1, sort.output = TRUE)
+get_random_regions(n = 10, chr = NULL, species = "human", build = "hg19", size.mean = 10, size.sd = 0.25, mask.gaps = FALSE, mask.repeats = FALSE, sort.output = TRUE, verbose = TRUE)
 
 }
 
@@ -20,9 +20,11 @@ get_random_regions(n = 10, chr = "chr22", species = "human", build = "hg19", siz
   \item{build}{build}
   \item{size.mean}{region mean in log space}
   \item{size.sd}{region sd in log space }
-  \item{mask.unmapped}{should the gaps in the reference build be masked.  this adds time.}
+  \item{mask.gaps}{should the gaps (Ns) in the human reference be ignored as potential start points.  This drammatically increases memory and run time but is more appropriate in almost all settings.  By default it's off.}
+  \item{mask.repeats}{should the repeats from repeatMasker be ignored as potential start points.  This drammatically increases memory and run time but is more appropriate in almost all settings.  By default it's off.}
   \item{sort.output}{return a sorted index}
-}
+  \item{verbose}{words}
+  }
 %\details{
 %}
 %\value{

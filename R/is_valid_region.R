@@ -15,7 +15,6 @@ is_valid_region <- function(x, check.zero.based = TRUE, check.chr = TRUE, throw.
 		is.index <- TRUE;
 		}
 	else if (input.type == 1) { # bed
-		
 		# check the data types.  this can screw up sorting in R
 		is.correct.datatype <- all(sapply(x[,1:3], mode) == c("character", "numeric", "numeric"));
 		if (!is.correct.datatype) {

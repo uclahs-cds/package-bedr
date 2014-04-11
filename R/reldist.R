@@ -20,8 +20,19 @@ reldist <- function(x, y, detail = FALSE, check.zero.based = TRUE, check.chr = T
 		}
 
 	x <- bedr(engine = "bedtools", input = list(a = x, b=y), method = "reldist", params = params, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = verbose);
-	
-	x <- data.frame(apply(x, 2, as.numeric));
+
+	if (detail) {
+		colnames(x) <- c("chr","start","stop","reldist");
+		x$start <- as.integer(x$start);
+		x$end <- as.integer(x$end);
+		x$reldist <- as.integer(x$reldist);
+		}
+	else {
+		x[,1] <- as.numeric(x[,1]);
+		x[,2] <- as.numeric(x[,2]);
+		x[,3] <- as.numeric(x[,3]);
+		x[,4] <- as.numeric(x[,4]);
+		}
 #	colnames(x) <- c("reldist", "count", "total", "fraction");;
 
 	return(x);

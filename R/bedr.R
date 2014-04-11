@@ -105,9 +105,9 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 	ncol.output <- ncol(output);
 
 	# set the header for a few 
-	if (ncol.output >= 3 && method %in% c("jaccard", "reldist")) {
+	if (ncol.output >= 3 && method %in% c("jaccard", "reldist") && !grepl("detail", params)) {
 		# delete the header
-		colnames(output) <- output[1,]
+		colnames(output) <- output[1,];
 		output <- output[-1,];
 		}
 
@@ -134,7 +134,7 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 		# replace output with index if input was index
 		output <- new.index;	
 		}
-	else if (ncol.output > 3 && attr(input.files[[1]],"is.index")) {
+	else if (ncol.output > 3 && attr(input.files[[1]],"is.index") && !method %in% c("jaccard","reldist")) {
 		# if index specifed delete added chr, start, stop
 		output <- data.frame(index = new.index, output[,-c(chr.column:(chr.column+2)), drop = FALSE], stringsAsFactors = FALSE);
 		}

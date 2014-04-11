@@ -59,7 +59,7 @@ catv("MERGING\n")
 
 	catv(paste0(" * Collapsing ", n.rec.before, " --> ", n.rec.after, " regions... NOTE\n"))
 
-	if (length(colnames)>=3) {
+	if (length(colnames(x))>=3) {
 		colnames(x)[1:3] <- c("chr","start","end");
 		}
 

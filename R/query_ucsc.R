@@ -1,4 +1,4 @@
-query_ucsc <- function(x, mirror = "http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database", download = TRUE, overwrite.local = FALSE, verbose = TRUE) {
+query_ucsc <- function(x, mirror = "http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database", download = TRUE, overwrite.local = FALSE, columns.keep = NULL, verbose = TRUE) {
 
 	# first check if it's already been downloaded
 	bedr.data.path <- paste0(Sys.getenv("HOME"),"/bedr/data");
@@ -76,10 +76,16 @@ query_ucsc <- function(x, mirror = "http://hgdownload.soe.ucsc.edu/goldenPath/hg
 			}
 		
 		}
+		
+	if (!is.null(columns.keep)) {
+		var.types[!table.names %in% columns.keep] <- "NULL";
+		table.names <- table.names[table.names %in% columns.keep];
+		}
 	
 	if (!is.null(mirror)) {
 		data.con   <- gzcon(url(data.file));
 		data.raw   <- textConnection(readLines(data.con));
+
 		ucsc.table <- read.table(data.raw, as.is = TRUE, sep = "\t", col.names = table.names, colClasses = var.types );
 		#ucsc.table <- fread(data.raw, stringsAsFactors = FALSE, sep = "\t",  colClasses = var.types );
 		#setNames(ucsc.table, table.names);
@@ -93,7 +99,6 @@ query_ucsc <- function(x, mirror = "http://hgdownload.soe.ucsc.edu/goldenPath/hg
 		ucsc.table <- fread(data.file, stringsAsFactors = FALSE, sep = "\t", colClasses = var.types );
 		ucsc.table <- setNames(ucsc.table, table.names)
 		ucsc.table <- as.data.frame(ucsc.table);
-		#setNames(ucsc.table, table.names);
 		}
 
 	ucsc.table;
