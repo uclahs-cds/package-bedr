@@ -109,7 +109,7 @@ permute_region <- function(x, stratify.by.chr = FALSE, species = "human", build 
 
 			# do the sampling with 0 weights for masked regions
 			#random.start[random.chr == chr] <- sample(chr.length[chr.length$chr == chr,"length"], sum(random.chr == chr), replace = TRUE, prob = as.logical(mask));
-			random.start[random.chr == chr]  <- sample_interval(sum(random.chr == chr), mask[mask$chr == chr, ]);
+			random.start[random.chr == chr]  <- sample_interval(sum(random.chr == chr), mask[mask$chr == chr, c("start","end")]);
 			
 			random.end[random.chr == chr]   <- random.start[random.chr == chr] + random.size;
 		
@@ -130,7 +130,7 @@ permute_region <- function(x, stratify.by.chr = FALSE, species = "human", build 
 		x <- sort_region(x, check.valid = FALSE, check.zero.based = FALSE, check.chr = FALSE, check.merge = FALSE, verbose = FALSE)
 		}
 	
-	gc();	
+	gc();
 	# add region masking i.e. exome/centromeres
 	# flush/trim overhaning regions
 	return(x);
@@ -145,7 +145,7 @@ sample_interval <- function(n, x) {
 
 	# sample rows
 	random.rows <- ceiling(runif(n, min = 1, max = nrow(x)));
-	random.values <- integer(n);	
+	random.values <- integer(n);
 
 	# sample from the intervals
 	for (row in unique(random.rows)) {
