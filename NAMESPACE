@@ -45,11 +45,11 @@ export(
 	);
 
 import('data.table',
-	'VennDiagram','testthat',
+	'VennDiagram',
+	'testthat',
 	'multicore',
 	'yaml',
-	bit'
+	'bit',
+	'Rcpp'
 	);
 
-useDynLib(mypackage)
-importFrom(Rcpp, sourceCpp)
