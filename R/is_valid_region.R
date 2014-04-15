@@ -11,6 +11,8 @@ is_valid_region <- function(x, check.zero.based = TRUE, check.chr = TRUE, throw.
 		attr(x, "input.type") <- input.type;
 		}
 
+	catv("VALIDATE REGIONS\n");
+
 	if (input.type == 0) { # index vector
 		is.index <- TRUE;
 		}
@@ -49,7 +51,7 @@ is_valid_region <- function(x, check.zero.based = TRUE, check.chr = TRUE, throw.
 		}
 
 	if (check.chr) {
-		pattern <- "(^chr[0-9XYMT]{1,2}|^chrGL.*):\\d*-\\d*$";
+		pattern <- "(^chr[0-9XYMTxymt]{1,2}|^chrGL.*):\\d*-\\d*$";
 		}
 	else {
 		pattern <- "^.*:\\d*-\\d*$";
@@ -78,10 +80,9 @@ is_valid_region <- function(x, check.zero.based = TRUE, check.chr = TRUE, throw.
 		catv(" * Check for missing values... PASS\n");
 		}
 
-	
 	is.valid.position <- x$start <= x$end;
 	if (any(is.missing) )  is.valid.position[is.missing] <- TRUE;
-	
+
 	if (any(!is.valid.position)) {
 		catv(" * Check if start is larger than end position... FAIL.\n");
 		if(verbose) if (sum(!is.valid.position)>5) {print(head(x[!is.valid.position,]))} else {print(x[!is.valid.position,])};
@@ -95,7 +96,7 @@ is_valid_region <- function(x, check.zero.based = TRUE, check.chr = TRUE, throw.
 		is.zero.based <- x$start != x$end;
 		is.zero.based[is.na(is.zero.based)] <- TRUE;
 		if (any(!is.zero.based)) {
-			catv("Check if zero based... FAIL\n    There are identical start and stop positions.\n    This usually indicates 1 based point variants.\n");
+			catv(" * Check if zero based... FAIL\n   There are identical start and stop positions.\n   This usually indicates 1 based point variants.\n");
 			if(verbose) if (sum(!is.zero.based)>5) {print(head(x[!is.zero.based,]))}else {print(x[!is.zero.based,])};
 			}
 		else {

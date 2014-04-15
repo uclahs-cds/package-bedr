@@ -11,7 +11,7 @@
 
 is_merged_region <- function(x, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, verbose = FALSE) {
 
-	x.merge   <- merge_region(x, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, verbose = verbose);
+	x.merge   <- merge_region(x, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, verbose = FALSE);
 	if (is.vector(x)) {
 		is.merged <- length(x) == length(x.merge);
 		}
@@ -25,6 +25,7 @@ is_merged_region <- function(x, check.zero.based = TRUE, check.chr = TRUE, check
 		}
 	else {
 		catv("FAIL\n")
+		catv(paste0("   The input for object has overlapping features!\n   This can cause unexpected results for some set operations.\n   i.e. x <- merge_region(x)\n", sep = ""));
 		}
 
 	return(is.merged);

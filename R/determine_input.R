@@ -1,8 +1,9 @@
 determine_input <- function(x, check.chr = FALSE, verbose = TRUE) {
 	# vector index (0), bed (1), index in first column (2), rownmames are index (3), unrecognized(4)
 
+
 	if (check.chr) {
-		pattern = "^chr[0-9XYM]{1,2}:\\d*-\\d*$";
+		pattern = "^chr[0-9XYMTxymt]{1,2}:\\d*-\\d*$";
 		}
 	else {
 		#pattern = "^.*[0-9XYM]{1,2}:\\d*-\\d*$";
