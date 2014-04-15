@@ -7,7 +7,20 @@ Compare sets of regions via jaccard and relative distance using permutation
 Compare sets of regions via jaccard and relative distance using permutation to get an empirical p-value.
 }
 \usage{
-test_region_similarity(x, y, n = 1000, stratify.by.chr = FALSE, species = "human", build = "hg19", mask.gaps = FALSE, mask.repeats = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, verbose = TRUE)
+test_region_similarity(
+	x,
+	y,
+	n = 1000,
+	stratify.by.chr = FALSE,
+	species = "human",
+	build = "hg19",
+	mask.gaps = FALSE,
+	mask.repeats = FALSE,
+	check.zero.based = TRUE,
+	check.chr = TRUE,
+	check.valid = TRUE,
+	verbose = TRUE
+	)
 }
 \arguments{
   \item{x}{first region to be compared. this is the region that is permuted}

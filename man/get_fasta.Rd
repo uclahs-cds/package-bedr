@@ -7,7 +7,20 @@ Query fasta sequence
 Query fasta sequence using bedtools get_fasta
 }
 \usage{
-get_fasta(x, fasta = NULL, bed12 = FALSE, strand = FALSE, output.fasta = FALSE, use.name.field = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE)
+get_fasta(
+	x,
+	fasta = NULL,
+	bed12 = FALSE,
+	strand = FALSE,
+	output.fasta = FALSE,
+	use.name.field = FALSE,
+	check.zero.based = TRUE,
+	check.chr = TRUE,
+	check.valid = TRUE,
+	check.sort = TRUE,
+	check.merge = TRUE,
+	verbose = TRUE
+	)
 }
 \arguments{
   \item{x}{
@@ -83,7 +96,11 @@ writeLines(d[[1]], con = "test.fasta")
 clinvar_vcf_example      <- system.file("extdata/clinvar_dbSNP138_example.vcf.gz", package = "bedr")
 clinvar <- read_vcf(clinvar_vcf_example)
 # note that clinvar uses ncbi fasta which does not use "chr" and codes chrM as MT
-clinvar.bed <- data.frame(chr = paste0("chr", gsub("MT", "M", clinvar$vcf$CHROM)), start = clinvar$vcf$POS - 2, end = clinvar$vcf$POS + 1 )
+clinvar.bed <- data.frame(
+	chr = paste0("chr", gsub("MT", "M", clinvar$vcf$CHROM)),
+	start = clinvar$vcf$POS - 2,
+	end = clinvar$vcf$POS + 1
+	)
 
 mutation.triplet <- get_fasta(clinvar.bed, check.chr = FALSE);
 }

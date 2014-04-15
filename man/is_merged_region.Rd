@@ -8,7 +8,14 @@ checks if region file is merged
 checks if region file is merged
 }
 \usage{
-is_merged_region(x, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, verbose = FALSE)
+is_merged_region(
+	x,
+	check.zero.based = TRUE,
+	check.chr = TRUE,
+	check.valid = TRUE,
+	check.sort = TRUE,
+	verbose = FALSE
+	)
 }
 
 \arguments{

@@ -9,7 +9,20 @@ Get adjacent flanks from regions
 Get adjacent flanks from regions
 }
 \usage{
-grow_region(x, n.add = NULL, start.add = NULL, end.add = NULL, species = "human", build = "hg19", check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE)
+grow_region(
+	x,
+	n.add = NULL,
+	start.add = NULL,
+	end.add = NULL,
+	species = "human",
+	build = "hg19",
+	check.zero.based = TRUE,
+	check.chr = TRUE,
+	check.valid = TRUE,
+	check.sort = TRUE,
+	check.merge = TRUE,
+	verbose = TRUE
+	)
 
 }
 

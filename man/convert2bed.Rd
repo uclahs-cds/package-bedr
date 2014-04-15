@@ -8,7 +8,16 @@ convert object to bed format
 checks if an object can be converted into a bed style data.frame then does the conversion.
 }
 \usage{
-convert2bed(x, set.type = TRUE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE)
+convert2bed(
+	x,
+	set.type = TRUE,
+	check.zero.based = TRUE,
+	check.chr = TRUE,
+	check.valid = TRUE,
+	check.sort = TRUE,
+	check.merge = TRUE,
+	verbose = TRUE
+	)
 }
 
 \arguments{

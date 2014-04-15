@@ -7,7 +7,15 @@ cluster intervals
 cluster intervals
 }
 \usage{
-cluster_region(x, distance = 0, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, verbose = TRUE)
+cluster_region(
+	x,
+	distance = 0,
+	check.zero.based = TRUE,
+	check.chr = TRUE,
+	check.valid = TRUE,
+	check.sort = TRUE,
+	verbose = TRUE
+	)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

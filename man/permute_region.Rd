@@ -7,7 +7,20 @@ permute a set of regions
 permute a set of regions
 }
 \usage{
-permute_region(x, stratify.by.chr = FALSE, species = "human", build = "hg19", mask.gaps = FALSE, mask.repeats = FALSE, sort.output = TRUE, is.checked = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, verbose = TRUE)
+permute_region(
+	x,
+	stratify.by.chr = FALSE,
+	species = "human",
+	build = "hg19",
+	mask.gaps = FALSE,
+	mask.repeats = FALSE,
+	sort.output = TRUE,
+	is.checked = FALSE,
+	check.zero.based = TRUE,
+	check.chr = TRUE,
+	check.valid = TRUE,
+	verbose = TRUE
+	)
 }
 \arguments{
   \item{x}{regions to permute}

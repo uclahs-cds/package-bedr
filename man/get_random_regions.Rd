@@ -9,7 +9,18 @@ generates a set of random regions
 generates a set of random regions for a specific species/build.  Choices are human (hg18, hg19), mouse(mm9, mm10). regions are sampled from a log-normal distribution.
 }
 \usage{
-get_random_regions(n = 10, chr = NULL, species = "human", build = "hg19", size.mean = 10, size.sd = 0.25, mask.gaps = FALSE, mask.repeats = FALSE, sort.output = TRUE, verbose = TRUE)
+get_random_regions(
+	n = 10,
+	chr = NULL,
+	species = "human",
+	build = "hg19",
+	size.mean = 10,
+	size.sd = 0.25,
+	mask.gaps = FALSE,
+	mask.repeats = FALSE,
+	sort.output = TRUE,
+	verbose = TRUE
+	)
 
 }
 

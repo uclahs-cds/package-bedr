@@ -9,7 +9,18 @@ checks if regions in object a are found in object b
 checks if regions in object a are found in object b
 }
 \usage{
-in_region(x, y, proportion.overlap = 1e-09, reciprocal.overlap = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = FALSE)
+in_region(
+	x,
+	y,
+	proportion.overlap = 1e-09,
+	reciprocal.overlap = FALSE,
+	check.zero.based = TRUE,
+	check.chr = TRUE,
+	check.valid = TRUE,
+	check.sort = TRUE,
+	check.merge = TRUE,
+	verbose = FALSE
+	)
 }
 
 \arguments{

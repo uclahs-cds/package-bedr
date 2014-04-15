@@ -9,7 +9,21 @@ join two multiple objects
 
 }
 \usage{
-join_multiple_region(x = list(), fraction.overlap = 1/1e9, empty = FALSE, missing.values = ".", cluster = FALSE, species = "human", build = "hg19", check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE )
+join_multiple_region(
+	x = list(),
+	fraction.overlap = 1/1e9,
+	empty = FALSE,
+	missing.values = ".",
+	cluster = FALSE,
+	species = "human",
+	build = "hg19",
+	check.zero.based = TRUE,
+	check.chr = TRUE,
+	check.valid = TRUE,
+	check.sort = TRUE,
+	check.merge = TRUE,
+	verbose = TRUE
+	)
 }
 
 \arguments{

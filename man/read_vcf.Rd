@@ -47,7 +47,8 @@ multiSample_vcf_example  <- system.file("extdata/multiSampleOICR_example.vcf.gz"
 # read a subset of NCBI clinVar vcf.  Note this has no samples.
 vcf1.a <- read_vcf(clinVar_vcf_example)
 vcf1.b <- read_vcf(clinVar_vcf_example, split.info = TRUE)
-vcf1.c <- read_vcf(clinVar_vcf_example, split.info = TRUE, split.sample = TRUE) # same as above b/c no sample
+# same as above b/c no sample
+vcf1.c <- read_vcf(clinVar_vcf_example, split.info = TRUE, split.sample = TRUE) 
 
 # read a single-sample VCF
 system.time(

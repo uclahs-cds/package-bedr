@@ -7,7 +7,16 @@ checks if region file is sorted
 checks if region file is sorted
 }
 \usage{
-is_sorted_region(x, method = "lex", engine = "unix",check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.merge = TRUE, verbose = FALSE)
+is_sorted_region(
+	x,
+	method = "lex",
+	engine = "unix",
+	check.zero.based = TRUE,
+	check.chr = TRUE,
+	check.valid = TRUE,
+	check.merge = TRUE,
+	verbose = FALSE
+	)
 }
 \arguments{
   \item{x}{The region index, bed file, or bed formatted object}

@@ -7,7 +7,14 @@ read a ucsc table into R
 read a ucsc table into R
 }
 \usage{
-query_ucsc(x, mirror = "http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database", download = TRUE, overwrite.local = FALSE, columns.keep = NULL, verbose = TRUE)
+query_ucsc(
+	x,
+	mirror = "http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database",
+	download = TRUE,
+	overwrite.local = FALSE,
+	columns.keep = NULL,
+	verbose = TRUE
+	)
 }
 \arguments{
   \item{x}{a ucsc data table.  Include the full path including "txt.gz" extenstion to load from a local file.  Note that $HOME/bedr/data will be checked first before downloading.}

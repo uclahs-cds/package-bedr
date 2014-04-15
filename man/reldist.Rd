@@ -7,7 +7,17 @@ Calculate the relative distance between two sets of intervals
 Calculate the relative distance between two sets of intervals
 }
 \usage{
-reldist(x,y, detail = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort =TRUE, check.merge = TRUE, verbose = TRUE)
+reldist(
+	x,
+	y,
+	detail = FALSE,
+	check.zero.based = TRUE,
+	check.chr = TRUE,
+	check.valid = TRUE,
+	check.sort =TRUE,
+	check.merge = TRUE,
+	verbose = TRUE
+	)
 }
 \arguments{
   \item{x}{firt region to be compared}

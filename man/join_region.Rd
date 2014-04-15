@@ -9,7 +9,19 @@ join two region objects using a left outer join
 
 }
 \usage{
-join_region(x, y, fraction.overlap = 1/1e9, reciporical = FALSE, report.n.overlap = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE)
+join_region(
+	x,
+	y,
+	fraction.overlap = 1/1e9,
+	reciporical = FALSE,
+	report.n.overlap = FALSE,
+	check.zero.based = TRUE,
+	check.chr = TRUE,
+	check.valid = TRUE,
+	check.sort = TRUE,
+	check.merge = TRUE,
+	verbose = TRUE
+	)
 }
 
 \arguments{

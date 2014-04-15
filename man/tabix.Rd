@@ -8,7 +8,21 @@ Main bedtools wrapper function.
 Main bedtools wrapper function.
 }
 \usage{
-tabix(region, file.name, params = NULL,  tmpDir = NULL, deleteTmpDir = TRUE, outputDir = NULL, outputFile = NULL, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE)
+tabix(
+	region,
+	file.name,
+	params = NULL,
+	tmpDir = NULL,
+	deleteTmpDir = TRUE,
+	outputDir = NULL,
+	outputFile = NULL,
+	check.zero.based = TRUE,
+	check.chr = TRUE,
+	check.valid = TRUE,
+	check.sort = TRUE,
+	check.merge = TRUE,
+	verbose = TRUE
+	)
 
 }
 
@@ -45,7 +59,10 @@ genomicRanges
 if (check_binary("tabix")) {
 
 query_regions <- c("1:1000-100000", "1:1000000-1100000")
-cosmic_vcf_example <- system.file("extdata/CosmicCodingMuts_v66_20130725_ex.vcf.gz", package = "bedr")
+cosmic_vcf_example <- system.file(
+	"extdata/CosmicCodingMuts_v66_20130725_ex.vcf.gz",
+	package = "bedr"
+	)
 
 cosmic_query <- tabix(query_regions, cosmic_vcf_example, check.chr = FALSE)
 

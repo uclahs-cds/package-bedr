@@ -8,7 +8,21 @@ Main bedtools wrapper function.
 Main bedtools wrapper function.
 }
 \usage{
-bedr(engine = "bedtools", params = NULL, input = list(), method = NULL,  tmpDir = NULL, deleteTmpDir = TRUE, outputDir = NULL, outputFile = NULL, check.chr = TRUE, check.zero.based = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE)
+bedr(engine = "bedtools", 
+	params = NULL,
+	input = list(),
+	method = NULL,
+	tmpDir = NULL,
+	deleteTmpDir = TRUE,
+	outputDir = NULL,
+	outputFile = NULL,
+	check.chr = TRUE,
+	check.zero.based = TRUE,
+	check.valid = TRUE,
+	check.sort = TRUE,
+	check.merge = TRUE,
+	verbose = TRUE
+	);
 
 }
 
@@ -82,11 +96,11 @@ is.region <- in_region(a.merge1, b.merge1);
 #is.region <- a.merge1 \%in.region\% b.merge1
 
 ### intersect 
-# note for bedtools it is recommended to sort_regions before intersect to allow for faster processing.  
+# note for bedtools its  recommended to sort_regions before intersect to allow for faster processing
 # also if regions are not merged this can cause unexpected behaviour
 a.int1 <- bedr(input = list(a = a, b = b), method = "intersect", params = "-loj");
-a.int1 <- bedr(input = list(a = a.sort1, b = b.sort1), method = "intersect", params = "-loj -sorted");
-a.int2 <- bedr(input = list(a = a.merge1, b = b.merge1), method = "intersect", params = "-loj -sorted");
+a.int1 <- bedr(input = list(a = a.sort1, b = b.sort1), method="intersect",params ="-loj -sorted");
+a.int2 <- bedr(input = list(a = a.merge1, b = b.merge1), method="intersect",params="-loj -sorted");
 a.int3 <- join_region(a.merge1, b.merge1);
 
 ### multiple join
@@ -96,16 +110,22 @@ a.mult <- join_multiple_region(x = list(a.merge1,b.merge1,sort_region(d)));
 ### groupby 
 # note the "g" column number is based on bed format i.e. first three columns chr, start, stop
 # note the use of first, first, last on the region columns i.e. the union of the regions
-# note currently missing values are note dealt with in bedtools.  also the 5th column is assumed to be "score" and gets a default "-1" not a "."
-#cnv.gene <- bedr(input = list(i=cnv.gene), method = "groupby", params = paste("-g 16 -c ", paste(1:15, collapse = ","), " -o ", "first,first,last,", paste(rep("sum",12), collapse = ","), sep = ""));
+# note currently missing values are note dealt with in bedtools.  also the 5th column is 
+# assumed to be "score" and gets a default "-1" not a "."
+#cnv.gene <- bedr(input = list(i=cnv.gene), method = "groupby", params = paste("-g 16 -c ", 
+#paste(1:15, collapse = ","), " -o ", "first,first,last,", 
+#paste(rep("sum",12), collapse = ","), sep = ""));
 
 ### example 1
 ###  workflow adding gene names to exome sequencing target file
-# download refseq genes from ucsc or query biomart for ensemble gene names.  format them in basic bed format.
+# download refseq genes from ucsc or query biomart for ensemble gene names.  
+#format them in basic bed format.
 # sort, merge target
-# sort, merge -nms target.  Overlapping genes/features get merged.  this may not be ideal if there are some really big features.
+# sort, merge -nms target.  Overlapping genes/features get merged.  
+#this may not be ideal if there are some really big features.
 # intersect -loj target, genes.
-# alternatively, do not merge the target and apply the merge after the intersect.  this will provide precision a the level of the exon.
+# alternatively, do not merge the target and apply the merge after the intersect.  
+#this will provide precision a the level of the exon.
 }
 }
 

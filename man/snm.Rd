@@ -9,7 +9,17 @@ sort a region file
 sort a region file
 }
 \usage{
-snm(x, method = "lexicographical", distance = 0, list.names = TRUE, number = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, verbose = TRUE)
+snm(
+	x,
+	method = "lexicographical",
+	distance = 0,
+	list.names = TRUE,
+	number = FALSE,
+	check.zero.based = TRUE,
+	check.chr = TRUE,
+	check.valid = TRUE,
+	verbose = TRUE
+	)
 
 }
 

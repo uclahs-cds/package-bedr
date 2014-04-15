@@ -8,7 +8,18 @@ subtracts features or ranges in object b from object a
 subtracts features or ranges in object b from object a
 }
 \usage{
-  subtract_region(x, y, fraction.overlap = 1/1e9, remove.whole.feature = TRUE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE)
+subtract_region(
+	x,
+	y,
+	fraction.overlap = 1/1e9,
+	remove.whole.feature = TRUE,
+	check.zero.based = TRUE,
+	check.chr = TRUE,
+	check.valid = TRUE,
+	check.sort = TRUE,
+	check.merge = TRUE,
+	verbose = TRUE
+	)
 }
 
 \arguments{

@@ -7,7 +7,18 @@ calculate the jaccard distance between sets of intervals
 calculate the jaccard distance between sets of intervals
 }
 \usage{
-jaccard(x, y, proportion.overlap = 1e-09, reciprocal.overlap = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE)
+jaccard(
+	x,
+	y,
+	proportion.overlap = 1e-09,
+	reciprocal.overlap = FALSE,
+	check.zero.based = TRUE,
+	check.chr = TRUE,
+	check.valid = TRUE,
+	check.sort = TRUE,
+	check.merge = TRUE,
+	verbose = TRUE
+	)
 }
 \arguments{
   \item{x}{first region to be compared}

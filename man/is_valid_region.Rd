@@ -7,7 +7,13 @@ checks if region/index is valid
 checks if region/index is valid
 }
 \usage{
-is_valid_region(x, check.zero.based = TRUE, check.chr = TRUE, throw.error = FALSE, verbose = TRUE)
+is_valid_region(
+	x,
+	check.zero.based = TRUE,
+	check.chr = TRUE,
+	throw.error = FALSE,
+	verbose = TRUE
+	)
 }
 \arguments{
   \item{x}{The region index, bed file, or bed formatted object}

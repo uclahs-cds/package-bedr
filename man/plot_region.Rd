@@ -7,7 +7,16 @@ Visualize regions or intervals
 Visualize regions or intervals.  e.g. VennDiagrams of intersections of distinct intervals, base pairs and genes. 
 }
 \usage{
-plot_region(input, filename = NULL, type = "venn", feature = "interval", fraction.overlap = 0.000000001, group = NULL, params = list(), verbose = TRUE)
+plot_region(
+	input,
+	filename = NULL,
+	type = "venn",
+	feature = "interval",
+	fraction.overlap = 0.000000001,
+	group = NULL,
+	params = list(),
+	verbose = TRUE
+	)
 }
 \arguments{
   \item{input}{ 
@@ -55,14 +64,18 @@ f <- get_random_regions(n = 1000, chr = "chr22", size.mean = 10)
 #pdf("plot_region_ex.pdf")
 
 ### basic venn diagrams
-#plot_region(input = list(a=a)) # note single inputs compare the original with a merged/collapsed set of regions
+# note single inputs compare the original with a merged/collapsed set of regions
+#plot_region(input = list(a=a)) 
 #plot_region(input = list(a=a,b=b))
 #plot_region(input = list(a=a,b=b,d=d))
 #plot_region(input = list(a=a,b=b,d=d,e=e))
 #plot_region(input = list(a=a,b=b,d=d,e=e,f=f))
 
 ### change venn parameters
-#plot_egion(input = list(a=a,b=b,d=d), params = list(lty = 2, label.col = "black", main = "Region Overlap"))
+#plot_egion(
+#	input = list(a=a,b=b,d=d),
+#	params = list(lty = 2, label.col = "black", main = "Region Overlap")
+#	)
 
 ### try with different 
 #plot_region(input = list(a=a,b=b), feature = "gene")

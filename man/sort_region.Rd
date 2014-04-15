@@ -9,7 +9,16 @@ sort a region file
 sort a region file
 }
 \usage{
-sort_region(x, method = "lexicographical", engine = "R", check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.merge = TRUE, verbose = TRUE)
+sort_region(
+	x,
+	method = "lexicographical",
+	engine = "R",
+	check.zero.based = TRUE,
+	check.chr = TRUE,
+	check.valid = TRUE,
+	check.merge = TRUE,
+	verbose = TRUE
+	)
 
 }
 

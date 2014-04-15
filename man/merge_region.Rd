@@ -9,7 +9,18 @@ merge i.e. collapse overlpaping regions
 merge i.e. collapse overlpaping regions
 }
 \usage{
-merge_region(x, distance = 0, list.names = TRUE,  number = FALSE, stratify.by = NULL, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, verbose = TRUE);
+merge_region(
+	x,
+	distance = 0,
+	list.names = TRUE,
+	number = FALSE,
+	stratify.by = NULL,
+	check.zero.based = TRUE,
+	check.chr = TRUE,
+	check.valid = TRUE,
+	check.sort = TRUE,
+	verbose = TRUE
+	);
 }
 
 \arguments{

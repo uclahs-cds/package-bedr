@@ -8,7 +8,18 @@ verifies that sequences are correct given coordinates and a reference
 verifies that sequences are correct given coordinates and a reference
 }
 \usage{
-is_valid_seq(x, querySeq, fasta = NULL, strand = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE)
+is_valid_seq(
+	x,
+	querySeq,
+	fasta = NULL,
+	strand = FALSE,
+	check.zero.based = TRUE,
+	check.chr = TRUE,
+	check.valid = TRUE,
+	check.sort = TRUE,
+	check.merge = TRUE,
+	verbose = TRUE
+	)
 }
 \arguments{
   \item{x}{input bed object}

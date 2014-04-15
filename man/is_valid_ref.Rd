@@ -7,7 +7,17 @@ verifies the reference sequence in a vcf
 verifies the reference sequence in a vcf
 }
 \usage{
-is_valid_ref(x, fasta = NULL, strand = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE)
+is_valid_ref(
+	x,
+	fasta = NULL,
+	strand = FALSE,
+	check.zero.based = TRUE,
+	check.chr = TRUE,
+	check.valid = TRUE,
+	check.sort = TRUE,
+	check.merge = TRUE,
+	verbose = TRUE
+	)
 }
 \arguments{
   \item{x}{input bed object}

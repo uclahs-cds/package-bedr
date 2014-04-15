@@ -8,7 +8,14 @@ Gets the sort order of a region index similar to the order command
 Helps if you don't want to use sort region on a huge dataset
 }
 \usage{
-order_region(x, method = "lex", check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.merge = TRUE)
+order_region(
+	x,
+	method = "lex",
+	check.zero.based = TRUE,
+	check.chr = TRUE,
+	check.valid = TRUE,
+	check.merge = TRUE
+	)
 }
 
 \arguments{

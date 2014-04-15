@@ -44,12 +44,11 @@ export(
 	'test_region_similarity'
 	);
 
-import('data.table',
+import('bit','data.table',
 	'VennDiagram',
 	'testthat',
 	'multicore',
 	'yaml',
-	'bit',
 	'Rcpp'
 	);
 
