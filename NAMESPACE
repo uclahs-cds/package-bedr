@@ -44,4 +44,12 @@ export(
 	'test_region_similarity'
 	);
 
-import('data.table', 'VennDiagram','testthat', 'multicore', 'yaml', 'bit');
+import('data.table',
+	'VennDiagram','testthat',
+	'multicore',
+	'yaml',
+	bit'
+	);
+
+useDynLib(mypackage)
+importFrom(Rcpp, sourceCpp)

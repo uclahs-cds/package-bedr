@@ -12,7 +12,7 @@
 is_sorted_region <- function(x, method = "lex", engine = "unix", check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.merge = TRUE, verbose = FALSE) {
 
 	x.sort    <- sort_region(x, method = method, engine = engine, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.merge = check.merge, verbose = verbose);
-	is.sorted <- identical(x, x.sort);
+	is.sorted <- identical(data.frame(x),data.frame(x.sort)); # use data.frame to drop attributes
 
 	catv(" * Checking sort order... ")
 	if (is.sorted) {

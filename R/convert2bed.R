@@ -43,6 +43,7 @@ convert2bed <- function(x, set.type = TRUE, check.zero.based = TRUE, check.chr =
 	# check if sorted
 	if (check.sort) {
 		is.sorted <- is_sorted_region(x, method = "lexicographical", check.valid = FALSE, check.zero.based = check.zero.based, check.chr = check.chr, check.merge = FALSE, verbose = FALSE);
+		
 		if (!is.sorted) {
 			catv(paste0("   The input for object is not *lexographically* ordered!\n   This can cause unexpected results for some set operations.\n   try: x <- sort_region(x)\n"));
 			}
