@@ -11,7 +11,7 @@ IntegerVector sample_interval(NumericMatrix x, int n) {
  
 	// number of intervals
 	int nrows = x.nrow();
-	
+
 	// interval sizes
 	NumericVector intervalSize = x(_,1) - x(_,0);
 //	intervalSize = as<NumericVector>(intervalSize);
@@ -22,7 +22,7 @@ IntegerVector sample_interval(NumericMatrix x, int n) {
 
 	// row sampling
 //	IntegerVector randomRows = ceil(runif(n, 0, x.nrow()));
-	IntegerVector rowNumbers = seq_len(nrows);
+	IntegerVector rowNumbers = seq_len(nrows) - 1; // starts at zero?
 	IntegerVector randomRows = RcppArmadillo::sample(rowNumbers, n, true, samplingProbability);
 
 	// loop over sampled rows
@@ -44,12 +44,14 @@ IntegerVector sample_interval(NumericMatrix x, int n) {
 		}
 
 		// randomly sample from interval
-		//randomValues(randomRows == row*) = ceil(runif(nrows, min = x(row*,1), max = x(row*,2)));
-		NumericVector cat = runif(nrows, min = x(row*,1), max = x(row*,2));
+//		randomValues(randomRows == row*) = ceil(runif(nrows, x(row*,0), x(row*,1)));
+		int min = x(row*,0);
+//		int max = as<int>nrows;
+//		NumericVector cat = runif(nrows, min, max);
+//		NumericVector cat = runif(nrows,1,2);
 
 	}
 
-	IntegerVector randomValues;
 	return randomValues;
 
 }

@@ -44,7 +44,8 @@ export(
 	'test_region_similarity'
 	);
 
-import('bit','data.table',
+import(
+	'data.table',
 	'VennDiagram',
 	'testthat',
 	'multicore',
