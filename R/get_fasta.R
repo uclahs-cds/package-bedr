@@ -33,8 +33,10 @@ get_fasta <- function(x, fasta = NULL, bed12 = FALSE, strand = FALSE, output.fas
 	if (!output.fasta)  {params <- paste(params, "-tab")}
 	params <- paste(params, "-fo stdout");
 
-	# run validation first 
-	is.valid <- is_valid_region(x, check.zero.based = check.zero.based, check.chr = check.chr, throw.error = TRUE, verbose = verbose);
+	# run validation first
+	if (check.valid) {
+		is.valid <- is_valid_region(x, check.zero.based = check.zero.based, check.chr = check.chr, throw.error = TRUE, verbose = verbose);
+		}
 
 	region.size <- size_region(x, check.zero.based = FALSE, check.chr = FALSE, check.valid = FALSE, verbose = FALSE);
 	if (any(region.size>8095)) {

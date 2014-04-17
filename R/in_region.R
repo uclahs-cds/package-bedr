@@ -11,6 +11,8 @@
 
 in_region <- function(x,y, proportion.overlap = 1e-9, reciprocal.overlap = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = FALSE) {
 
+	catv("REGION %in% REGION\n");
+
 	params <- paste0("-c -f ", proportion.overlap, reciprocal.overlap)
 
 	if (reciprocal.overlap) {

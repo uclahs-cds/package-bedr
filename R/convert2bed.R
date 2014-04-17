@@ -44,7 +44,7 @@ convert2bed <- function(x, set.type = TRUE, check.zero.based = TRUE, check.chr =
 	
 	# check if sorted
 	if (check.sort) {
-		is.sorted <- is_sorted_region(x, method = "lexicographical", check.valid = FALSE, check.zero.based = check.zero.based, check.chr = check.chr, check.merge = FALSE, verbose = TRUE);
+		is.sorted <- is_sorted_region(x, method = "lexicographical", check.valid = FALSE, check.zero.based = check.zero.based, check.chr = check.chr, check.merge = FALSE, verbose = verbose);
 		
 		#catv(" * Checking sort order... ");
 		#if (!is.sorted) {
@@ -58,7 +58,7 @@ convert2bed <- function(x, set.type = TRUE, check.zero.based = TRUE, check.chr =
 	
 	# check if merged
 	if (check.merge) {
-		is.merged <- is_merged_region(x, check.valid = FALSE, check.zero.based = check.zero.based, check.chr = check.chr, check.sort = FALSE, verbose = TRUE);
+		is.merged <- is_merged_region(x, check.valid = FALSE, check.zero.based = check.zero.based, check.chr = check.chr, check.sort = FALSE, verbose = verbose);
 		#if (!is.merged) {
 		#	catv(paste0("   The input for object has overlapping features!\n   This can cause unexpected results for some set operations.\n   i.e. x <- merge_region(x)\n", sep = ""));
 		#	}

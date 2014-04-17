@@ -1,6 +1,8 @@
 is_valid_region <- function(x, check.zero.based = TRUE, check.chr = TRUE, throw.error = FALSE , verbose = TRUE) {
 	# vector index (0), bed (1), index in first column (2), rownmames are index (3), unrecognized(4)
 
+	catv("VALIDATE REGIONS\n");
+
 	is.error <- FALSE;
 	# check if input type has already been determined
 	input.type <- attr(x, "input.type"); 
@@ -11,8 +13,6 @@ is_valid_region <- function(x, check.zero.based = TRUE, check.chr = TRUE, throw.
 		attr(x, "input.type") <- input.type;
 		}
 
-	catv("VALIDATE REGIONS\n");
-
 	if (input.type == 0) { # index vector
 		is.index <- TRUE;
 		}
@@ -21,6 +21,7 @@ is_valid_region <- function(x, check.zero.based = TRUE, check.chr = TRUE, throw.
 		is.correct.datatype <- all(sapply(x[,1:3], mode) == c("character", "numeric", "numeric"));
 		if (!is.correct.datatype) {
 			catv(" * Check data types... FAIL\n   Make sure the the chr column is character and the start and end positions are numbers\n");
+			if (is.factor(x[,1])) catv("   your chr column is a factor!\n")
 			is.error <- TRUE;
 			}
 			
