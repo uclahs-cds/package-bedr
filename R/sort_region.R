@@ -21,8 +21,10 @@ catv("SORTING\n");
 		header <- "index";
 		}
 	
-	# run validation first 
-	is.valid <- is_valid_region(x, check.zero.based = check.zero.based, check.chr = check.chr, throw.error = TRUE, verbose = verbose);
+	# run validation first
+	if (check.valid) {
+		is.valid <- is_valid_region(x, check.zero.based = check.zero.based, check.chr = check.chr, throw.error = TRUE, verbose = verbose);
+		}
 
 	x       <- convert2bed(x, set.type = FALSE, check.zero.based = FALSE, check.chr = FALSE, check.valid = FALSE, check.sort = FALSE, check.merge = FALSE, verbose = FALSE);
 	is.unix <- .Platform$OS.type == "unix";

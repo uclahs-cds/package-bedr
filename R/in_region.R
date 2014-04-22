@@ -13,14 +13,14 @@ in_region <- function(x,y, proportion.overlap = 1e-9, reciprocal.overlap = FALSE
 
 	catv("REGION %in% REGION\n");
 
+	reciprocal.overlap <- ifelse (reciprocal.overlap, "-r", "");
 	params <- paste0("-c -f ", proportion.overlap, reciprocal.overlap)
 
-	if (reciprocal.overlap) {
-		params <- paste0(params, " -r");
-		}
 
 	xy <- bedr(engine = "bedtools", input = list(a = x, b = y), method = "intersect", params = params,  check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = verbose);
+
 	in.region <- xy[,ncol(xy)] > 0;
+	
 	return(in.region);
 	}
 

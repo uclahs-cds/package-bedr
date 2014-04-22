@@ -58,7 +58,7 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 
 	# print the command
 	catv(paste0("   ", command,"\n"));
-	
+
 	# capture output R object or send to a file
 	if (is.null(outputFile)) {
 		output <- try(system(command , wait = TRUE, intern = intern, ignore.stdout = FALSE, ignore.stderr = FALSE));

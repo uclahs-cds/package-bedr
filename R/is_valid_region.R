@@ -24,7 +24,7 @@ is_valid_region <- function(x, check.zero.based = TRUE, check.chr = TRUE, throw.
 			if (is.factor(x[,1])) catv("   your chr column is a factor!\n")
 			is.error <- TRUE;
 			}
-			
+
 		old.scipen <- getOption("scipen");
 		options(scipen = 999);
 		x <- paste0(x[,1],":",x[,2],"-",x[,3]);
@@ -41,7 +41,7 @@ is_valid_region <- function(x, check.zero.based = TRUE, check.chr = TRUE, throw.
 		catv("ERROR: Not sure what the input format is!\n");
 		stop();
 		}
-	
+
 	is.string <- is.character(x);
 	if (!is.string) {
 		catv(" * Check if index is a string... FAIL\n   Is the input a factor?\n");
@@ -59,7 +59,7 @@ is_valid_region <- function(x, check.zero.based = TRUE, check.chr = TRUE, throw.
 		}
 	
 	is.valid.pattern <- grepl(pattern, x);
-	
+
 	if (any(!is.valid.pattern)) {
 		catv(" * Check index pattern... FAIL\n   Use check.chr = FALSE if no 'chr' prefix\n");
 		if(verbose) print(head(x[!is.valid.pattern]));
@@ -68,7 +68,7 @@ is_valid_region <- function(x, check.zero.based = TRUE, check.chr = TRUE, throw.
 	else {
 		catv(" * Check index pattern... PASS\n");
 		}
-	
+
 	# split for more checks
 	x <- index2bed(x);
 	is.missing <- is.na(x[,1]) | is.na(x[,2]) | is.na(x[,3]);

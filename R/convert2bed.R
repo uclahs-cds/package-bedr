@@ -41,7 +41,7 @@ convert2bed <- function(x, set.type = TRUE, check.zero.based = TRUE, check.chr =
 		attr(x, "input.type") <- 1; # temporarily assign type to bed b/c it was just converted
 		is.valid <- is_valid_region(x, throw.error = TRUE, check.zero.based = check.zero.based, check.chr = check.chr, verbose = verbose);
 		}
-	
+
 	# check if sorted
 	if (check.sort) {
 		is.sorted <- is_sorted_region(x, method = "lexicographical", check.valid = FALSE, check.zero.based = check.zero.based, check.chr = check.chr, check.merge = FALSE, verbose = verbose);

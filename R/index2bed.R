@@ -1,7 +1,7 @@
 index2bed <- function(x, set.type = TRUE) {
 
 	# check its vector
-	if (!is.vector(x ,mode = "characteric")) {
+	if (!is.null(dim(x)) || !is.character(x)) {
 		return(x);
 		}
 

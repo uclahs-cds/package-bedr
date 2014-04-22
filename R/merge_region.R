@@ -26,7 +26,9 @@ catv("MERGING\n")
 		}
 	
 	# run validation first 
-	is.valid <- is_valid_region(x, check.zero.based = check.zero.based, check.chr = check.chr, throw.error = TRUE, verbose = verbose);
+	if (check.valid) {
+		is.valid <- is_valid_region(x, check.zero.based = check.zero.based, check.chr = check.chr, throw.error = TRUE, verbose = verbose);
+		}
 
 	# need to check sort first to avoid error in bedtools merge
 	if (check.sort) {
