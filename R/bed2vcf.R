@@ -2,6 +2,7 @@ bed2vcf <- function(x, filename = NULL, zero.based = TRUE, header = NULL, fasta 
 
 	if (is.null(header)) header <- list();
 
+	# add check.valid if
 	is.valid <- is_valid_region(x);
 	x <- convert2bed(x);
 
