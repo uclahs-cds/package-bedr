@@ -30,11 +30,12 @@ IntegerVector sample_interval(NumericMatrix x, int n) {
 	IntegerVector randomValues(n);
 	int nUniqueRows = uniqueRows.size();
 //	for (int i = 0; i < nUniqueRows; i++) {
+	IntegerVector test;
 	
 	// loop over unique values of sampled rows
 	for (IntegerVector::iterator row = uniqueRows.begin(); row != uniqueRows.end(); ++row) {
 
-		// the number times a row was sampled
+		// the number times a row was sampled.  Is there no function to sum a logical vector?
 		LogicalVector isRow = randomRows == *row;
 		int nRowSampled = 0;
 		for(int i = 0; i < isRow.size(); i++) {
@@ -45,14 +46,17 @@ IntegerVector sample_interval(NumericMatrix x, int n) {
 
 		// randomly sample from interval
 //		randomValues(randomRows == row*) = ceil(runif(nrows, x(row*,0), x(row*,1)));
-		int min = x(row*,0);
+		NumericVector RandomFloats nrows, x(row*,0), x(row*,1))
+		test  = ceil(runif(nrows, x(row*,0), x(row*,1)));
+//		int xmin = x(*row,0);
 //		int max = as<int>nrows;
 //		NumericVector cat = runif(nrows, min, max);
 //		NumericVector cat = runif(nrows,1,2);
 
 	}
 
-	return randomValues;
+	return test;
+//	return randomValues;
 
 }
 

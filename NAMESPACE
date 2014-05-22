@@ -48,7 +48,6 @@ import(
 	'data.table',
 	'VennDiagram',
 	'testthat',
-	'multicore',
 	'yaml',
 	'Rcpp'
 	);
