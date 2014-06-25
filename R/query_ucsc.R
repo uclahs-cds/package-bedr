@@ -60,8 +60,8 @@ query_ucsc <- function(x, mirror = "http://hgdownload.soe.ucsc.edu/goldenPath/hg
 	for ( i in 1:length(sql) ){
 
 		line <- sql[i] 
-		if (grepl("^CREATE",line)) {keep <- TRUE;next;}
-		if (grepl("^  KEY|^  UNIQUE",line)) break;
+		if (grepl("^CREATE",line)) {keep <- TRUE; next;}
+		if (grepl("^  KEY|^  UNIQUE|^  PRIMARY", line)) break;
 		if (keep) { 
 			table.name <- gsub("^  `(.*)`.*","\\1", line);
 			table.names <- c(table.names, table.name);
@@ -96,7 +96,13 @@ query_ucsc <- function(x, mirror = "http://hgdownload.soe.ucsc.edu/goldenPath/hg
 		system(paste0("gunzip -c ", data.file, " > ", data.file.tmp));
 		data.file <- data.file.tmp;
 		#ucsc.table <- read.table(data.file, as.is = TRUE, sep = "\t", col.names = table.names, colClasses = var.types );
-		ucsc.table <- fread(data.file, stringsAsFactors = FALSE, sep = "\t", colClasses = var.types );
+        ucsc.table <- try(fread(data.file, stringsAsFactors = FALSE, sep = "\t", colClasses = var.types), silent = TRUE);
+        i.autostart <- 2;
+        while (length(ucsc.table)!=length(table.names)) {
+            ucsc.table <- try(fread(data.file, stringsAsFactors = FALSE, sep = "\t", colClasses = var.types, autostart = i.autostart), silent = TRUE);
+            i.autostart <- 2+1;
+            if (i.autostart == 100 ) break
+            }
 		ucsc.table <- setNames(ucsc.table, table.names)
 		ucsc.table <- as.data.frame(ucsc.table);
 		}
