@@ -49,6 +49,7 @@ import(
 	'VennDiagram',
 	'testthat',
 	'yaml',
-	'Rcpp'
+	'Rcpp',
+	'RcppArmadillo'
 	);
 
