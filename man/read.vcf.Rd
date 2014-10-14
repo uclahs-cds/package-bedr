@@ -40,9 +40,9 @@ Daryl Waggott
 
 \examples{
 
-clinVar.vcf.example      <- system.file("extdata/clinvar.dbSNP138.example.vcf.gz", package = "bedr")
-singleSample.vcf.example <- system.file("extdata/singleSampleOICR.example.vcf.gz", package = "bedr")
-multiSample.vcf.example  <- system.file("extdata/multiSampleOICR.example.vcf.gz", package = "bedr")
+clinVar.vcf.example      <- system.file("extdata/clinvar_dbSNP138_example.vcf.gz", package = "bedr")
+singleSample.vcf.example <- system.file("extdata/singleSampleOICR_example.vcf.gz", package = "bedr")
+multiSample.vcf.example  <- system.file("extdata/multiSampleOICR_example.vcf.gz", package = "bedr")
 
 # read a subset of NCBI clinVar vcf.  Note this has no samples.
 vcf1.a <- read.vcf(clinVar.vcf.example)

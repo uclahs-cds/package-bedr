@@ -93,7 +93,7 @@ d <- get.fasta(a, output.fasta = TRUE);
 writeLines(d[[1]], con = "test.fasta")
 
 # get the region adjacent to a set of mutations in a vcf
-clinvar.vcf.example      <- system.file("extdata/clinvar.dbSNP138.example.vcf.gz", package = "bedr")
+clinvar.vcf.example      <- system.file("extdata/clinvar_dbSNP138_example.vcf.gz", package = "bedr")
 clinvar <- read.vcf(clinvar.vcf.example)
 # note that clinvar uses ncbi fasta which does not use "chr" and codes chrM as MT
 clinvar.bed <- data.frame(

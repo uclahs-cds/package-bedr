@@ -60,7 +60,7 @@ if (check.binary("tabix")) {
 
 query.regions <- c("1:1000-100000", "1:1000000-1100000")
 cosmic.vcf.example <- system.file(
-	"extdata/CosmicCodingMuts.v66.20130725.ex.vcf.gz",
+	"extdata/CosmicCodingMuts_v66_20130725_ex.vcf.gz",
 	package = "bedr"
 	)
 

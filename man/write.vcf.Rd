@@ -34,7 +34,7 @@ bed <- get.example.regions()[[1]];
 bed <- snm(bed);
 
 #vcf <- bed2vcf(bed, header = list(note="a bedr example vcf"));
-vcf  <- read.vcf(system.file("extdata/clinvar.dbSNP138.example.vcf.gz", package = "bedr"));
+vcf  <- read.vcf(system.file("extdata/clinvar_dbSNP138_example.vcf.gz", package = "bedr"));
 vcf$header <- c(vcf$header, NOTE="vcf processed by bedr")
 write.vcf(vcf, filename = "bedr.example.vcf");
 

@@ -47,7 +47,7 @@ Daryl Waggott
 
 \examples{
 
-cosmic.path <- system.file("extdata/CosmicCodingMuts.v66.20130725.ex.vcf.gz", package = "bedr");
+cosmic.path <- system.file("extdata/CosmicCodingMuts_v66_20130725_ex.vcf.gz", package = "bedr");
 cosmic      <- read.vcf(cosmic.path);
 
 #is.valid.ref(cosmic);

@@ -1,5 +1,5 @@
-\name{subtract_region}
-\alias{subtract_region}
+\name{subtract.region}
+\alias{subtract.region}
 
 \title{
 subtracts features or ranges in object b from object a
@@ -8,7 +8,7 @@ subtracts features or ranges in object b from object a
 subtracts features or ranges in object b from object a
 }
 \usage{
-subtract_region(
+subtract.region(
 	x,
 	y,
 	fraction.overlap = 1/1e9,
@@ -45,13 +45,13 @@ subtract_region(
 Daryl Waggott
 }
 \examples{
-if (check_binary("bedtools")) {
-index <- get_example_regions();
+if (check.binary("bedtools")) {
+index <- get.example.regions();
 
 a <- index[[1]];
 b <- index[[2]];
 
-d <- subtract_region(a,b);
+d <- subtract.region(a,b);
 
 }
 }
