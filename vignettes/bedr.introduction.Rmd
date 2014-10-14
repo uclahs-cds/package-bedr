@@ -42,15 +42,15 @@ The current implementation focuses on three excellent tools.  For specifics on f
 General Region Utilities
 ----------------------------
 
-* sort_region & is_sorted_region
-* merge_region & is_merged_region
-* in_region & order_region
-* subtract_region
-* flank_region & grow_region
+* sort.region & is.sorted.region
+* merge.region & is.merged.region
+* in.region & order.region
+* subtract.region
+* flank.region & grow.region
 * intersectRegion
-* join_region & join_multiple_region
+* join.region & join.multiple.region
 * get.RegionSize
-* get_fastaRegion
+* get.fastaRegion
 * jaccard & reldist
 
 
@@ -61,25 +61,25 @@ First check if the regions are valid.  This involves checking for "chr" prefix, 
 ```{r}
 ### region validation
 
-index <- get_example_regions();
+index <- get.example.regions();
 a <- index[[1]];
 b <- index[[2]];
 
-is.a.valid  <- is_valid_region(a);
-is.b.valid  <- is_valid_region(b);
+is.a.valid  <- is.valid.region(a);
+is.b.valid  <- is.valid.region(b);
 a <- a[is.a.valid];
 b <- b[is.b.valid];
 
 ```
 
-Generally, it's a good idea to confirm that you've sorted your inputs to avoid unexpected results and take advantage of optimized algorithms.  For example merging and clustering require adjacent intervals.  `is_sorted_region` is convenient for explicit evaluation although it's done internally for core operations.
+Generally, it's a good idea to confirm that you've sorted your inputs to avoid unexpected results and take advantage of optimized algorithms.  For example merging and clustering require adjacent intervals.  `is.sorted.region` is convenient for explicit evaluation although it's done internally for core operations.
 
 
 ```{r}
 ### sort
-is.sorted <- is_sorted_region(a);
+is.sorted <- is.sorted.region(a);
 
-a.sort <- sort_region(a);
+a.sort <- sort.region(a);
 
 b.sort <- bedr(engine = "bedtools", input = list(i = b), method = "sort", params = "");
 
@@ -89,10 +89,10 @@ Similarly, merging adjacent or overlapping regions is often required to avoid re
 
 ```{r}
 ### merge or cluster
-is.merged <- is_merged_region(a.sort);
-is.merged <- is_merged_region(b.sort);
+is.merged <- is.merged.region(a.sort);
+is.merged <- is.merged.region(b.sort);
 
-a.merge <- merge_region(a.sort);
+a.merge <- merge.region(a.sort);
 
 # the explicit call uses the bedr function
 b.merge <- bedr(engine = "bedtools", input = list(i = b.sort), method = "merge", params = "");
@@ -102,7 +102,7 @@ b.merge <- bedr(engine = "bedtools", input = list(i = b.sort), method = "merge",
 ```{r}
 ### subtract
 a.sub1 <- bedr(input = list(a = a.merge1, b = b.merge1), method = "subtract", params="");
-a.sub2 <- subtract_region(a.merge1, b.merge1);
+a.sub2 <- subtract.region(a.merge1, b.merge1);
 
 ### flank
 
@@ -117,19 +117,19 @@ a.sub2 <- subtract_region(a.merge1, b.merge1);
 
 ```{r}
 ### in
-is.region <- in_region(a.merge1, b.merge1);
+is.region <- in.region(a.merge1, b.merge1);
 # or alternatively
 is.region <- a.merge1 %in.region% b.merge1
 ```
 
 ```{r}
 ### intersect / join
-a.int3 <- join_region(a.merge1, b.merge1);
+a.int3 <- join.region(a.merge1, b.merge1);
 a.int1 <- bedr(input = list(a = a.sort1, b = b.sort1), method = "intersect", params = "-loj -sorted");
 
 ### multiple join
-d <- get_random_regions(100, chr="chr1", sort = TRUE);
-a.mult <- join_multiple_region(x = list(a.merge1,b.merge1,sort_region(d)));
+d <- get.random.regions(100, chr="chr1", sort = TRUE);
+a.mult <- join.multiple.region(x = list(a.merge1,b.merge1,sort.region(d)));
 ```
 
 ```{r}
@@ -158,7 +158,7 @@ Other Utilities
 
 These tools are in development and will be documented at a later time. 
 
-* read_vcf
+* read.vcf
 * gene name validation.
 * ensembl query.  
 * ucsc query.
@@ -235,9 +235,9 @@ Example 3. ClinVar Summarizing
 
 tabix to get some bed data i.e. acmg genes
 
-read_vcf to load some clinical data annotation
+read.vcf to load some clinical data annotation
 
-read_vcf to load some variants, 1kg??
+read.vcf to load some variants, 1kg??
 
 summarize counts, type, consequence, ti-tv
 
@@ -247,7 +247,7 @@ stacked barplot
 Example 4. Cosmic Munging
 ----------------------------
 
-read_vcf
+read.vcf
 
 getfasta triplet nucleotide around variant
 
