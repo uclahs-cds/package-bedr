@@ -21,7 +21,7 @@ jaccard <- function(x, y, proportion.overlap  = 1e-9, reciprocal.overlap = FALSE
 
 	x <- bedr(engine = "bedtools", input = list(a = x, b=y), method = "jaccard", params = params, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = verbose);
 
-#	colnames(x) <- c("intersection", "union", "jaccard", "n_intersections");;
+#	colnames(x) <- c("intersection", "union", "jaccard", "n.intersections");;
 
 	return(x);
 	}

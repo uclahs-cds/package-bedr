@@ -3,7 +3,7 @@ bed2vcf <- function(x, filename = NULL, zero.based = TRUE, header = NULL, fasta 
 	if (is.null(header)) header <- list();
 
 	# add check.valid if
-	is.valid <- is_valid_region(x);
+	is.valid <- is.valid.region(x);
 	x <- convert2bed(x);
 
 	header.defaults <- list(fileformat = "VCFv4.1", fileDate = format(Sys.time(),  "%Y-%M-%d"), source = "bedr", reference = fasta );
@@ -25,7 +25,7 @@ bed2vcf <- function(x, filename = NULL, zero.based = TRUE, header = NULL, fasta 
 		vcf$REF <- x$REF;
 		}
 	else {
-		vcf$REF <- get_fasta(x, fasta = fasta)$sequence;
+		vcf$REF <- get.fasta(x, fasta = fasta)$sequence;
 		}
 
 	for (default in default.vcf.field.names[default.vcf.field.names %in% colnames(x)]) {
@@ -35,9 +35,9 @@ bed2vcf <- function(x, filename = NULL, zero.based = TRUE, header = NULL, fasta 
 	vcf <- list(header = header, vcf = vcf);
 	attr(vcf, "vcf") <- TRUE;
 
-	# write_vcf
+	# write.vcf
 	if (!is.null(filename)) {
-		write_vcf(vcf, filename = filename);
+		write.vcf(vcf, filename = filename);
 		return();
 		}
 	else {

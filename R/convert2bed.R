@@ -14,7 +14,7 @@ convert2bed <- function(x, set.type = TRUE, check.zero.based = TRUE, check.chr =
 
 	catv("CONVERT TO BED\n");
 
-	input.type <- determine_input(x, verbose = verbose);
+	input.type <- determine.input(x, verbose = verbose);
 
 	# extract the region and convert to bed
 	if (input.type == 0) {
@@ -39,17 +39,17 @@ convert2bed <- function(x, set.type = TRUE, check.zero.based = TRUE, check.chr =
 	# check if the region is valid
 	if (check.valid) {
 		attr(x, "input.type") <- 1; # temporarily assign type to bed b/c it was just converted
-		is.valid <- is_valid_region(x, throw.error = TRUE, check.zero.based = check.zero.based, check.chr = check.chr, verbose = verbose);
+		is.valid <- is.valid.region(x, throw.error = TRUE, check.zero.based = check.zero.based, check.chr = check.chr, verbose = verbose);
 		}
 
 	# check if sorted
 	if (check.sort) {
-		is.sorted <- is_sorted_region(x, method = "lexicographical", check.valid = FALSE, check.zero.based = check.zero.based, check.chr = check.chr, check.merge = FALSE, verbose = verbose);
+		is.sorted <- is.sorted.region(x, method = "lexicographical", check.valid = FALSE, check.zero.based = check.zero.based, check.chr = check.chr, check.merge = FALSE, verbose = verbose);
 		
 		#catv(" * Checking sort order... ");
 		#if (!is.sorted) {
 		#	catv("FAIL\n");
-		#	catv(paste0("   The input for object is not *lexographically* ordered!\n   This can cause unexpected results for some set operations.\n   try: x <- sort_region(x)\n"));
+		#	catv(paste0("   The input for object is not *lexographically* ordered!\n   This can cause unexpected results for some set operations.\n   try: x <- sort.region(x)\n"));
 		#	}
 		#else {
 		#	catv("PASS\n");
@@ -58,9 +58,9 @@ convert2bed <- function(x, set.type = TRUE, check.zero.based = TRUE, check.chr =
 	
 	# check if merged
 	if (check.merge) {
-		is.merged <- is_merged_region(x, check.valid = FALSE, check.zero.based = check.zero.based, check.chr = check.chr, check.sort = FALSE, verbose = verbose);
+		is.merged <- is.merged.region(x, check.valid = FALSE, check.zero.based = check.zero.based, check.chr = check.chr, check.sort = FALSE, verbose = verbose);
 		#if (!is.merged) {
-		#	catv(paste0("   The input for object has overlapping features!\n   This can cause unexpected results for some set operations.\n   i.e. x <- merge_region(x)\n", sep = ""));
+		#	catv(paste0("   The input for object has overlapping features!\n   This can cause unexpected results for some set operations.\n   i.e. x <- merge.region(x)\n", sep = ""));
 		#	}
 		}
 

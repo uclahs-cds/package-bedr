@@ -4,7 +4,7 @@ tabix <- function(region, file.name, params = NULL, tmpDir = NULL, deleteTmpDir 
 	catv("TABIX-QUERY\n")
 	
 	# check binary is in path
-	if(!check_binary("tabix", verbose = FALSE)) {
+	if(!check.binary("tabix", verbose = FALSE)) {
 		catv(paste0("bedr: missing binary/executable tabix"));
 		return(0); # return FALSE but dont throw an error.  prevents R CMD check failing
 		}
@@ -24,7 +24,7 @@ tabix <- function(region, file.name, params = NULL, tmpDir = NULL, deleteTmpDir 
 		}
 	
 	# parse indices and create temp files
-	region.file <- process_input(region, tmpDir = tmpDir, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = verbose);
+	region.file <- process.input(region, tmpDir = tmpDir, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = verbose);
 
 	tabix.output <- NULL;
 
@@ -70,7 +70,7 @@ tabix <- function(region, file.name, params = NULL, tmpDir = NULL, deleteTmpDir 
 	attr(tabix.output, "header") <- header;
 
 	# get the file extension
-	file.ext <- tools::file_ext(gsub(".gz","",file.name));
+	file.ext <- tools::file.ext(gsub(".gz","",file.name));
 
 	# do some datatype formatting depending on filetype
 	if (file.ext == "bed") {

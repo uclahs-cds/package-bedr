@@ -15,7 +15,7 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 	if (is.null(params)) params <- "";
 	
 	# check binary is in path
-	if(!check_binary(engine, verbose = FALSE)) {
+	if(!check.binary(engine, verbose = FALSE)) {
 		catv(paste0("ERROR: missing binary/executable ", engine))
 		return(0);
 		}
@@ -30,10 +30,10 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 
 	# parse indices and create temp files
 	if (engine == "bedops") {
-		input.files <- process_input(input, tmpDir = tmpDir, include.names = FALSE, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = verbose);
+		input.files <- process.input(input, tmpDir = tmpDir, include.names = FALSE, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = verbose);
 		}
 	else {
-		input.files <- process_input(input, tmpDir = tmpDir, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = verbose);
+		input.files <- process.input(input, tmpDir = tmpDir, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = verbose);
 		}
 
 	# do not capture output if help requested
