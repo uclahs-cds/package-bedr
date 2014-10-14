@@ -24,7 +24,7 @@ read.vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 	# uncompress, fread doesn't natively read compressed, booh.
 	if (grepl(".gz$", x)) {
 		x.basename <- basename(x);
-		x.tmp      <- tempfile(pattern = paste(x.basename, ".", sep = ""));
+		x.tmp      <- tempfile(pattern = paste(x.basename, "_", sep = ""));
 		system(paste0("gunzip -c ", x, " > ", x.tmp));
 		x <- x.tmp;
 		}
