@@ -47,9 +47,9 @@ Daryl Waggott
 jaccard
 }
 \examples{
-if (check_binary("bedtools")) {
+if (check.binary("bedtools")) {
 
-index <- get_example_regions();
+index <- get.example.regions();
 
 a <- index[[1]];
 b <- index[[2]];

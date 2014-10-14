@@ -56,15 +56,15 @@ Daryl Waggott
 genomicRanges
 }
 \examples{
-if (check_binary("tabix")) {
+if (check.binary("tabix")) {
 
-query_regions <- c("1:1000-100000", "1:1000000-1100000")
-cosmic_vcf_example <- system.file(
-	"extdata/CosmicCodingMuts_v66_20130725_ex.vcf.gz",
+query.regions <- c("1:1000-100000", "1:1000000-1100000")
+cosmic.vcf.example <- system.file(
+	"extdata/CosmicCodingMuts.v66.20130725.ex.vcf.gz",
 	package = "bedr"
 	)
 
-cosmic_query <- tabix(query_regions, cosmic_vcf_example, check.chr = FALSE)
+cosmic.query <- tabix(query.regions, cosmic.vcf.example, check.chr = FALSE)
 
 }
 }

@@ -57,55 +57,55 @@ Daryl Waggott
 iranges
 }
 \examples{
-if (check_binary("bedtools")) {
+if (check.binary("bedtools")) {
 set.seed(666)
 
-index <- get_example_regions();
+index <- get.example.regions();
 a <- index[[1]];
 b <- index[[2]];
 
 ### check
-is.a.valid  <- is_valid_region(a);
-is.b.valid  <- is_valid_region(b);
+is.a.valid  <- is.valid.region(a);
+is.b.valid  <- is.valid.region(b);
 a <- a[is.a.valid];
 b <- b[is.b.valid];
 
 ### sort
-is.sorted <- is_sorted_region(a);
+is.sorted <- is.sorted.region(a);
 a.sort1 <- bedr(engine = "bedtools", input = list(i = a), method = "sort", params = "");
 b.sort1 <- bedr(engine = "bedtools", input = list(i = b), method = "sort", params = "");
 a.sort2 <- bedr(engine = "bedops",   input = list(i = a), method = "sort", params = "");
 
-a.sort3 <- sort_region(a);
-a.sort4 <- sort_region(a, engine = "unix", method = "natural");
-a.sort5 <- sort_region(a, engine = "R", method = "natural");
+a.sort3 <- sort.region(a);
+a.sort4 <- sort.region(a, engine = "unix", method = "natural");
+a.sort5 <- sort.region(a, engine = "R", method = "natural");
 
 ### merge
-is.merged <- is_merged_region(a.sort1);
+is.merged <- is.merged.region(a.sort1);
 a.merge1 <- bedr(engine = "bedtools", input = list(i = a.sort1), method = "merge", params = "");
 b.merge1 <- bedr(engine = "bedtools", input = list(i = b.sort1), method = "merge", params = "");
 a.merge2 <- bedr(engine = "bedops",   input = list(i = a.sort1), method = "merge", params = "");
-# a.merge3 <- merge_region(a); this will throw an error b/c region is not sorted
+# a.merge3 <- merge.region(a); this will throw an error b/c region is not sorted
 
 ### subtract
 a.sub1 <- bedr(input = list(a = a.merge1, b = b.merge1), method = "subtract", params="");
-a.sub2 <- subtract_region(a.merge1, b.merge1);
+a.sub2 <- subtract.region(a.merge1, b.merge1);
 
-### in_region
-is.region <- in_region(a.merge1, b.merge1);
+### in.region
+is.region <- in.region(a.merge1, b.merge1);
 #is.region <- a.merge1 \%in.region\% b.merge1
 
 ### intersect 
-# note for bedtools its  recommended to sort_regions before intersect to allow for faster processing
+# note for bedtools its  recommended to sort.regions before intersect to allow for faster processing
 # also if regions are not merged this can cause unexpected behaviour
 a.int1 <- bedr(input = list(a = a, b = b), method = "intersect", params = "-loj");
 a.int1 <- bedr(input = list(a = a.sort1, b = b.sort1), method="intersect",params ="-loj -sorted");
 a.int2 <- bedr(input = list(a = a.merge1, b = b.merge1), method="intersect",params="-loj -sorted");
-a.int3 <- join_region(a.merge1, b.merge1);
+a.int3 <- join.region(a.merge1, b.merge1);
 
 ### multiple join
-d <- get_random_regions(100, chr="chr1", sort = TRUE);
-a.mult <- join_multiple_region(x = list(a.merge1,b.merge1,sort_region(d)));
+d <- get.random.regions(100, chr="chr1", sort = TRUE);
+a.mult <- join.multiple.region(x = list(a.merge1,b.merge1,sort.region(d)));
 
 ### groupby 
 # note the "g" column number is based on bed format i.e. first three columns chr, start, stop

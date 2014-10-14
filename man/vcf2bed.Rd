@@ -4,7 +4,7 @@
 convert a vcf to a bed file
 }
 \description{
-Convert a vcf to a bed file.  Currently, it needs to read into R via read_vcf
+Convert a vcf to a bed file.  Currently, it needs to read into R via read.vcf
 }
 \usage{
 vcf2bed(x, filename = NULL, other = NULL)
@@ -29,7 +29,7 @@ Daryl Waggott
 %\seealso{
 %}
 \examples{
-# read_vcf(x)
+# read.vcf(x)
 # vcf2bed(x)
 }
 \keyword{ vcf }
