@@ -1,6 +1,6 @@
 context("in.region")
 
-if (check.binary("bedtools", verbose = FALSE)) {
+if (check.binary("bedtools", verbose = TRUE)) {
 
 test_that("check in.region", {
 	

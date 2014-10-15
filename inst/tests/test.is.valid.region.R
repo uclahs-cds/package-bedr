@@ -1,7 +1,7 @@
 context("is.valid.region")
 
 test_that("check if region input is valid", {
-	
+
 	regions <- get.example.regions()
 
 	# good region

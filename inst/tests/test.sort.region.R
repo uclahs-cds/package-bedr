@@ -1,6 +1,6 @@
 context("bedr.sort.region")
 
-if (check.binary("bedtools", verbose = FALSE)) {
+if (check.binary("bedtools", verbose = TRUE)) {
 
 test_that("bedr.sort.region handles parameter input", {	
 	

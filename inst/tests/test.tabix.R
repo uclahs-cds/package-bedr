@@ -1,6 +1,6 @@
 context("tabix")
 
-if (check.binary("tabix")) {
+if (check.binary("tabix", verbose = TRUE)) {
 
 test_that("check tabix", {
 	vcf <- system.file("extdata/CosmicCodingMuts_v66_20130725_ex.vcf.gz", package = "bedr");

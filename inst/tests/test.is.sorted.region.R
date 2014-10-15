@@ -1,6 +1,6 @@
 context("is.sorted.region")
 
-if (check.binary("bedtools", verbose = FALSE)) {
+if (check.binary("bedtools", verbose = TRUE)) {
 
 test_that("correctly identifies if regions are sorted", {	
 	
