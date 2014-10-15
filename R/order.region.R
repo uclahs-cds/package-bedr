@@ -12,6 +12,6 @@
 order.region <- function(x, method = "lex", check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.merge = TRUE) {
 	x <- convert2bed(x, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = FALSE, check.merge = check.merge);
 	x <- data.frame(x, row.order = 1:nrow(x), stringsAsFactors = FALSE);
-	x <- sort.region(x, method = method,check.zero.based = check.zero.based, check.chr = check.chr, check.valid = FALSE, check.merge = FALSE, verbose = FALSE);
+	x <- bedr.sort.region(x, method = method,check.zero.based = check.zero.based, check.chr = check.chr, check.valid = FALSE, check.merge = FALSE, verbose = FALSE);
 	return(as.numeric(x$row.order));
 	}

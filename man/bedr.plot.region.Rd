@@ -1,5 +1,5 @@
-\name{plot.region}
-\alias{plot.region}
+\name{bedr.plot.region}
+\alias{bedr.plot.region}
 \title{
 Visualize regions or intervals
 }
@@ -7,7 +7,7 @@ Visualize regions or intervals
 Visualize regions or intervals.  e.g. VennDiagrams of intersections of distinct intervals, base pairs and genes. 
 }
 \usage{
-plot.region(
+bedr.plot.region(
 	input,
 	filename = NULL,
 	type = "venn",
@@ -61,15 +61,15 @@ d <- get.random.regions(n = 1000, chr = "chr22", size.mean = 10)
 e <- get.random.regions(n = 1000, chr = "chr22", size.mean = 10)
 f <- get.random.regions(n = 1000, chr = "chr22", size.mean = 10)
 
-#pdf("plot.region.ex.pdf")
+#pdf("bedr.plot.region.ex.pdf")
 
 ### basic venn diagrams
 # note single inputs compare the original with a merged/collapsed set of regions
-#plot.region(input = list(a=a)) 
-#plot.region(input = list(a=a,b=b))
-#plot.region(input = list(a=a,b=b,d=d))
-#plot.region(input = list(a=a,b=b,d=d,e=e))
-#plot.region(input = list(a=a,b=b,d=d,e=e,f=f))
+#bedr.plot.region(input = list(a=a)) 
+#bedr.plot.region(input = list(a=a,b=b))
+#bedr.plot.region(input = list(a=a,b=b,d=d))
+#bedr.plot.region(input = list(a=a,b=b,d=d,e=e))
+#bedr.plot.region(input = list(a=a,b=b,d=d,e=e,f=f))
 
 ### change venn parameters
 #plot.egion(
@@ -78,11 +78,11 @@ f <- get.random.regions(n = 1000, chr = "chr22", size.mean = 10)
 #	)
 
 ### try with different 
-#plot.region(input = list(a=a,b=b), feature = "gene")
-#plot.region(input = list(a=a,b=b), feature = "reference")
-#plot.region(input = list(a=a,b=b), feature = "interval")
-#plot.region(input = list(a=a,b=b), feature = "cluster")
-#plot.region(input = list(a=a,b=b), feature = "bp")
+#bedr.plot.region(input = list(a=a,b=b), feature = "gene")
+#bedr.plot.region(input = list(a=a,b=b), feature = "reference")
+#bedr.plot.region(input = list(a=a,b=b), feature = "interval")
+#bedr.plot.region(input = list(a=a,b=b), feature = "cluster")
+#bedr.plot.region(input = list(a=a,b=b), feature = "bp")
 
 #dev.off()
 }

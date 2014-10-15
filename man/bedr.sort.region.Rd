@@ -1,5 +1,5 @@
-\name{sort.region}
-\alias{sort.region}
+\name{bedr.sort.region}
+\alias{bedr.sort.region}
 
 \title{
 sort a region file
@@ -9,7 +9,7 @@ sort a region file
 sort a region file
 }
 \usage{
-sort.region(
+bedr.sort.region(
 	x,
 	method = "lexicographical",
 	engine = "R",
@@ -57,7 +57,7 @@ index <- get.example.regions();
 
 a <- index[[1]];
 
-b <- sort.region(a);
+b <- bedr.sort.region(a);
 
 }
 }

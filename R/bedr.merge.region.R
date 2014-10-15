@@ -9,7 +9,7 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-merge.region <- function(x, distance = 0, list.names = TRUE, number = FALSE, stratify.by = NULL, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, verbose = TRUE) {
+bedr.merge.region <- function(x, distance = 0, list.names = TRUE, number = FALSE, stratify.by = NULL, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, verbose = TRUE) {
 
 catv("MERGING\n")
 
@@ -35,7 +35,7 @@ catv("MERGING\n")
 		if (!is.sorted.region(x, check.zero.based = FALSE, check.chr = FALSE, check.valid = FALSE, check.merge = FALSE, verbose = FALSE)) {
 			catv(" * Bedtools requires sorted input for merging!\n");
 			catv("   Your data is being automatically sorted\n");
-			x <- sort.region(x, check.zero.based = FALSE, check.chr = FALSE, check.valid = FALSE, check.merge = FALSE, verbose = FALSE);
+			x <- bedr.sort.region(x, check.zero.based = FALSE, check.chr = FALSE, check.valid = FALSE, check.merge = FALSE, verbose = FALSE);
 			}
 		}
 

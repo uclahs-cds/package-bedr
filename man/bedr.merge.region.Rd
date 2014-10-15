@@ -1,5 +1,5 @@
-\name{merge.region}
-\alias{merge.region}
+\name{bedr.merge.region}
+\alias{bedr.merge.region}
 
 \title{
 merge i.e. collapse overlpaping regions
@@ -9,7 +9,7 @@ merge i.e. collapse overlpaping regions
 merge i.e. collapse overlpaping regions
 }
 \usage{
-merge.region(
+bedr.merge.region(
 	x,
 	distance = 0,
 	list.names = TRUE,
@@ -53,8 +53,8 @@ index <- get.example.regions();
 
 a <- index[[1]];
 
-a.sort   <- sort.region(a);
-a.merged <- merge.region(a.sort);
+a.sort   <- bedr.sort.region(a);
+a.merged <- bedr.merge.region(a.sort);
 
 }
 }

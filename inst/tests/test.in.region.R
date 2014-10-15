@@ -29,10 +29,10 @@ test_that("check in.region", {
 	expect_equal(in.region(regions$a, regions$b, proportion.overlap = 1, verbose = F), a.b.overlap.pc1);
 	
 	# sorted
-	expect_equal(in.region(sort.region(regions$a, verbose = FALSE), regions$b, verbose=F), a.b.overlap.sorted)
+	expect_equal(in.region(bedr.sort.region(regions$a, verbose = FALSE), regions$b, verbose=F), a.b.overlap.sorted)
 
 	# merged
-	expect_equal(in.region(merge.region(regions$a,verbose=F, distance = -1), regions$b, verbose=F), a.b.overlap.merged)
+	expect_equal(in.region(bedr.merge.region(regions$a,verbose=F, distance = -1), regions$b, verbose=F), a.b.overlap.merged)
 
 	# %in.region% gives same results
 	expect_equal(in.region(regions$a,regions$b, verbose = F), regions$a %in.region% regions$b)

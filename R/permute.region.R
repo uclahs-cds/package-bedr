@@ -127,7 +127,7 @@ permute.region <- function(x, stratify.by.chr = FALSE, species = "human", build 
 	x <- data.frame(chr = random.chr, start = random.start, end = random.end, stringsAsFactors = FALSE);
 
 	if (sort.output) {
-		x <- sort.region(x, check.valid = FALSE, check.zero.based = FALSE, check.chr = FALSE, check.merge = FALSE, verbose = FALSE)
+		x <- bedr.sort.region(x, check.valid = FALSE, check.zero.based = FALSE, check.chr = FALSE, check.merge = FALSE, verbose = FALSE)
 		}
 	
 	gc();

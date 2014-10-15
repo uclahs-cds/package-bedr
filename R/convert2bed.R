@@ -49,7 +49,7 @@ convert2bed <- function(x, set.type = TRUE, check.zero.based = TRUE, check.chr =
 		#catv(" * Checking sort order... ");
 		#if (!is.sorted) {
 		#	catv("FAIL\n");
-		#	catv(paste0("   The input for object is not *lexographically* ordered!\n   This can cause unexpected results for some set operations.\n   try: x <- sort.region(x)\n"));
+		#	catv(paste0("   The input for object is not *lexographically* ordered!\n   This can cause unexpected results for some set operations.\n   try: x <- bedr.sort.region(x)\n"));
 		#	}
 		#else {
 		#	catv("PASS\n");
@@ -60,7 +60,7 @@ convert2bed <- function(x, set.type = TRUE, check.zero.based = TRUE, check.chr =
 	if (check.merge) {
 		is.merged <- is.merged.region(x, check.valid = FALSE, check.zero.based = check.zero.based, check.chr = check.chr, check.sort = FALSE, verbose = verbose);
 		#if (!is.merged) {
-		#	catv(paste0("   The input for object has overlapping features!\n   This can cause unexpected results for some set operations.\n   i.e. x <- merge.region(x)\n", sep = ""));
+		#	catv(paste0("   The input for object has overlapping features!\n   This can cause unexpected results for some set operations.\n   i.e. x <- bedr.merge.region(x)\n", sep = ""));
 		#	}
 		}
 

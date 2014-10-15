@@ -1,4 +1,4 @@
-plot.region <- function(input, filename = NULL, type = "venn", feature = "interval", fraction.overlap = 1e-9, group = NULL, params = list(), verbose = TRUE) {
+bedr.plot.region <- function(input, filename = NULL, type = "venn", feature = "interval", fraction.overlap = 1e-9, group = NULL, params = list(), verbose = TRUE) {
 	# Venn, Box or BarPlot, heatmap, circos 
 	# feature is region/bp for intersect
 	# https://groups.google.com/forum/#!msg/bedtools-discuss/93n2WUP0MME/HvCN7kyjroEJ
@@ -13,8 +13,8 @@ plot.region <- function(input, filename = NULL, type = "venn", feature = "interv
 
 		# if only one dataset compare with a collapsed/merged
 		if (n == 1) {
-			input[[1]]   <- sort.region(input[[1]]);
-			input[[2]]   <- merge.region(input[[1]], number = TRUE);
+			input[[1]]   <- bedr.sort.region(input[[1]]);
+			input[[2]]   <- bedr.merge.region(input[[1]], number = TRUE);
 			last.var     <- names(input[[2]])[ncol(input[[2]])]
 			input[[2]]   <- input[[2]][input[[2]][,last.var] >  1,];
 			names(input) <- c("Original","Merged");

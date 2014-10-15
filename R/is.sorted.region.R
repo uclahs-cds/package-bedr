@@ -11,7 +11,7 @@
 
 is.sorted.region <- function(x, method = "lex", engine = "unix", check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.merge = TRUE, verbose = FALSE) {
 
-	x.sort    <- sort.region(x, method = method, engine = engine, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.merge = check.merge, verbose = FALSE);
+	x.sort    <- bedr.sort.region(x, method = method, engine = engine, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.merge = check.merge, verbose = FALSE);
 	is.sorted <- all(x == x.sort); # use data.frame to drop attributes
 
 	catv(" * Checking sort order... ")
@@ -20,7 +20,7 @@ is.sorted.region <- function(x, method = "lex", engine = "unix", check.zero.base
 		}
 	else {
 		catv("FAIL\n")
-		catv(paste0("   The input for object is not *lexographically* ordered!\n   This can cause unexpected results for some set operations.\n   try: x <- sort.region(x)\n"));
+		catv(paste0("   The input for object is not *lexographically* ordered!\n   This can cause unexpected results for some set operations.\n   try: x <- bedr.sort.region(x)\n"));
 		}
 		
 	

@@ -76,16 +76,16 @@ a.sort1 <- bedr(engine = "bedtools", input = list(i = a), method = "sort", param
 b.sort1 <- bedr(engine = "bedtools", input = list(i = b), method = "sort", params = "");
 a.sort2 <- bedr(engine = "bedops",   input = list(i = a), method = "sort", params = "");
 
-a.sort3 <- sort.region(a);
-a.sort4 <- sort.region(a, engine = "unix", method = "natural");
-a.sort5 <- sort.region(a, engine = "R", method = "natural");
+a.sort3 <- bedr.sort.region(a);
+a.sort4 <- bedr.sort.region(a, engine = "unix", method = "natural");
+a.sort5 <- bedr.sort.region(a, engine = "R", method = "natural");
 
 ### merge
 is.merged <- is.merged.region(a.sort1);
 a.merge1 <- bedr(engine = "bedtools", input = list(i = a.sort1), method = "merge", params = "");
 b.merge1 <- bedr(engine = "bedtools", input = list(i = b.sort1), method = "merge", params = "");
 a.merge2 <- bedr(engine = "bedops",   input = list(i = a.sort1), method = "merge", params = "");
-# a.merge3 <- merge.region(a); this will throw an error b/c region is not sorted
+# a.merge3 <- bedr.merge.region(a); this will throw an error b/c region is not sorted
 
 ### subtract
 a.sub1 <- bedr(input = list(a = a.merge1, b = b.merge1), method = "subtract", params="");
@@ -96,7 +96,7 @@ is.region <- in.region(a.merge1, b.merge1);
 #is.region <- a.merge1 \%in.region\% b.merge1
 
 ### intersect 
-# note for bedtools its  recommended to sort.regions before intersect to allow for faster processing
+# note for bedtools its  recommended to bedr.sort.regions before intersect to allow for faster processing
 # also if regions are not merged this can cause unexpected behaviour
 a.int1 <- bedr(input = list(a = a, b = b), method = "intersect", params = "-loj");
 a.int1 <- bedr(input = list(a = a.sort1, b = b.sort1), method="intersect",params ="-loj -sorted");
@@ -105,7 +105,7 @@ a.int3 <- join.region(a.merge1, b.merge1);
 
 ### multiple join
 d <- get.random.regions(100, chr="chr1", sort = TRUE);
-a.mult <- join.multiple.region(x = list(a.merge1,b.merge1,sort.region(d)));
+a.mult <- join.multiple.region(x = list(a.merge1,b.merge1,bedr.sort.region(d)));
 
 ### groupby 
 # note the "g" column number is based on bed format i.e. first three columns chr, start, stop

@@ -42,7 +42,7 @@ Daryl Waggott
 
 
 \seealso{
-\code{\link{merge.region}}
+\code{\link{bedr.merge.region}}
 }
 \examples{
 

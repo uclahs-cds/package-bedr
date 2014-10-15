@@ -9,7 +9,7 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-sort.region <- function(x, method = "lexicographical", engine = "R", check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.merge = TRUE, verbose = TRUE) {
+bedr.sort.region <- function(x, method = "lexicographical", engine = "R", check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.merge = TRUE, verbose = TRUE) {
 # engine bedtools, bedops, unix, R
 
 catv("SORTING\n");
