@@ -15,7 +15,7 @@ get.fasta <- function(x, fasta = NULL, bed12 = FALSE, strand = FALSE, output.fas
 
 	# default
 	if (is.null(fasta)) {
-		fasta="/oicr/data/genomes/homo.sapiens.mc/UCSC/hg19.random/Genomic/references/fasta/hg19.random.fa";
+		fasta="/oicr/data/genomes/homo_sapiens_mc/UCSC/hg19_random/Genomic/references/fasta/hg19_random.fa";
 		}
 		
 	if (!file.exists(fasta)) {
