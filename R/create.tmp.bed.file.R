@@ -14,7 +14,7 @@ create.tmp.bed.file <- function(x, name = "bedr", tmpDir = NULL) {
 	options(scipen = 999);
 
 	tmpDir         <- ifelse (is.null(tmpDir), tempdir(), tmpDir);
-	file.x         <- tempfile(pattern = paste(name,".", sep = ""), tmpdir = tmpDir, fileext = ".bed");
+	file.x         <- tempfile(pattern = paste(name, "_", sep = ""), tmpdir = tmpDir, fileext = ".bed");
 	colnames(x)[1] <- paste("#",colnames(x)[1], sep="");
 	write.table(x, file.x, quote = FALSE, row.names = FALSE, sep = "\t", col.names = FALSE);
 
