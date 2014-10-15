@@ -70,7 +70,7 @@ tabix <- function(region, file.name, params = NULL, tmpDir = NULL, deleteTmpDir 
 	attr(tabix.output, "header") <- header;
 
 	# get the file extension
-	file.ext <- tools::file.ext(gsub(".gz","",file.name));
+	file.ext <- tools::file_ext(gsub(".gz","",file.name));
 
 	# do some datatype formatting depending on filetype
 	if (file.ext == "bed") {

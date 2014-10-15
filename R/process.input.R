@@ -15,7 +15,7 @@ process.input <- function(input, tmpDir = NULL, include.names = TRUE, check.zero
 			catv(paste0(" * Processing input (", i, "): ", names(input)[i], "\n"));
 
 			# check if input is a file
-			is.file  <- is.vector(input[[i]]) && length(input[[i]]) == 1  && tools::file.ext(gsub(".gz", "", input[[i]]) ) %in% file.extensions;
+			is.file  <- is.vector(input[[i]]) && length(input[[i]]) == 1  && tools::file_ext(gsub(".gz", "", input[[i]]) ) %in% file.extensions;
 
 			# skip procesing if input is a file
 			if (is.file) {

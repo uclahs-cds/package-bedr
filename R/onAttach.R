@@ -1,13 +1,13 @@
 .onAttach <- function(libname, pkgname) {
 
 	if (file.exists(system.file("config/config.yml", package = "bedr"))) {
-		config.bedr <- yaml::yaml.load.file(input = system.file("config/config.yml", package = "bedr"));
+		config.bedr <- yaml::yaml.load_file(input = system.file("config/config.yml", package = "bedr"));
 		}
 	else {
 		config.bedr <- list();
 		}
 	if (file.exists(paste0(Sys.getenv("HOME"), "/bedr/config.yml"))) {
-		config.bedr.user <- yaml::yaml.load.file(input = paste0(Sys.getenv("HOME"), "/bedr/config.yml"));
+		config.bedr.user <- yaml::yaml.load_file(input = paste0(Sys.getenv("HOME"), "/bedr/config.yml"));
 		config.bedr <- modifyList2(config.bedr, config.bedr.user);
 		}
 
