@@ -14,7 +14,9 @@ permute.region(
 	build = "hg19",
 	chr.names = paste0("chr",c(1:22,"X","Y","M")),
 	mask.gaps = FALSE,
+	gaps.file = NULL,
 	mask.repeats = FALSE,
+	repeats.file = NULL,
 	sort.output = TRUE,
 	is.checked = FALSE,
 	check.zero.based = TRUE,
@@ -29,8 +31,10 @@ permute.region(
   \item{species}{species}
   \item{build}{the build of the reference}
   \item{chr.names}{names of the chromosomes to use}
-  \item{mask.gaps}{should the gaps (Ns) in the human reference be ignored as potential start points.  This drammatically increases memory and run time but is more appropriate in almost all settings.  It defaults to off.}
-  \item{mask.repeats}{should the repeats from repeatMasker be ignored as potential start points.  This drammatically increases memory and run time but is more appropriate in almost all settings.  By default it's off.}
+  \item{mask.gaps}{should the gaps (Ns) in the human reference be ignored as potential start points.  This drammatically increases memory and run time but is more appropriate in almost all settings.  It defaults to off}
+  \item{gaps.file}{database file of gaps. Defaults to Homo sapiens Hg19 gap.txt.gz file available through UCSC}
+  \item{mask.repeats}{should the repeats from repeatMasker be ignored as potential start points.  This drammatically increases memory and run time but is more appropriate in almost all settings.  By default it's off}
+  \item{repeats.file}{database file of repeats as supplied by UCSC containing RepMasker data e.g rmsk.txt.gz}
   \item{sort.output}{should the output be sorted}
   \item{is.checked}{Has the input data already be tested for validity.  This is often done once before multiple permutations.}
   \item{check.zero.based}{should 0 based coordinates be checked}

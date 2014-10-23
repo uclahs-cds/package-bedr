@@ -1,4 +1,4 @@
-permute.region <- function(x, stratify.by.chr = FALSE, species = "human", build = "hg19", chr.names = paste0("chr",c(1:22,"X","Y","M")), mask.gaps = FALSE, mask.repeats = FALSE, sort.output = TRUE, is.checked = FALSE, check.zero.based = TRUE, check.chr = TRUE,check.valid = TRUE, verbose = TRUE) {
+permute.region <- function(x, stratify.by.chr = FALSE, species = "human", build = "hg19", chr.names = paste0("chr",c(1:22,"X","Y","M")), mask.gaps = FALSE, gaps.file = NULL, mask.repeats = FALSE, repeats.file = NULL, sort.output = TRUE, is.checked = FALSE, check.zero.based = TRUE, check.chr = TRUE,check.valid = TRUE, verbose = TRUE) {
 
 	if (!is.checked) {
 		x <- convert2bed(x, check.zero.based = check.zero.based, check.chr = check.chr, verbose = verbose);
@@ -7,7 +7,7 @@ permute.region <- function(x, stratify.by.chr = FALSE, species = "human", build 
 	colnames(x)[1:3] <- c("chr","start","end");
 
 	n.regions    <- nrow(x);
-	
+
 	# select the chr to use	
 	if (stratify.by.chr) {
 		chr.length <- get.chr.length(chr = unique(x$chr));
@@ -18,17 +18,29 @@ permute.region <- function(x, stratify.by.chr = FALSE, species = "human", build 
 
 	# load the masks
 	if (mask.gaps) {
-		gaps <- query.ucsc(system.file("extdata/gap.txt.gz", package = "bedr"), columns.keep = c("chrom","chromStart","chromEnd"));
+		if (is.null(gaps.file)) {
+			catv("The gaps.file is NULL. reading default gaps file (Homo sapiens)\n");
+			gaps.file <- system.file("extdata/gap.txt.gz", package = "bedr");
+			}
+		gaps <- query.ucsc(
+			gaps.file, 
+			columns.keep = c("chrom","chromStart","chromEnd")
+			);
 		colnames(gaps)[1:3] <- c("chr","start","end");
 		}
-	
+
 	if (mask.repeats) {
-		if (!file.exists("~/bedr/data/rmsk.txt.gz")) {
-			catv("The repeatMasker file does not exist.  Either run download.datasets() or query.ucsc(rmsk)\n");
+		if (is.null(repeats.file)) {
+			catv("The repeats.file is NULL. reading default repeats file (Homo sapiens)\n");
+			catv("~/bedr/data/rmsk.txt.gz\n");
+			if (!file.exists("~/bedr/data/rmsk.txt.gz")) {
+				catv("The repeatMasker file does not exist.  Either run download.datasets() or query.ucsc(rmsk)\n");
+				}
+			else {
+				repeats <- query.ucsc("~/bedr/data/rmsk.txt.gz", columns.keep = c("genoName", "genoStart","genoEnd"));
+				colnames(repeats)[1:3] <- c("chr","start","end");
+				}
 			}
-		
-		repeats <- query.ucsc("~/bedr/data/rmsk.txt.gz", columns.keep = c("genoName", "genoStart","genoEnd"));
-		colnames(repeats)[1:3] <- c("chr","start","end");
 		}
 
 	# create the mask bed file
