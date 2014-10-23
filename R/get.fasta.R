@@ -17,7 +17,7 @@ get.fasta <- function(x, fasta = NULL, bed12 = FALSE, strand = FALSE, output.fas
 	if (is.null(fasta)) {
 		fasta="/oicr/data/genomes/homo_sapiens_mc/UCSC/hg19_random/Genomic/references/fasta/hg19_random.fa";
 		}
-		
+
 	if (!file.exists(fasta)) {
 		catv(" * Fasta does not exist... FAIL\n")
 		}
@@ -45,7 +45,6 @@ get.fasta <- function(x, fasta = NULL, bed12 = FALSE, strand = FALSE, output.fas
 	else {
 		outputFile <- NULL;
 		}
-		
 	
 	x <- bedr(engine = "bedtools", input = list(bed = x), method = "getfasta", outputFile = outputFile, params = params, check.zero.based = FALSE, check.chr = FALSE, check.valid = FALSE, check.sort = check.sort, check.merge = check.merge, verbose = TRUE);
 
