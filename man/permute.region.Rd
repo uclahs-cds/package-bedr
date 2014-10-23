@@ -12,6 +12,7 @@ permute.region(
 	stratify.by.chr = FALSE,
 	species = "human",
 	build = "hg19",
+	chr.names = paste0("chr",c(1:22,"X","Y","M")),
 	mask.gaps = FALSE,
 	mask.repeats = FALSE,
 	sort.output = TRUE,
@@ -27,6 +28,7 @@ permute.region(
   \item{stratify.by.chr}{Should the permutation be happen separetely for each chromosome.  That is are chromosomes exchangeable.}
   \item{species}{species}
   \item{build}{the build of the reference}
+  \item{chr.names}{names of the chromosomes to use}
   \item{mask.gaps}{should the gaps (Ns) in the human reference be ignored as potential start points.  This drammatically increases memory and run time but is more appropriate in almost all settings.  It defaults to off.}
   \item{mask.repeats}{should the repeats from repeatMasker be ignored as potential start points.  This drammatically increases memory and run time but is more appropriate in almost all settings.  By default it's off.}
   \item{sort.output}{should the output be sorted}

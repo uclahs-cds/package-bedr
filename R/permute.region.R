@@ -1,4 +1,4 @@
-permute.region <- function(x, stratify.by.chr = FALSE, species = "human", build = "hg19", mask.gaps = FALSE, mask.repeats = FALSE, sort.output = TRUE, is.checked = FALSE, check.zero.based = TRUE, check.chr = TRUE,check.valid = TRUE, verbose = TRUE) {
+permute.region <- function(x, stratify.by.chr = FALSE, species = "human", build = "hg19", chr.names = paste0("chr",c(1:22,"X","Y","M")), mask.gaps = FALSE, mask.repeats = FALSE, sort.output = TRUE, is.checked = FALSE, check.zero.based = TRUE, check.chr = TRUE,check.valid = TRUE, verbose = TRUE) {
 
 	if (!is.checked) {
 		x <- convert2bed(x, check.zero.based = check.zero.based, check.chr = check.chr, verbose = verbose);
@@ -13,7 +13,6 @@ permute.region <- function(x, stratify.by.chr = FALSE, species = "human", build 
 		chr.length <- get.chr.length(chr = unique(x$chr));
 		}
 	else {
-		chr.names <- paste0("chr",c(1:22,"X","Y","M"));
 		chr.length <- get.chr.length(chr = chr.names);
 		}
 
