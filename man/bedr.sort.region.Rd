@@ -30,7 +30,7 @@ bedr.sort.region(
   \item{chr.to.num}{chromosome letter names to numbers map. Defaults to Homo sapiens i.e c("X" = 23, "Y" = 24, "M" = 25)}
   \item{check.zero.based}{should 0 based coordinates be checked}
   \item{check.chr}{should chr prefix be checked}
-  \item{check.valid}{should the region be checkded for integerity}
+  \item{check.valid}{should the region be checked for integerity}
   \item{check.merge}{ should overlapping regions be checked}
   \item{verbose}{should log messages and checking take place}
 }

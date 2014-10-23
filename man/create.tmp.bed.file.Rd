@@ -18,7 +18,7 @@ create.tmp.bed.file(x, name = "bedr", tmpDir = NULL)
   \item{tmpDir}{where should the temp files be put}
 }
 %\details{
- 
+
 %}
 %\value{
 %}

@@ -34,7 +34,7 @@ process.input <- function(input, tmpDir = NULL, include.names = TRUE, check.zero
 				}
 
 			attr(input.file, "is.file") <- is.file;
-			input.files                 <- c(input.files, list(input.file)); # note the list() to prevent c() from dropping attributes
+			input.files <- c(input.files, list(input.file)); # note the list() to prevent c() from dropping attributes
 			}
 
 		# paste the input files together

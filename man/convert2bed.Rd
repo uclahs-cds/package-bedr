@@ -25,7 +25,7 @@ convert2bed(
   \item{set.type}{should the attribute input.type be set.  Sometimes it is desirable to avoid setting it when applying intermediate conversion}
   \item{check.zero.based}{should 0 based coordinates be checked}
   \item{check.chr}{should chr prefix be checked}
-  \item{check.valid}{should the region be checkded for integerity}
+  \item{check.valid}{should the region be checked for integerity}
   \item{check.sort}{should the region be checked to see if it is sorted}
   \item{check.merge}{should the region be checked for overlapping regions}
   \item{verbose}{messages and text}

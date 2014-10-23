@@ -44,10 +44,6 @@ flank.region(
  
 %}
 %\value{
- 
-
-
-
 
 %}
 \author{

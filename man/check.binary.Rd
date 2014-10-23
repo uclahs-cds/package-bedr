@@ -12,8 +12,7 @@ check.binary(x = "bedtools", verbose = TRUE)
 }
 \arguments{
   \item{x}{a string referring to a binary/executable i.e. bedtools, bedops, tabix}
-  \item{verbose}{
-}
+  \item{verbose}{print log}
 }
 \details{
 Used internally to determine functionality selection options.

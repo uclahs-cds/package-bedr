@@ -1,6 +1,6 @@
 modifyList2 <- function (x, val) 
 # changed the double square to single square brackets on assignment
-# this has allows NULL values to overwrite and NOT delete items in x
+# this allows NULL values to overwrite and NOT delete items in x
 {
     stopifnot(is.list(x), is.list(val))
     xnames <- names(x)
