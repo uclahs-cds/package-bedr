@@ -9,7 +9,7 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-bedr.sort.region <- function(x, method = "lexicographical", engine = "R", check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.merge = TRUE, verbose = TRUE) {
+bedr.sort.region <- function(x, method = "lexicographical", engine = "R", chr.to.num = c("X" = 23, "Y" = 24, "M" = 25),  check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.merge = TRUE, verbose = TRUE) {
 # engine bedtools, bedops, unix, R
 
 catv("SORTING\n");
@@ -72,9 +72,11 @@ catv("SORTING\n");
 		else if (engine == "R"){
 			catv("    Natural sorting is done in R which could be memory intensive for large files\n");
 			chr.integer <- gsub("^chr", "", x[,1], ignore.case = TRUE);
-			chr.integer[chr.integer == "X"] <- 23;
-			chr.integer[chr.integer == "Y"] <- 24;
-			chr.integer[chr.integer == "M"] <- 25;
+			if (!is.null(chr.to.num)) {
+				for (chr.char in names(chr.to.num)) {
+					chr.integer[chr.integer == chr.char] <- chr.to.num[chr.char];
+					}
+				}
 			chr.integer <- as.numeric(chr.integer);
 			x[,2] <- as.numeric(x[,2]);
 			x[,3] <- as.numeric(x[,3]);

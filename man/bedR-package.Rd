@@ -14,7 +14,7 @@ Package: \tab bedr\cr
 Type: \tab Package\cr
 Version: \tab 1.0\cr
 Date: \tab 2012-11-19\cr
-License: \tab What license is it under?\cr
+License: \tab GPL2\cr
 }
 }
 \author{

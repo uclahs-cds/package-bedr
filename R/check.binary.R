@@ -22,7 +22,6 @@ check.binary <- function(x = "bedtools", verbose = TRUE) {
 	else if (x == "tabix") {
 		default.path <- "/oicr/local/analysis/sw/tabix/tabix-0.2.6";
 		git.url <- "https://github.com/samtools/tabix";
-		
 		}
 	else {
 		default.path <- "";
