@@ -28,6 +28,6 @@ Daryl Waggott
 %}
 
 \examples{
-df2list(data.frame(a = 1:10, b = 11:20));
+#df2list(data.frame(a = 1:10, b = 11:20));
 }
 %\keyword{ }

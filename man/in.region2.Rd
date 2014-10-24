@@ -32,7 +32,7 @@ index <- get.example.regions();
 
 a <- index[[1]];
 b <- index[[2]];
-d <- a \%in.region\% b
+# d <- a \%in.region\% b
 
 }
 \keyword{in}

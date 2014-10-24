@@ -17,7 +17,7 @@ size.region(
 	)
 }
 \arguments{
-  \item{x}{}
+  \item{x}{region in vector, matrix or dataframe format}
   \item{zero.based}{whether the coordinates are zero-based or 1}
   \item{check.zero.based}{should 0 based coordinates be checked}
   \item{check.chr}{should chr prefix be checked}
