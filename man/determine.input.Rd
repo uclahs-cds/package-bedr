@@ -28,6 +28,6 @@ Daryl Waggott
 %\seealso{
 %}
 
-\examples{
-}
+%\examples{
+%}
 \keyword{ input }

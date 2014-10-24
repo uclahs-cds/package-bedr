@@ -27,7 +27,7 @@ Daryl Waggott
 %\seealso{
 %}
 
-%\examples{
+\examples{
 df2list(data.frame(a = 1:10, b = 11:20));
-%}
-\keyword{}
+}
+%\keyword{ }
