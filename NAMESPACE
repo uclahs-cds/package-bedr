@@ -41,7 +41,8 @@ export(
 	'download.datasets',
 	'bedr.setup',
 	'permute.region',
-	'test.region.similarity'
+	'test.region.similarity',
+	'process.input'
 	);
 
 import(

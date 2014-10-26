@@ -56,9 +56,7 @@ Daryl Waggott
 if (check.binary("bedtools")) {
 
 index <- get.example.regions();
-
 a <- index[[1]];
-
 b <- bedr.sort.region(a);
 
 }

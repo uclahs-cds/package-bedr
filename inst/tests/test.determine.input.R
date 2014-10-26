@@ -9,8 +9,11 @@ test_that("check that input format is correctly identified", {
 	region.a.index.df1 <- data.frame(index=regions$a, score = 1:length(regions$a), stringsAsFactors=F)
 	region.a.index.df2 <- data.frame(matrix(ncol=3,nrow=length(regions$a)), row.names=regions$a, stringsAsFactors=F)
 
+	a <- bedr(engine = "bedtools", input = list(i = regions$a), method = "sort", params = "");
+	b <- bedr(engine = "bedtools", input = list(i = regions$b), method = "sort", params = "");
+
 	# index
-	expect_equal(determine.input(regions$a, verbose = F), 0);
+	expect_equal(determine.input(a, verbose = F), 0);
 
 	# bed
 	expect_equal(determine.input(region.a.bed.df1, verbose = F), 1) # df with correct names

@@ -5,6 +5,8 @@ if (check.binary("bedtools", verbose = TRUE)) {
 test_that("check converting a region into bed file including file type checking and region verification", {
 	
 	regions <- get.example.regions()
+	regions$a <- bedr.sort.region(regions$a)
+	regions$b <- bedr.sort.region(regions$b)
 	a.bed <- index2bed(regions$a)
 	b.bed <- index2bed(regions$b)
 

@@ -5,6 +5,7 @@ if (check.binary("bedtools", verbose = TRUE)) {
 test_that("check input processing i.e. converting to bed and sending to a tmp file", {
 	
 	regions <- get.example.regions()
+	regions$a <- bedr.sort.region(regions$a)
 
 	# good region
 	expect_equal(length(process.input(regions$a, verbose = F)), 1);

@@ -5,6 +5,8 @@ if (check.binary("tabix", verbose = TRUE)) {
 test_that("check tabix", {
 	vcf <- system.file("extdata/CosmicCodingMuts_v66_20130725_ex.vcf.gz", package = "bedr");
 	regions <- get.example.regions()
+	regions$a <- bedr.sort.region(regions$a);
+
 	a.nochr <- gsub("^chr", "", regions$a)
 
 	b <- c("chr1:10-100000","chr10:100-100000")

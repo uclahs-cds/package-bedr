@@ -43,7 +43,7 @@ if (check.binary("bedtools")) {
 index <- get.example.regions();
 
 a <- index[[1]];
-
+a <- bedr(engine = "bedtools", input = list(i = a), method = "sort", params = "");
 a.order <- order.region(a)
 
 b <- a[a.order];

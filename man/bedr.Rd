@@ -94,11 +94,10 @@ a.sub2 <- subtract.region(a.merge1, b.merge1);
 ### in.region
 is.region <- in.region(a.merge1, b.merge1);
 #is.region <- a.merge1 \%in.region\% b.merge1
-
 ### intersect 
 # note for bedtools its recommended to bedr.sort.regions before intersect for faster processing
 # also if regions are not merged this can cause unexpected behaviour
-a.int1 <- bedr(input = list(a = a, b = b), method = "intersect", params = "-loj");
+a.int1 <- bedr(input = list(a = a.sort1, b = b.sort1), method = "intersect", params = "-loj");
 a.int1 <- bedr(input = list(a = a.sort1, b = b.sort1), method="intersect",params ="-loj -sorted");
 a.int2 <- bedr(input = list(a = a.merge1, b = b.merge1), method="intersect",params="-loj -sorted");
 a.int3 <- join.region(a.merge1, b.merge1);

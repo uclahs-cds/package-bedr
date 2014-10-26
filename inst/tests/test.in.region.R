@@ -5,8 +5,10 @@ if (check.binary("bedtools", verbose = TRUE)) {
 test_that("check in.region", {
 	
 	regions <- get.example.regions()
-	a.b.overlap <- c(F,T,T,T,T,F,T,F )
-	b.a.overlap <- c(F,T,F,F,F,T,F )
+	regions$a <- bedr.sort.region(regions$a)
+	regions$b <- bedr.sort.region(regions$b)
+	a.b.overlap <- c(F,T,T,T,F,T,T,F)
+	b.a.overlap <- c(F,T,F,F,F,T,F)
 	a.b.overlap.pc0 <- c(T,T,T,T,T,T,T,F)
 	a.b.overlap.pc5 <- c(F,T,T,T,F,F,T,F)
 	a.b.overlap.pc1 <- c(F,F,T,T,F,F,T,F)
