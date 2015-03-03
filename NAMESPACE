@@ -51,6 +51,7 @@ import(
 	'testthat',
 	'yaml',
 	'Rcpp',
-	'RcppArmadillo'
+	'RcppArmadillo',
+    'parallel'
 	);
 
