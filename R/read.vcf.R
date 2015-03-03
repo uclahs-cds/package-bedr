@@ -49,7 +49,9 @@ read.vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 			x.colnames    <- unlist(strsplit(x.header.tmp, split = "\t| +"));
 			x.colnames[1] <- gsub("^#", "", x.colnames[1])
 		}
-		else if (grepl("^[C1-9]", x.header.tmp)) {
+		else if (!grepl("^#", x.header.tmp)) {
+            # line does not start with the comment character,
+            # so assume have read past the header 
 			end.of.header <- TRUE;
 			}
 		else {
@@ -69,7 +71,8 @@ read.vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 		header.length <- length(x.header)
 		}
 
-	if (is.null(x.colnames)) {
+    colnames.in.file <- !is.null(x.colnames);
+	if (!colnames.in.file) {
 		catv(" * No column names detected!  Now that's just lazy. Please fix for sanity purposes.\n");
 			
 		# assume the 8 colnames
@@ -89,7 +92,8 @@ read.vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 		}
 
 	# check the number of columns match the column names
-	x.firstline <- fread(x, header = FALSE, sep = "\t", skip = header.length+1, nrows = 1);
+    # (read past the header and column names, if present)
+	x.firstline <- fread(x, header = FALSE, sep = "\t", skip = header.length + colnames.in.file, nrows = 1);
 	if (length(x.firstline) != length(x.colnames)) {
 		catv(" * There looks to be more columns than column names.  Please fix!\n");
 		if ( length(x.firstline) > length(x.colnames) ) {
@@ -97,8 +101,8 @@ read.vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 			}
 		}
 
-		#x.df <- read.table(x, header = FALSE, sep = "\t", stringsAsFactors = TRUE, na.strings = ".", colClasses = c("character","integer", "character","character","character","numeric","character", "character", rep("character",length(x.colnames)-8)) , comment.char="", skip = length(x.header)+1, nrows = nrows)
-		x.df <- fread(x, header = FALSE, sep = "\t", stringsAsFactors = TRUE, na.strings = ".", colClasses = colClasses, skip = header.length+1, nrows = nrows);
+    # read in content after the header and column names (if present)
+    x.df <- fread(x, header = FALSE, sep = "\t", stringsAsFactors = TRUE, na.strings = ".", colClasses = colClasses, skip = header.length + colnames.in.file, nrows = nrows);
 
 	catv("   Done\n");
 
