@@ -45,7 +45,6 @@ read.vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 	while (!end.of.header) {
 		x.header.tmp <- readLines(con, n = 1);
 		if (grepl("^#[Cc]", x.header.tmp)) {
-			end.of.header <- TRUE;
 			x.colnames    <- unlist(strsplit(x.header.tmp, split = "\t| +"));
 			x.colnames[1] <- gsub("^#", "", x.colnames[1])
 		}
