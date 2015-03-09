@@ -74,7 +74,7 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 		}
 
 	# check for output
-	if (length(output) == 0 || (!is.null(attr(output,"status")) && attr(output,"status") == 1) || output==127) {
+	if ((method != 'intersect' && length(output) == 0) || (!is.null(attr(output,"status")) && attr(output,"status") == 1) || (length(output) == 1 && output==127)) {
 		for (i in 1:length(input)) {
 			if (attr(input.files[[i]], "is.file")) {
 				catv(paste("head of file", names(input)[i],"...\n"));
@@ -93,16 +93,25 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 		stop();
 		}
 
-	# parse output into columns if not stdout
-	if (intern) {
+	### everything below here needs to be reviewed ###
+
+	# format output as a data frame (if appropriate) 
+    if (length(output) == 0) {
+        # empty case
+	    output <- data.frame(output = NULL);
+        }
+	else if (intern) {
+        # output contains the command output (i.e. not an exit code)
 		output <- strsplit2matrix(output, split = "\t");
 		}
 
-	### everything below here needs to be reviewed ###
-
-	# col and row numbers
-	nrow.output <- nrow(output);
-	ncol.output <- ncol(output);
+	# column numbers
+    if (is.data.frame(output)) {
+	    ncol.output <- ncol(output);
+    }
+    else {
+	    ncol.output <- 0;
+    }
 
 	# set the header for a few 
 	if (ncol.output >= 3 && method %in% c("jaccard", "reldist") && !grepl("detail", params)) {
@@ -124,7 +133,7 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 		new.index   <- paste(output[,chr.column],":",output[,chr.column+1],"-",output[,chr.column+2], sep="");
 		options(scipen = old.scipen);
 		}
-	else {
+	else if (ncol.output > 0) {
 		chr.column <- 1;
 		new.index <- output[,1];
 		}
@@ -138,7 +147,7 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 		# if index specifed delete added chr, start, stop
 		output <- data.frame(index = new.index, output[,-c(chr.column:(chr.column+2)), drop = FALSE], stringsAsFactors = FALSE);
 		}
-	else {
+	else if (ncol.output > 0) {
 		# add rownames to the output if a unique index can be formed from the regions (groupby not first col)
 		if (length(new.index) == length(unique(new.index))) {rownames(output) <- new.index;}
 		# try and add column names when the ouptut is the same number of columns as the first input
