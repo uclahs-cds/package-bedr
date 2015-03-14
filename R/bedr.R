@@ -88,7 +88,7 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 				print(head(input[[i]]));
 				}
 			}
-#		try(system(paste(engine, ifelse(engine=="bedops", "", method), "--help")));
+		# try(system(paste(engine, ifelse(engine=="bedops", "", method), "--help")));
 		catv(paste0("ERROR: Looks like ", engine, " had a problem\n"));
 		stop();
 		}
@@ -96,22 +96,24 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 	### everything below here needs to be reviewed ###
 
 	# format output as a data frame (if appropriate) 
-    if (length(output) == 0) {
-        # empty case
-	    output <- data.frame(output = NULL);
-        }
+	if (length(output) == 0) {
+		# empty case
+		output <- data.frame(output = NULL);
+		}
 	else if (intern) {
-        # output contains the command output (i.e. not an exit code)
+		# output contains the command output (i.e. not an exit code)
 		output <- strsplit2matrix(output, split = "\t");
+		}
+	else {
 		}
 
 	# column numbers
-    if (is.data.frame(output)) {
-	    ncol.output <- ncol(output);
-    }
-    else {
-	    ncol.output <- 0;
-    }
+	if (is.data.frame(output)) {
+		ncol.output <- ncol(output);
+		}
+	else {
+		ncol.output <- 0;
+		}
 
 	# set the header for a few 
 	if (ncol.output >= 3 && method %in% c("jaccard", "reldist") && !grepl("detail", params)) {
@@ -127,7 +129,7 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 
 		chr.column  <- which(grepl("chr", output[1,]))[1];
 		if (is.na(chr.column)) {chr.column <- 1}
-		
+	
 		old.scipen <- getOption("scipen")
 		options(scipen = 999);
 		new.index   <- paste(output[,chr.column],":",output[,chr.column+1],"-",output[,chr.column+2], sep="");
@@ -136,6 +138,8 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 	else if (ncol.output > 0) {
 		chr.column <- 1;
 		new.index <- output[,1];
+		}
+	else {
 		}
 
 	# add back the index if it was used as input
@@ -188,7 +192,8 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 			}
 
 		}
-	
+	else {
+		}
 
 	# only delete tmp files if they exist
 	input.files <- Filter(function(x){grepl("Rtmp",x)}, input.files);
