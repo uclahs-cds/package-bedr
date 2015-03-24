@@ -9,7 +9,7 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-in.region <- function(x,y, proportion.overlap = 1e-9, reciprocal.overlap = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = FALSE) {
+in.region <- function(x,y, proportion.overlap = 1e-9, reciprocal.overlap = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE) {
 
 	catv("REGION %in% REGION\n");
 
