@@ -132,7 +132,7 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 	
 		old.scipen <- getOption("scipen")
 		options(scipen = 999);
-		new.index   <- paste(output[,chr.column],":",output[,chr.column+1],"-",output[,chr.column+2], sep="");
+		new.index   <- paste(output[,chr.column],":", as.integer(output[,chr.column+1]), "-", as.integer(output[,chr.column+2]), sep="");
 		options(scipen = old.scipen);
 		}
 	else if (ncol.output > 0) {
