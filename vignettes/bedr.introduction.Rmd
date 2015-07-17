@@ -37,7 +37,7 @@ The current implementation focuses on three excellent tools.  For specifics on f
 
 1. bedtools [docs](http://bedtools.readthedocs.org/en/latest/) and [source](https://github.com/arq5x/bedtools2)
 2. bedops [docs](https://bedops.readthedocs.org/en/latest/) and [source](https://github.com/alexpreynolds/bedops)
-3. tabix [docs]() and [source](/oicr/local/analysis/sw/tabix/tabix-0.2.6)
+3. tabix [docs](http://www.htslib.org/doc/tabix.html) and [source](http://sourceforge.net/projects/samtools/files/tabix/)
 
 General Region Utilities
 ----------------------------
@@ -138,8 +138,6 @@ a.mult <- join.multiple.region(x = list(a.merge1,b.merge1,sort.region(d)));
 # note the use of first, first, last on the region columns i.e. the union of the regions
 # note currently missing values are note dealt with in bedtools.  also the 5th column is assumed to be "score" and gets a default "-1" not a "."
 #cnv.gene <- bedr(input = list(i=cnv.gene), method = "groupby", params = paste("-g 16 -c ", paste(1:15, collapse = ","), " -o ", "first,first,last,", paste(rep("sum",12), collapse = ","), sep = ""));
-
-```
 
 ```
 
