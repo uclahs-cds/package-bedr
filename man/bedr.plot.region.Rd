@@ -72,7 +72,7 @@ f <- get.random.regions(n = 1000, chr = "chr22", size.mean = 10)
 #bedr.plot.region(input = list(a=a,b=b,d=d,e=e,f=f))
 
 ### change venn parameters
-#plot.egion(
+#bedr.plot.region(
 #	input = list(a=a,b=b,d=d),
 #	params = list(lty = 2, label.col = "black", main = "Region Overlap")
 #	)

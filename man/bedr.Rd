@@ -109,7 +109,7 @@ a.mult <- join.multiple.region(x = list(a.merge1,b.merge1,bedr.sort.region(d)));
 ### groupby 
 # note the "g" column number is based on bed format i.e. first three columns chr, start, stop
 # note the use of first, first, last on the region columns i.e. the union of the regions
-# note currently missing values are note dealt with in bedtools.  also the 5th column is 
+# note currently missing values are not dealt with in bedtools.  also the 5th column is 
 # assumed to be "score" and gets a default "-1" not a "."
 #cnv.gene <- bedr(input = list(i=cnv.gene), method = "groupby", params = paste("-g 16 -c ", 
 #paste(1:15, collapse = ","), " -o ", "first,first,last,", 
@@ -124,7 +124,7 @@ a.mult <- join.multiple.region(x = list(a.merge1,b.merge1,bedr.sort.region(d)));
 #this may not be ideal if there are some really big features.
 # intersect -loj target, genes.
 # alternatively, do not merge the target and apply the merge after the intersect.  
-#this will provide precision a the level of the exon.
+#this will provide precision at the level of the exon.
 }
 }
 
