@@ -53,6 +53,7 @@ import(
 	'yaml',
 	'Rcpp',
 	'RcppArmadillo',
-    'parallel'
+    'parallel',
+    'grid'
 	);
 

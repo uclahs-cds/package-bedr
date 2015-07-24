@@ -5,8 +5,6 @@
 \usage{
 get.program.defaults()
 }
-\arguments{
-}
 \value{Returns a list of path/s to the input directories/files where the contents of this package are installed}
 \author{Syed Haider}
 \examples{
