@@ -9,13 +9,12 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-in.region <- function(x,y, proportion.overlap = 1e-9, reciprocal.overlap = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE) {
+in.region <- function(x,y, proportion.overlap = 1e-9, reciprocal.overlap = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = FALSE) {
 
 	catv("REGION %in% REGION\n");
 
 	reciprocal.overlap <- ifelse (reciprocal.overlap, "-r", "");
 	params <- paste0("-c -f ", proportion.overlap, reciprocal.overlap)
-
 
 	xy <- bedr(engine = "bedtools", input = list(a = x, b = y), method = "intersect", params = params,  check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = verbose);
 
