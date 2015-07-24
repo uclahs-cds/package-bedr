@@ -14,7 +14,7 @@ download.datasets <- function(datasets = "all", data.dir = paste0(Sys.getenv("HO
 	if (datasets == "all") {
 		datasets <- c("refgene","hg19","b37","hugo", "cosmic","clinvar", "agilent", "nimblegen","gap");
 		}
-	
+
 	old.dir <- getwd();
 	setwd(data.dir);
 
@@ -34,7 +34,7 @@ download.datasets <- function(datasets = "all", data.dir = paste0(Sys.getenv("HO
 		download.file("http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/refGene.txt.gz", destfile="refGene.txt.gz");
 		download.file("http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/refGene.sql", destfile="refGene.sql");
 		}
-	
+
 	# parse refgene
 	if ("refgene" %in% datasets && !file.exists(paste0(data.dir, "/gene_regions.txt"))) {
 		refgene    <- query.ucsc(paste0(data.dir, "/refGene.txt.gz"));
