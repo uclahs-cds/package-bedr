@@ -50,8 +50,6 @@ import(
 	'VennDiagram',
 	'testthat',
 	'yaml',
-	'Rcpp',
-	'RcppArmadillo',
 	'parallel',
 	'grid'
 	);
