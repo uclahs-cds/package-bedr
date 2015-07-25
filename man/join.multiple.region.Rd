@@ -58,8 +58,8 @@ index <- get.example.regions();
 a <- index[[1]];
 b <- index[[2]];
 
-a.sort <- sort.region(a);
-b.sort <- sort.region(b);
+a.sort <- bedr.sort.region(a);
+b.sort <- bedr.sort.region(b);
 d <- get.random.regions(100, chr="chr1", sort = TRUE);
 
 a.mult <- join.multiple.region(x = list(a.sort,b.sort,bedr.sort.region(d)));

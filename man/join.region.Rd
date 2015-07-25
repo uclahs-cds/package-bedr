@@ -55,8 +55,8 @@ index <- get.example.regions();
 a <- index[[1]];
 b <- index[[2]];
 
-a.sort <- sort.region(a);
-b.sort <- sort.region(b);
+a.sort <- bedr.sort.region(a);
+b.sort <- bedr.sort.region(b);
 
 d <- join.region(a.sort, b.sort);
 }
