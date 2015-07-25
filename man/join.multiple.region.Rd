@@ -62,7 +62,7 @@ a.sort <- sort.region(a);
 b.sort <- sort.region(b);
 d <- get.random.regions(100, chr="chr1", sort = TRUE);
 
-a.mult <- join.multiple.region(x = list(a.sort,b.sort,sort.region(d)));
+a.mult <- join.multiple.region(x = list(a.sort,b.sort,bedr.sort.region(d)));
 }
 }
 \keyword{ join }

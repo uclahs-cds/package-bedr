@@ -42,13 +42,13 @@ The current implementation focuses on three excellent tools.  For specifics on f
 General Region Utilities
 ----------------------------
 
-* sort.region & is.sorted.region
-* merge.region & is.merged.region
+* bedr.sort.region & is.sorted.region
+* bedr.merge.region & is.merged.region
 * in.region & order.region
 * subtract.region
 * flank.region & grow.region
 * intersectRegion
-* join.region & join.multiple.region
+* bedr.join.region & join.multiple.region
 * get.RegionSize
 * get.fastaRegion
 * jaccard & reldist
@@ -79,7 +79,7 @@ Generally, it's a good idea to confirm that you've sorted your inputs to avoid u
 ### sort
 is.sorted <- is.sorted.region(a);
 
-a.sort <- sort.region(a);
+a.sort <- bedr.sort.region(a);
 
 b.sort <- bedr(engine = "bedtools", input = list(i = b), method = "sort", params = "");
 
@@ -92,7 +92,7 @@ Similarly, merging adjacent or overlapping regions is often required to avoid re
 is.merged <- is.merged.region(a.sort);
 is.merged <- is.merged.region(b.sort);
 
-a.merge <- merge.region(a.sort);
+a.merge <- bedr.merge.region(a.sort);
 
 # the explicit call uses the bedr function
 b.merge <- bedr(engine = "bedtools", input = list(i = b.sort), method = "merge", params = "");
@@ -129,7 +129,7 @@ a.int1 <- bedr(input = list(a = a.sort1, b = b.sort1), method = "intersect", par
 
 ### multiple join
 d <- get.random.regions(100, chr="chr1", sort = TRUE);
-a.mult <- join.multiple.region(x = list(a.merge1,b.merge1,sort.region(d)));
+a.mult <- join.multiple.region(x = list(a.merge1,b.merge1,bedr.sort.region(d)));
 ```
 
 ```{r}
