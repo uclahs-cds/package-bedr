@@ -5,8 +5,7 @@
 sort a region file
 }
 \description{
-
-sort a region file
+Sort and merge regions object in one step
 }
 \usage{
 snm(
@@ -37,9 +36,9 @@ snm(
 %\details{
  
 %}
-%\value{
- 
-%}
+\value{
+Sorted and merged and regions object 
+}
 \author{
 Daryl Waggott
 }

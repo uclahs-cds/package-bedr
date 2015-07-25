@@ -9,5 +9,4 @@ Description: Genomic region processing using tools such as bedtools, bedops and 
 Depends: R (>= 3.0),
 Suggests: knitr (>= 1.4)
 License: GPL-2
-LinkingTo: Rcpp, RcppArmadillo
-Imports: Rcpp, RcppArmadillo, testthat (>= 0.7.1), VennDiagram (>= 1.6.4), data.table (>= 1.8.11), yaml (>= 2.1.10), parallel, grid
+Imports: Rcpp (>= 0.11.6), RcppArmadillo (>= 0.5.100.1.0), testthat (>= 0.7.1), VennDiagram (>= 1.6.4), data.table (>= 1.8.11), yaml (>= 2.1.10), parallel, grid
