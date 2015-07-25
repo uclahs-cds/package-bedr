@@ -39,16 +39,10 @@ snm(
 %}
 %\value{
  
-
-
-
-
 %}
 \author{
 Daryl Waggott
 }
-
-
 \examples{
 if (check.binary("bedtools")) {
 
@@ -60,5 +54,4 @@ b <- snm(a);
 
 }
 }
-
 \keyword{ sort }

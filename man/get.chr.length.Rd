@@ -10,9 +10,7 @@ Gets the length of each chromosome for a species/build.  Choices are human (hg18
 }
 \usage{
 get.chr.length(chr = NULL, species = "human", build = "hg19")
-
 }
-
 \arguments{
   \item{chr}{a vector of chromosomes to query. defaults to all.}
   \item{species}{species}
@@ -25,7 +23,6 @@ get.chr.length(chr = NULL, species = "human", build = "hg19")
 \author{
 Daryl Waggott
 }
-
 \examples{
 size <- get.chr.length();
 }

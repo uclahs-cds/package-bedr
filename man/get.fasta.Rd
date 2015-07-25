@@ -104,7 +104,6 @@ clinvar.bed <- data.frame(
 
 mutation.triplet <- get.fasta(clinvar.bed, check.chr = FALSE);
 }
-
 }
 }
 \keyword{fasta}

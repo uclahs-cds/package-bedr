@@ -24,10 +24,12 @@ integer value. index format (0), bed (1), index in first column (2), rownmames a
 \author{
 Daryl Waggott
 }
+\examples{
+if (check.binary("bedtools")) {
 
-%\seealso{
-%}
-
-%\examples{
-%}
+index <- get.example.regions();
+a <- index[[1]];
+bedr:::determine.input(a);
+}
+}
 \keyword{ input }

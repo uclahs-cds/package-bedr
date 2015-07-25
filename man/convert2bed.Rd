@@ -35,10 +35,6 @@ Very useful to convert data before using other bedr functions
 }
 \value{
 Returns x converted to bedformat, as a data frame
-
-
-
-
 }
 \author{
 Daryl Waggott

@@ -13,6 +13,7 @@ check.binary <- function(x = 'bedtools', verbose = TRUE) {
 
 	default.path <- '';
 	git.url <- '';
+	return.flag <- FALSE;
 
 	if ('bedtools' == x) {
 		git.url <- 'https://github.com/arq5x/bedtools2';
@@ -37,7 +38,8 @@ check.binary <- function(x = 'bedtools', verbose = TRUE) {
 		}
 	else {
 		catv(paste0('PASS\n    ', Sys.which(x), '\n') );
+		return.flag <- TRUE;
 		}
 
-	return(1);
+	return(return.flag);
 	}

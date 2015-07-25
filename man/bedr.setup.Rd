@@ -5,7 +5,7 @@
 Initialize some config settings for bedr
 }
 \description{
-Initialize some config settings for bedr.  This includes downloading useful datasets if requested.
+Initialize some config settings for bedr. This includes downloading useful datasets if requested.
 }
 \usage{
 bedr.setup(datasets = "all", data.dir = paste0(Sys.getenv("HOME"), "/bedr/data"))

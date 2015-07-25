@@ -37,7 +37,14 @@ Daryl Waggott
 \seealso{
 convert2bed
 }
+\examples{
+if (check.binary("bedtools")) {
 
-%\examples{
-%}
+index <- get.example.regions();
+
+a <- index[[1]];
+
+a.sizes <- bedr:::size.region(a);
+}
+}
 \keyword{region}

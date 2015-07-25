@@ -51,8 +51,18 @@ join.multiple.region(
 Daryl Waggott
 }
 \examples{
-# In progress
+if (check.binary("bedtools")) {
+
+index <- get.example.regions();
+
+a <- index[[1]];
+b <- index[[2]];
+
+a.sort <- sort.region(a);
+b.sort <- sort.region(b);
+d <- get.random.regions(100, chr="chr1", sort = TRUE);
+
+a.mult <- join.multiple.region(x = list(a.sort,b.sort,sort.region(d)));
 }
-
-
+}
 \keyword{ join }

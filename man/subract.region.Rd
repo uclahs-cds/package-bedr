@@ -36,8 +36,9 @@ subtract.region(
 }
 %\details{
 %}
-%\value{
-%}
+\value{
+Regions exclusive to one object of regions.
+}
 \references{
 \url{http://bedtools.readthedocs.org/en/latest/content/tools/subtract.html}
 }
@@ -53,7 +54,6 @@ b <- index[[2]];
 a <- bedr(engine = "bedtools", input = list(i = a), method = "sort", params = "");
 b <- bedr(engine = "bedtools", input = list(i = b), method = "sort", params = "");
 d <- subtract.region(a,b);
-
 }
 }
 \keyword{subtract}

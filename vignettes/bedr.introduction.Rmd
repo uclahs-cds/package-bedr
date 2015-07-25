@@ -141,39 +141,66 @@ a.mult <- join.multiple.region(x = list(a.merge1,b.merge1,sort.region(d)));
 
 ```
 
-Visualization Methods
+Example 1: Compare Variant Callers
 ----------------------------
+The example workflow below reads two VCF files from different variant callers, further limiting to structural variants only and finally identifying common calls.
 
-There are several approaches to visualization of genomic ranges including venn diagrams and genome viewers.  Several examples on how to use venn diagrams include.
+```{r, results = "hide", message = FALSE, eval = TRUE}
+options("warn" = -1);
 
-* VennDiagram
-* Barplots
-* UCSC
+VALID.SV.TYPES <- c('BND', 'CNV', 'DEL', 'DUP', 'INS', 'INV');
+POSITION.COLUMNS <- c('CHROM', 'POS', 'END');
+
+callerA.filename <- system.file("extdata/callerA.vcf.gz", package = "bedr");
+callerB.filename <- system.file("extdata/callerB.vcf.gz", package = "bedr");
+
+# read the VCF file
+callerA <- read.vcf(callerA.filename, split.info = TRUE)$vcf;
+callerB <- read.vcf(callerB.filename, split.info = TRUE)$vcf;
+
+# focus on SVs
+callerA <- callerA[which(callerA$SVTYPE %in% VALID.SV.TYPES), ];
+callerB <- callerB[which(callerB$SVTYPE %in% VALID.SV.TYPES), ];
+
+# convert to zero-based coordinates
+callerA$POS <- callerA$POS - 1;
+callerB$POS <- callerB$POS - 1;
+
+# find all overlapping pairs, retrieve size of overlap (bp)
+overlapping.pairs <- join.region(
+    callerA[, POSITION.COLUMNS],
+    callerB[, POSITION.COLUMNS],
+    report.n.overlap = TRUE,
+    check.chr = FALSE
+    );
+colnames(overlapping.pairs) <- c(
+    'a.CHROM', 'a.POS', 'a.END',
+    'nOverlap',
+    'b.CHROM', 'b.POS', 'b.END'
+    );
+overlapping.pairs$b.POS <- as.numeric(overlapping.pairs$b.POS);
+overlapping.pairs$b.END <- as.numeric(overlapping.pairs$b.END);
+
+# compute a distance between overlapping pairs
+min.breakpoint.distances <- cbind(
+    overlapping.pairs$a.POS - overlapping.pairs$b.POS,
+    overlapping.pairs$a.END - overlapping.pairs$b.END
+    );
+
+min.breakpoint.distances <- apply(
+    abs(min.breakpoint.distances),
+    1,
+    min
+    );
+a.length <- overlapping.pairs$a.END - overlapping.pairs$a.POS;
+b.length <- overlapping.pairs$b.END - overlapping.pairs$b.POS;
+
+overlapping.pairs$distance  <- (min.breakpoint.distances + abs(a.length - b.length)) / 2;
+
+```
 
 
-Other Utilities
-----------------------------
-
-These tools are in development and will be documented at a later time. 
-
-* read.vcf
-* gene name validation.
-* ensembl query.  
-* ucsc query.
-* cbio query. 
-
-
-Statistics
-----------------------------
-
-These tools are in development and will be documented at a later time. 
-
-Hypergeometric test
-Proportion test
-
-
-
-Example 1: Exome Target Processing
+Example 2: Exome Target Processing
 ----------------------------
 
 Download target BED, RefGene

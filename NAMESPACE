@@ -42,8 +42,7 @@ export(
 	'bedr.setup',
 	'permute.region',
 	'test.region.similarity',
-	'process.input',
-	'get.program.defaults'
+	'process.input'
 	);
 
 import(
@@ -53,7 +52,7 @@ import(
 	'yaml',
 	'Rcpp',
 	'RcppArmadillo',
-    'parallel',
-    'grid'
+	'parallel',
+	'grid'
 	);
 

@@ -41,8 +41,6 @@ The frequency of relative distances in bins spanning 0 to 0.5
 \author{
 Daryl Waggott
 }
-
-
 \seealso{
 jaccard
 }

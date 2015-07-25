@@ -21,7 +21,6 @@ get.random.regions(
 	sort.output = TRUE,
 	verbose = TRUE
 	)
-
 }
 
 \arguments{
@@ -44,6 +43,6 @@ get.random.regions(
 Daryl Waggott
 }
 \examples{
-# test.regions <- get.example.regions(100)
+test.regions <- get.random.regions(100)
 }
 \keyword{example}

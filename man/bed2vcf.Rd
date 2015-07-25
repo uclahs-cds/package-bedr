@@ -36,7 +36,6 @@ build of the genome in fasta format
 Daryl Waggott
 }
 
-
 %\seealso{
 %}
 \examples{

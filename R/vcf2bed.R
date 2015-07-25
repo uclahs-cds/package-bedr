@@ -15,7 +15,7 @@
 # if - as ref then need to go to fasta
 
 
-vcf2bed <- function(x, filename = NULL, other = NULL) {
+vcf2bed <- function(x, filename = NULL, other = NULL, verbose = TRUE) {
 
 	catv("CONVERT VCF TO BED\n")
 
@@ -26,7 +26,6 @@ vcf2bed <- function(x, filename = NULL, other = NULL) {
 		catv(" * This is not an vcf!\n")
 		stop();
 		}
-
 
 	chr   <- x$CHROM;
 	start <- x$POS-1;

@@ -48,8 +48,18 @@ join.region(
 Daryl Waggott
 }
 \examples{
-# In progress
-}
+if (check.binary("bedtools")) {
 
+index <- get.example.regions();
+
+a <- index[[1]];
+b <- index[[2]];
+
+a.sort <- sort.region(a);
+b.sort <- sort.region(b);
+
+d <- join.region(a.sort, b.sort);
+}
+}
 
 \keyword{ join}

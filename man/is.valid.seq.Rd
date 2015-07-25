@@ -45,10 +45,14 @@ is.valid.seq(
 Daryl Waggott
 }
 
-
 %\seealso{
 
 \examples{
-# is.valid.seq()
+if (check.binary("bedtools")) {
+# index <- get.example.regions();
+# a <- index[[1]];
+# a <- get.fasta(a);
+# is.valid.seq(a)
+}
 }
 \keyword{sequence }

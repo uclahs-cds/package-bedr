@@ -46,8 +46,6 @@ A list of results
 \author{
 Daryl Waggott
 }
-
-
 \examples{
 
 if (check.binary("bedtools")) {
