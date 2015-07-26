@@ -57,15 +57,14 @@ For example:
 
 First check if the regions are valid.  This involves checking for "chr" prefix, data types, end > start position and for compliance to bed formats zero based start position.  All checks can be turned off as required.  The "chr" check is useful due to various human reference formats (NCBI vs UCSC) having different standards.  This can result in unexpected results if comapring across specifications.  Similarly, bed format uses a zero based start postion, but vcf's use a one based position.  Therefore, a snp at position 100 would be chr1:100-100 in one based but chr1:99-100 in zero based format.  Another common mistake relates to overlaps between adjacent intervals, for example in zero based setups chr1:10-100 does not intersect with chr1:100-110. 
 
-```{r}
+```{r, results = "hide", message = FALSE, eval = FALSE}
 # load bedr library
 library("bedr");
 
-### region validation
+# region validation
 index <- get.example.regions();
 a <- index[[1]];
 b <- index[[2]];
-
 is.a.valid  <- is.valid.region(a);
 is.b.valid  <- is.valid.region(b);
 a <- a[is.a.valid];
@@ -76,7 +75,7 @@ b <- b[is.b.valid];
 Generally, it's a good idea to confirm that you've sorted your inputs to avoid unexpected results and take advantage of optimized algorithms.  For example merging and clustering require adjacent intervals.  `is.sorted.region` is convenient for explicit evaluation although it's done internally for core operations.
 
 
-```{r}
+```{r, results = "hide", message = FALSE, eval = FALSE}
 ### sort
 is.sorted <- is.sorted.region(a);
 
@@ -88,7 +87,7 @@ b.sort <- bedr(engine = "bedtools", input = list(i = b), method = "sort", params
 
 Similarly, merging adjacent or overlapping regions is often required to avoid redundancy.  Doing an intersection/join with when you have redundant regions can cause unexpected results.
 
-```{r}
+```{r, results = "hide", message = FALSE, eval = FALSE}
 ### merge or cluster
 is.merged <- is.merged.region(a.sort);
 is.merged <- is.merged.region(b.sort);
@@ -100,24 +99,24 @@ b.merge <- bedr(engine = "bedtools", input = list(i = b.sort), method = "merge",
 
 ```
 
-```{r}
+```{r, results = "hide", message = FALSE, eval = FALSE}
 ### subtract
 a.sub1 <- bedr(input = list(a = a.merge, b = b.merge), method = "subtract", params="");
 a.sub2 <- subtract.region(a.merge, b.merge);
 ```
 
-```{r}
+```{r, results = "hide", message = FALSE, eval = FALSE}
 ### jaccard & relative distance
 ```
 
-```{r}
+```{r, results = "hide", message = FALSE, eval = FALSE}
 ### in
 is.region <- in.region(a.merge, b.merge);
 # or alternatively
 is.region <- a.merge %in.region% b.merge
 ```
 
-```{r}
+```{r, results = "hide", message = FALSE, eval = FALSE}
 ### intersect / join
 a.int3 <- join.region(a.merge, b.merge);
 a.int1 <- bedr(input = list(a = a.sort, b = b.sort), method = "intersect", params = "-loj -sorted");
@@ -127,7 +126,7 @@ d <- get.random.regions(100, chr="chr1", sort = TRUE);
 a.mult <- join.multiple.region(x = list(a.merge,b.merge,bedr.sort.region(d)));
 ```
 
-```{r}
+```{r, results = "hide", message = FALSE, eval = FALSE}
 ### groupby 
 # note the "g" column number is based on bed format i.e. first three columns chr, start, stop
 # note the use of first, first, last on the region columns i.e. the union of the regions
@@ -140,7 +139,7 @@ Example 1: Compare Variant Callers
 ----------------------------
 The example workflow below reads two VCF files from different variant callers, further limiting to structural variants only and finally identifying common calls.
 
-```{r, results = "hide", message = FALSE, eval = TRUE}
+```{r, results = "hide", message = FALSE, eval = FALSE}
 options("warn" = -1);
 
 VALID.SV.TYPES <- c('BND', 'CNV', 'DEL', 'DUP', 'INS', 'INV');
