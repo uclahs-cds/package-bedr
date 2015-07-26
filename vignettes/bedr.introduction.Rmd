@@ -1,17 +1,16 @@
-<!--
-%\VignetteEngine{knitr::docco_linear}
-%\VignetteIndexEntry{An Introduction to the **bedr** package}
--->
+---
+title: ""
+author: ""
+date: ""
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{bedr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc}
+  %\SweaveUTF8
+---
 
-An Introduction to **bedr***package
-=======================================
-
-
-```{r setup, include=FALSE}
-library(knitr)
-opts_chunk$set(out.extra='style="display:block; margin: auto"', fig.align="center")
-```
-
+# An Introduction to bedr package
 
 Introduction
 ------------
@@ -59,8 +58,10 @@ For example:
 First check if the regions are valid.  This involves checking for "chr" prefix, data types, end > start position and for compliance to bed formats zero based start position.  All checks can be turned off as required.  The "chr" check is useful due to various human reference formats (NCBI vs UCSC) having different standards.  This can result in unexpected results if comapring across specifications.  Similarly, bed format uses a zero based start postion, but vcf's use a one based position.  Therefore, a snp at position 100 would be chr1:100-100 in one based but chr1:99-100 in zero based format.  Another common mistake relates to overlaps between adjacent intervals, for example in zero based setups chr1:10-100 does not intersect with chr1:100-110. 
 
 ```{r}
-### region validation
+# load bedr library
+library("bedr");
 
+### region validation
 index <- get.example.regions();
 a <- index[[1]];
 b <- index[[2]];
@@ -101,14 +102,8 @@ b.merge <- bedr(engine = "bedtools", input = list(i = b.sort), method = "merge",
 
 ```{r}
 ### subtract
-a.sub1 <- bedr(input = list(a = a.merge1, b = b.merge1), method = "subtract", params="");
-a.sub2 <- subtract.region(a.merge1, b.merge1);
-
-### flank
-
-
-### grow
-
+a.sub1 <- bedr(input = list(a = a.merge, b = b.merge), method = "subtract", params="");
+a.sub2 <- subtract.region(a.merge, b.merge);
 ```
 
 ```{r}
@@ -117,19 +112,19 @@ a.sub2 <- subtract.region(a.merge1, b.merge1);
 
 ```{r}
 ### in
-is.region <- in.region(a.merge1, b.merge1);
+is.region <- in.region(a.merge, b.merge);
 # or alternatively
-is.region <- a.merge1 %in.region% b.merge1
+is.region <- a.merge %in.region% b.merge
 ```
 
 ```{r}
 ### intersect / join
-a.int3 <- join.region(a.merge1, b.merge1);
-a.int1 <- bedr(input = list(a = a.sort1, b = b.sort1), method = "intersect", params = "-loj -sorted");
+a.int3 <- join.region(a.merge, b.merge);
+a.int1 <- bedr(input = list(a = a.sort, b = b.sort), method = "intersect", params = "-loj -sorted");
 
 ### multiple join
 d <- get.random.regions(100, chr="chr1", sort = TRUE);
-a.mult <- join.multiple.region(x = list(a.merge1,b.merge1,bedr.sort.region(d)));
+a.mult <- join.multiple.region(x = list(a.merge,b.merge,bedr.sort.region(d)));
 ```
 
 ```{r}
@@ -279,10 +274,4 @@ getfasta triplet nucleotide around variant
 20-20 rule to id some TS and Onc's
 
 
-
-
-
-<div align = "center">
- <embed width="504" height="504" name="plugin" src="http://animation.r-forge.r-project.org/swf/corrplot-ani.swf" type="application/x-shockwave-flash"> 
-</div>
 
