@@ -9,7 +9,7 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-subtract.region <- function(x, y, fraction.overlap = 1/1e9, remove.whole.feature = TRUE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE) {
+bedr.subtract.region <- function(x, y, fraction.overlap = 1/1e9, remove.whole.feature = TRUE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE) {
 	catv("SUBTRACTING\n");
 
 	fraction.overlap     <- ifelse(fraction.overlap == 1/1e9, "", paste("-f ", fraction.overlap));

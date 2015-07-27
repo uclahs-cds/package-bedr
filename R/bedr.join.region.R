@@ -9,7 +9,7 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-join.region <- function(x, y, fraction.overlap = 1/1e9, reciporical = FALSE, report.n.overlap = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE) {
+bedr.join.region <- function(x, y, fraction.overlap = 1/1e9, reciporical = FALSE, report.n.overlap = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE) {
 
 	catv("JOINING\n")
 
@@ -21,7 +21,7 @@ join.region <- function(x, y, fraction.overlap = 1/1e9, reciporical = FALSE, rep
 		}
 
 	if (!check.sort || ! check.merge) {
-		catv("  * join.region assumes sorted regions.\n    Also, overlapping regions cause unexpected results.\n")
+		catv("  * bedr.join.region assumes sorted regions.\n    Also, overlapping regions cause unexpected results.\n")
 		}
 
 	xy <- bedr(

@@ -44,7 +44,7 @@ General Region Utilities
 * bedr.sort.region & is.sorted.region
 * bedr.merge.region & is.merged.region
 * in.region & order.region
-* subtract.region
+* bedr.subtract.region
 * flank.region & grow.region
 * intersectRegion
 * bedr.join.region & join.multiple.region
@@ -102,7 +102,7 @@ b.merge <- bedr(engine = "bedtools", input = list(i = b.sort), method = "merge",
 ```{r, results = "hide", message = FALSE, eval = FALSE}
 ### subtract
 a.sub1 <- bedr(input = list(a = a.merge, b = b.merge), method = "subtract", params="");
-a.sub2 <- subtract.region(a.merge, b.merge);
+a.sub2 <- bedr.subtract.region(a.merge, b.merge);
 ```
 
 ```{r, results = "hide", message = FALSE, eval = FALSE}
