@@ -35,7 +35,7 @@ The current implementation focuses on three excellent tools.  For specifics on f
 
 
 1. bedtools [docs](http://bedtools.readthedocs.org/en/latest/) and [source](https://github.com/arq5x/bedtools2)
-2. bedops [docs](https://bedops.readthedocs.org/en/latest/) and [source](https://github.com/alexpreynolds/bedops)
+2. bedops [docs](https://bedops.readthedocs.org/en/latest/) and [source](https://github.com/bedops/bedops)
 3. tabix [docs](http://www.htslib.org/doc/tabix.html) and [source](http://sourceforge.net/projects/samtools/files/tabix/)
 
 General Region Utilities
