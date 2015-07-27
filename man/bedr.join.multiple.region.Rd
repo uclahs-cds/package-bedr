@@ -1,5 +1,5 @@
-\name{join.multiple.region}
-\alias{join.multiple.region}
+\name{bedr.join.multiple.region}
+\alias{bedr.join.multiple.region}
 
 \title{
 join multiple region objects
@@ -9,7 +9,7 @@ join two multiple objects
 
 }
 \usage{
-join.multiple.region(
+bedr.join.multiple.region(
 	x = list(),
 	fraction.overlap = 1/1e9,
 	empty = FALSE,
@@ -62,7 +62,7 @@ a.sort <- bedr.sort.region(a);
 b.sort <- bedr.sort.region(b);
 d <- get.random.regions(100, chr="chr1", sort = TRUE);
 
-a.mult <- join.multiple.region(x = list(a.sort,b.sort,bedr.sort.region(d)));
+a.mult <- bedr.join.multiple.region(x = list(a.sort,b.sort,bedr.sort.region(d)));
 }
 }
 \keyword{ join }

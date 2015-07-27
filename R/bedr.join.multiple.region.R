@@ -9,7 +9,7 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-join.multiple.region <- function(x = list(), fraction.overlap = 1/1e9, empty = FALSE, missing.values = ".", cluster = FALSE, species = "human", build = "hg19", check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE) {
+bedr.join.multiple.region <- function(x = list(), fraction.overlap = 1/1e9, empty = FALSE, missing.values = ".", cluster = FALSE, species = "human", build = "hg19", check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE) {
 
 	catv("JOINING\n")
 
@@ -26,7 +26,7 @@ join.multiple.region <- function(x = list(), fraction.overlap = 1/1e9, empty = F
 	genome.file      <- paste0("-g ", genome.file);
 	
 	if (!check.sort || !check.merge) {
-		catv("  * join.multiple.region assumes sorted regions.\n    Also, overlapping regions cause unexpected results.\n")
+		catv("  * bedr.join.multiple.region assumes sorted regions.\n    Also, overlapping regions cause unexpected results.\n")
 		}
 
 	# only the first region should be names i
@@ -40,6 +40,5 @@ join.multiple.region <- function(x = list(), fraction.overlap = 1/1e9, empty = F
 	colnames(xyz)[(ncol(xyz)-(1+length(x))):ncol(xyz)] <- c("n.overlaps","names", dataset.names.orig);
 
 	return(xyz);
-	
-	
+
 	}

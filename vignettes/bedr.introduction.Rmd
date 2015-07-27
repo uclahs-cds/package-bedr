@@ -47,7 +47,7 @@ General Region Utilities
 * bedr.subtract.region
 * flank.region & grow.region
 * intersectRegion
-* bedr.join.region & join.multiple.region
+* bedr.join.region & bedr.join.multiple.region
 * get.RegionSize
 * get.fastaRegion
 * jaccard & reldist
@@ -123,7 +123,7 @@ a.int1 <- bedr(input = list(a = a.sort, b = b.sort), method = "intersect", param
 
 ### multiple join
 d <- get.random.regions(100, chr="chr1", sort = TRUE);
-a.mult <- join.multiple.region(x = list(a.merge,b.merge,bedr.sort.region(d)));
+a.mult <- bedr.join.multiple.region(x = list(a.merge,b.merge,bedr.sort.region(d)));
 ```
 
 ```{r, results = "hide", message = FALSE, eval = FALSE}

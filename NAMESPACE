@@ -6,7 +6,7 @@ export(
 	'is.merged.region',
 	'is.sorted.region',
 	'is.valid.region',
-	'join.multiple.region',
+	'bedr.join.multiple.region',
 	'bedr.join.region',
 	'bedr.merge.region',
 	'order.region',
