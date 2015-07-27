@@ -1,5 +1,5 @@
-\name{subtract.region}
-\alias{subtract.region}
+\name{bedr.subtract.region}
+\alias{bedr.subtract.region}
 
 \title{
 subtracts features or ranges in object b from object a
@@ -8,7 +8,7 @@ subtracts features or ranges in object b from object a
 subtracts features or ranges in object b from object a
 }
 \usage{
-subtract.region(
+bedr.subtract.region(
 	x,
 	y,
 	fraction.overlap = 1/1e9,
@@ -53,7 +53,7 @@ a <- index[[1]];
 b <- index[[2]];
 a <- bedr(engine = "bedtools", input = list(i = a), method = "sort", params = "");
 b <- bedr(engine = "bedtools", input = list(i = b), method = "sort", params = "");
-d <- subtract.region(a,b);
+d <- bedr.subtract.region(a,b);
 }
 }
 \keyword{subtract}

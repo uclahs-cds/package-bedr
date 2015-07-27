@@ -1,5 +1,5 @@
-\name{join.region}
-\alias{join.region}
+\name{bedr.join.region}
+\alias{bedr.join.region}
 
 \title{
 join two region objects using a left outer join
@@ -9,7 +9,7 @@ join two region objects using a left outer join
 
 }
 \usage{
-join.region(
+bedr.join.region(
 	x,
 	y,
 	fraction.overlap = 1/1e9,
@@ -58,7 +58,7 @@ b <- index[[2]];
 a.sort <- bedr.sort.region(a);
 b.sort <- bedr.sort.region(b);
 
-d <- join.region(a.sort, b.sort);
+d <- bedr.join.region(a.sort, b.sort);
 }
 }
 

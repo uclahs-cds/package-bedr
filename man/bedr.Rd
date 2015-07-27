@@ -89,7 +89,7 @@ a.merge2 <- bedr(engine = "bedops",   input = list(i = a.sort1), method = "merge
 
 ### subtract
 a.sub1 <- bedr(input = list(a = a.merge1, b = b.merge1), method = "subtract", params="");
-a.sub2 <- subtract.region(a.merge1, b.merge1);
+a.sub2 <- bedr.subtract.region(a.merge1, b.merge1);
 
 ### in.region
 is.region <- in.region(a.merge1, b.merge1);
@@ -100,7 +100,7 @@ is.region <- in.region(a.merge1, b.merge1);
 a.int1 <- bedr(input = list(a = a.sort1, b = b.sort1), method = "intersect", params = "-loj");
 a.int1 <- bedr(input = list(a = a.sort1, b = b.sort1), method="intersect",params ="-loj -sorted");
 a.int2 <- bedr(input = list(a = a.merge1, b = b.merge1), method="intersect",params="-loj -sorted");
-a.int3 <- join.region(a.merge1, b.merge1);
+a.int3 <- bedr.join.region(a.merge1, b.merge1);
 
 ### multiple join
 d <- get.random.regions(100, chr="chr1", sort = TRUE);
