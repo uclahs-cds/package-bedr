@@ -50,13 +50,13 @@ bedr.plot.region <- function(input, filename = NULL, type = "venn", feature = "i
 				}
 			}
 		else if (feature == "interval") { # interval overlap
-			input.overlap <- join.multiple.region(input);
+			input.overlap <- bedr.join.multiple.region(input);
 			}
 		else if (feature == "cluster") { # use clustering algorithm to identify overlaps
-			input.overlap <- join.multiple.region(input, cluster = TRUE);
+			input.overlap <- bedr.join.multiple.region(input, cluster = TRUE);
 			}
 		else if (feature == "bp") {
-			input.overlap <- join.multiple.region(input);
+			input.overlap <- bedr.join.multiple.region(input);
 			size          <- size.region(input.overlap);
 			}
 		else {

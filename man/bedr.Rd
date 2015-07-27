@@ -104,7 +104,7 @@ a.int3 <- bedr.join.region(a.merge1, b.merge1);
 
 ### multiple join
 d <- get.random.regions(100, chr="chr1", sort = TRUE);
-a.mult <- join.multiple.region(x = list(a.merge1,b.merge1,bedr.sort.region(d)));
+a.mult <- bedr.join.multiple.region(x = list(a.merge1,b.merge1,bedr.sort.region(d)));
 
 ### groupby 
 # note the "g" column number is based on bed format i.e. first three columns chr, start, stop
