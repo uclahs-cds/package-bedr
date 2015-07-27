@@ -54,3 +54,6 @@ import(
 	'grid'
 	);
 
+importFrom("stats", "rlnorm", "runif", "setNames");
+importFrom("utils", "download.file", "head", "modifyList",
+	"read.table", "tail", "write.table");
