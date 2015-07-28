@@ -29,7 +29,7 @@ The advantages to this approach include:
 * **Abstraction.** The existing utilities are only a subset of the native functionality found within each of the engines.  To directly access the full extent of options one can directly call the `bedr` including the required methods and parameters.  
 
 
-Documentation
+Third Party Tools
 ----------------------------
 
 The current implementation focuses on three excellent tools.  For specifics on functionality please visit there online documentation, primary citation and [biostar](http://www.biostars.org/show/tag/bedtools/) posts.  To gain the functionality of these analytical engines you will need to have the programs installed and in your default PATH.  In future versions the source code for these dependencies may be distributed together.
@@ -42,6 +42,7 @@ The current implementation focuses on three excellent tools.  For specifics on f
 General Region Utilities
 ----------------------------
 
+* is.valid.region
 * bedr.sort.region & is.sorted.region
 * bedr.merge.region & is.merged.region
 * in.region & order.region
@@ -51,101 +52,167 @@ General Region Utilities
 * bedr.join.region & bedr.join.multiple.region
 * get.RegionSize
 * get.fastaRegion
+* read.vcf
 * jaccard & reldist
 
 
-For example:
+### Load bedr
+Loading of bedr package will indicate the presensece of bedtools, bedops and tabix libraries on your system. If these are not present, there is very little value in using bedr package. If you have installed these in a non-standard path/directory of your computer, please add these to PATH environment variable.
+
+```{r, results = "hold", message = TRUE, eval = TRUE, errors = TRUE}
+# load bedr library
+library("bedr");
+```
+
+### Validate Region
 
 First check if the regions are valid.  This involves checking for "chr" prefix, data types, end > start position and for compliance to bed formats zero based start position.  All checks can be turned off as required.  The "chr" check is useful due to various human reference formats (NCBI vs UCSC) having different standards.  This can result in unexpected results if comapring across specifications.  Similarly, bed format uses a zero based start postion, but vcf's use a one based position.  Therefore, a snp at position 100 would be chr1:100-100 in one based but chr1:99-100 in zero based format.  Another common mistake relates to overlaps between adjacent intervals, for example in zero based setups chr1:10-100 does not intersect with chr1:100-110. 
 
-```{r, results = "hide", message = FALSE, eval = FALSE}
-# load bedr library
-library("bedr");
+```{r, results = "hold", message = TRUE, eval = TRUE, errors = TRUE}
 
-# get example regions
-index <- get.example.regions();
-a <- index[[1]];
-b <- index[[2]];
+if (check.binary("bedtools")) {
 
-# region validation
-is.a.valid  <- is.valid.region(a);
-is.b.valid  <- is.valid.region(b);
-a <- a[is.a.valid];
-b <- b[is.b.valid];
+	# get example regions
+	index <- get.example.regions();
+	a <- index[[1]];
+	b <- index[[2]];
 
+	# region validation
+	is.a.valid  <- is.valid.region(a);
+	is.b.valid  <- is.valid.region(b);
+	a <- a[is.a.valid];
+	b <- b[is.b.valid];
+		
+	# print
+	cat(" REGION a: ", a, "\n");
+	cat(" REGION b: ", b, "\n");
+	}
 ```
 
+### Sort Region
 Generally, it's a good idea to confirm that you've sorted your inputs to avoid unexpected results and take advantage of optimized algorithms.  For example merging and clustering require adjacent intervals.  `is.sorted.region` is convenient for explicit evaluation although it's done internally for core operations.
 
+```{r, results = "hold", message = TRUE, eval = TRUE, errors = TRUE}
+if (check.binary("bedtools")) {
 
-```{r, results = "hide", message = FALSE, eval = FALSE}
-# check if already sorted
-is.sorted <- is.sorted.region(a);
+	# check if already sorted
+	is.sorted <- is.sorted.region(a);
 
-# sort
-a.sort <- bedr.sort.region(a);
+	# sort lexographically
+	a.sort <- bedr.sort.region(a);
 
-# sort - explicit calling using primary API function bedr()
-b.sort <- bedr(
-	engine = "bedtools", 
-	input = list(i = b), 
-	method = "sort", 
-	params = ""
-	);
+	# sort naturally
+	a.sort.natural <- bedr.sort.region(a, method = "natural");
 
+	# sort - explicit call using primary API function bedr()
+	b.sort <- bedr(
+		engine = "bedtools", 
+		input = list(i = b), 
+		method = "sort", 
+		params = ""
+		);
+
+	# print
+	cat(" REGION a: ", a.sort, "\n");
+	cat(" REGION b: ", a.sort.natural, "\n");
+	cat(" REGION c: ", b.sort, "\n");
+	}
 ```
 
-Similarly, merging adjacent or overlapping regions is often required to avoid redundancy.  Performing an intersection/join with when you have redundant regions can cause unexpected results and hence best is to merge redundant regions.
+### Merge Regions
 
-```{r, results = "hide", message = FALSE, eval = FALSE}
-# check if already merged (non-overlapping regions)
-is.merged <- is.merged.region(a.sort);
-is.merged <- is.merged.region(b.sort);
+Similarly, merging adjacent or overlapping regions is often required to avoid redundancy.  Performing an intersection/join when you have redundant regions can cause unexpected results and hence best is to merge redundant regions.
 
-# merge
-a.merge <- bedr.merge.region(a.sort);
+```{r, results = "hold", message = TRUE, eval = TRUE, errors = TRUE}
+if (check.binary("bedtools")) {
 
-# merge - explicit calling using primary API function bedr()
-b.merge <- bedr(
-	engine = "bedtools", 
-	input = list(i = b.sort), 
-	method = "merge", 
-	params = ""
-	);
+	# check if already merged (non-overlapping regions)
+	is.merged <- is.merged.region(a.sort);
+	is.merged <- is.merged.region(b.sort);
+
+	# merge
+	a.merge <- bedr.merge.region(a.sort);
+
+	# merge - explicit call using primary API function bedr()
+	b.merge <- bedr(
+		engine = "bedtools", 
+		input = list(i = b.sort), 
+		method = "merge", 
+		params = ""
+		);
+
+	# print
+	cat(" REGION a: ", a.merge, "\n");
+	cat(" REGION b: ", b.merge, "\n");
+	}
 ```
 
-```{r, results = "hide", message = FALSE, eval = FALSE}
-# subtract
-a.sub2 <- bedr.subtract.region(a.merge, b.merge);
+### Subtract Region
 
-# subtract - explicit calling using primary API function bedr()
-a.sub1 <- bedr(
-	input = list(a = a.merge, b = b.merge), 
-	method = "subtract", 
-	params=""
-	);
+The subtract utility identifies regions exclusive to one (first) set of regions.
 
+```{r, results = "hold", message = TRUE, eval = TRUE, errors = TRUE}
+if (check.binary("bedtools")) {
+
+	# subtract
+	a.sub1 <- bedr.subtract.region(a.merge, b.merge);
+
+	# subtract - explicit call using primary API function bedr()
+	a.sub2 <- bedr(
+		input = list(a = a.merge, b = b.merge), 
+		method = "subtract", 
+		params = "-A"
+		);
+
+	# print
+	cat(" REGION a - sub1: ", a.sub1, "\n");
+	cat(" REGION a - sub2: ", a.sub2, "\n");
+	}
 ```
 
-```{r, results = "hide", message = FALSE, eval = FALSE}
-### jaccard & relative distance
+### in Region
+
+Finding genomic regions which overlap partially with another set of regions is an extremely useful requirement for various sequence analysis related tasks e.g finding gene/SNPS which may fall in particular segments (e.g chromosomal bands).
+
+```{r, results = "hold", message = TRUE, eval = TRUE, errors = TRUE}
+if (check.binary("bedtools")) {
+
+	# check if present in a region
+	is.region <- in.region(a.merge, b.merge);
+
+	# or alternatively R-like in command
+	is.region <- a.merge %in.region% b.merge
+
+	# print
+	cat(" is.region: ", is.region, "\n");
+	}
 ```
 
-```{r, results = "hide", message = FALSE, eval = FALSE}
-### in
-is.region <- in.region(a.merge, b.merge);
-# or alternatively
-is.region <- a.merge %in.region% b.merge
-```
+### Intersect/Join Regions
 
-```{r, results = "hide", message = FALSE, eval = FALSE}
-### intersect / join
-a.int3 <- join.region(a.merge, b.merge);
-a.int1 <- bedr(input = list(a = a.sort, b = b.sort), method = "intersect", params = "-loj -sorted");
+The intersect/join function identifies sub-regions of first set which overlap with the second set of regions, and returns a table with chromosome name along with coordinates of overlapping sub-region. The `bedr.join.multiple.region` function creates an intersect table for multiple regions displaying the overlapping regions along with a fast access truth table for all versus all regions.
 
-### multiple join
-d <- get.random.regions(100, chr="chr1", sort = TRUE);
-a.mult <- bedr.join.multiple.region(x = list(a.merge,b.merge,bedr.sort.region(d)));
+```{r, results = "hold", message = TRUE, eval = TRUE, errors = TRUE}
+if (check.binary("bedtools")) {
+
+	# intersect / join
+	a.int1 <- bedr.join.region(a.merge, b.merge);
+	a.int2 <- bedr(
+		input = list(a = a.sort, b = b.sort), 
+		method = "intersect", 
+		params = "-loj -sorted"
+		);
+
+	# multiple join
+	d <- get.random.regions(15, chr="chr1", sort = TRUE);
+	a.mult <- bedr.join.multiple.region(
+		x = list(a.merge, b.merge, bedr.sort.region(d))
+		);
+
+	# print
+	cat(" REGION a intersect: \n"); print(a.int1); cat("\n");
+	cat(" REGION multi (a,b,c) intersect: \n"); print(a.mult); cat("\n");
+	}
 ```
 
 ```{r, results = "hide", message = FALSE, eval = FALSE}
@@ -157,11 +224,11 @@ a.mult <- bedr.join.multiple.region(x = list(a.merge,b.merge,bedr.sort.region(d)
 
 ```
 
-Example 1: Compare Variant Callers
+Example Workflow 1: Compare Variant Callers
 ----------------------------
 The example workflow below reads two VCF files from different variant callers, further limiting to structural variants only and finally identifying common calls.
 
-```{r, results = "hide", message = FALSE, eval = FALSE}
+```{r, results = "hold", message = TRUE, eval = TRUE, errors = TRUE}
 options("warn" = -1);
 
 VALID.SV.TYPES <- c('BND', 'CNV', 'DEL', 'DUP', 'INS', 'INV');
@@ -183,7 +250,7 @@ callerA$POS <- callerA$POS - 1;
 callerB$POS <- callerB$POS - 1;
 
 # find all overlapping pairs, retrieve size of overlap (bp)
-overlapping.pairs <- join.region(
+overlapping.pairs <- bedr.join.region(
     callerA[, POSITION.COLUMNS],
     callerB[, POSITION.COLUMNS],
     report.n.overlap = TRUE,
@@ -212,6 +279,10 @@ a.length <- overlapping.pairs$a.END - overlapping.pairs$a.POS;
 b.length <- overlapping.pairs$b.END - overlapping.pairs$b.POS;
 
 overlapping.pairs$distance  <- (min.breakpoint.distances + abs(a.length - b.length)) / 2;
+
+# print
+cat("\nOverlapping pairs\n");
+print(overlapping.pairs);
 
 ```
 
