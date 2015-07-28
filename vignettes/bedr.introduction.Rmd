@@ -9,6 +9,7 @@ vignette: >
   %\usepackage[utf8]{inputenc}
   %\SweaveUTF8
 ---
+<link href="GitHub2.css" rel="stylesheet">
 
 # An Introduction to bedr package
 
@@ -21,10 +22,10 @@ The  **bedr** package is a suite of tools for genomic interval processing.  The 
 The advantages to this approach include:
 
 * **Speed.**  Algorithms such as intersections have been heavily optimized in other software.
-* **Size.** The operations happen outside of R and therefore are not constrained by memory to the same extent that R is.  Moreover, **bedr** allows for a hybrid analysis incorporating both R objects and huge on disk files
+* **Size.** The operations happen outside of R and therefore are not constrained by memory to the same extent that R is.  Moreover, **bedr** allows for a hybrid analysis incorporating both R objects and huge on disk files.
 * **Consistency.** A vast number of standardized pipelines already use these tools, therefore simplifying implementation and integration.
 * **Variety.**  Multiple tools *"engines"* are wrapped allowing for flexibility in choosing the ideal operation or cryptic functionality.
-* **Visualization.** Need I say more.
+* **Visualization.** bedr outputs are standardised and readily support various genomic visualisations such as genomic tracks and euler diagrams.
 * **Abstraction.** The existing utilities are only a subset of the native functionality found within each of the engines.  To directly access the full extent of options one can directly call the `bedr` including the required methods and parameters.  
 
 
@@ -61,10 +62,12 @@ First check if the regions are valid.  This involves checking for "chr" prefix, 
 # load bedr library
 library("bedr");
 
-# region validation
+# get example regions
 index <- get.example.regions();
 a <- index[[1]];
 b <- index[[2]];
+
+# region validation
 is.a.valid  <- is.valid.region(a);
 is.b.valid  <- is.valid.region(b);
 a <- a[is.a.valid];
@@ -76,33 +79,52 @@ Generally, it's a good idea to confirm that you've sorted your inputs to avoid u
 
 
 ```{r, results = "hide", message = FALSE, eval = FALSE}
-### sort
+# check if already sorted
 is.sorted <- is.sorted.region(a);
 
+# sort
 a.sort <- bedr.sort.region(a);
 
-b.sort <- bedr(engine = "bedtools", input = list(i = b), method = "sort", params = "");
+# sort - explicit calling using primary API function bedr()
+b.sort <- bedr(
+	engine = "bedtools", 
+	input = list(i = b), 
+	method = "sort", 
+	params = ""
+	);
 
 ```
 
-Similarly, merging adjacent or overlapping regions is often required to avoid redundancy.  Doing an intersection/join with when you have redundant regions can cause unexpected results.
+Similarly, merging adjacent or overlapping regions is often required to avoid redundancy.  Performing an intersection/join with when you have redundant regions can cause unexpected results and hence best is to merge redundant regions.
 
 ```{r, results = "hide", message = FALSE, eval = FALSE}
-### merge or cluster
+# check if already merged (non-overlapping regions)
 is.merged <- is.merged.region(a.sort);
 is.merged <- is.merged.region(b.sort);
 
+# merge
 a.merge <- bedr.merge.region(a.sort);
 
-# the explicit call uses the bedr function
-b.merge <- bedr(engine = "bedtools", input = list(i = b.sort), method = "merge", params = "");
-
+# merge - explicit calling using primary API function bedr()
+b.merge <- bedr(
+	engine = "bedtools", 
+	input = list(i = b.sort), 
+	method = "merge", 
+	params = ""
+	);
 ```
 
 ```{r, results = "hide", message = FALSE, eval = FALSE}
-### subtract
-a.sub1 <- bedr(input = list(a = a.merge, b = b.merge), method = "subtract", params="");
+# subtract
 a.sub2 <- bedr.subtract.region(a.merge, b.merge);
+
+# subtract - explicit calling using primary API function bedr()
+a.sub1 <- bedr(
+	input = list(a = a.merge, b = b.merge), 
+	method = "subtract", 
+	params=""
+	);
+
 ```
 
 ```{r, results = "hide", message = FALSE, eval = FALSE}
