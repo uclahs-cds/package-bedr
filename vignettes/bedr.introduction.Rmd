@@ -280,11 +280,14 @@ b.length <- overlapping.pairs$b.END - overlapping.pairs$b.POS;
 
 overlapping.pairs$distance  <- (min.breakpoint.distances + abs(a.length - b.length)) / 2;
 
-# print
-cat("\nOverlapping pairs\n");
-print(overlapping.pairs);
-
+# plot the overlapping summary
 ```
+
+Example 2: Annotate Variants
+----------------------------
+
+Example 3: Exome Target Processing
+----------------------------
 
 
 Example 2: Exome Target Processing

@@ -100,8 +100,8 @@ bedr.plot.region <- function(input, filename = NULL, type = "venn", feature = "i
 			cat.col = c("darkred", "darkblue", "darkgreen"),
 			cat.dist = c(0.06, 0.06, 0.03),
 			cat.pos = 0,
-			euler.d = TRUE,
-			scaled = TRUE
+			euler.d = FALSE,
+			scaled = FALSE
 			);
 
 		venn.4   <- alist(
@@ -143,7 +143,7 @@ bedr.plot.region <- function(input, filename = NULL, type = "venn", feature = "i
 			}
 		
 		# decide what venn function
-		venn.function <- paste("draw", venn.type,"venn", sep = ".");
+		venn.function <- paste("draw", venn.type, "venn", sep = ".");
 		
 		# set up custom plotting parameters
 		venn.default <- formals(venn.function);
@@ -167,8 +167,8 @@ bedr.plot.region <- function(input, filename = NULL, type = "venn", feature = "i
 			sub.cex = 1.2
 			);
 
-#		# update with any user specified venn plotting customizations
-#		venn.new <- modifyList(venn.new, ...)
+		# update with any user specified venn plotting customizations
+		# venn.new <- modifyList(venn.new, ...)
 
 		venn.new['filename'] <- list(filename);
 

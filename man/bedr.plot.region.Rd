@@ -26,7 +26,7 @@ A list of input regions or indices
 The name of the output image file
 }
   \item{type}{
-The type of plot including venn for intersections and barplots for score metrics
+The type of plot. only 'venn' is supported for intersections at the moment.
 }
   \item{feature}{
 How should the regions be intersected.  By unique "interval", "gene", "size" or "other" to use the features in the first item in the input list.
@@ -62,21 +62,19 @@ if (check.binary("bedtools")) {
 	e <- get.random.regions(n = 1000, chr = "chr22", size.mean = 10)
 	f <- get.random.regions(n = 1000, chr = "chr22", size.mean = 10)
 
-	#pdf("bedr.plot.region.ex.pdf")
+	pdf("bedr.plot.region.ex.pdf")
 
-	### basic venn diagrams
-	# note single inputs compare the original with a merged/collapsed set of regions
-	#bedr.plot.region(input = list(a=a)) 
-	#bedr.plot.region(input = list(a=a,b=b))
-	#bedr.plot.region(input = list(a=a,b=b,d=d))
-	#bedr.plot.region(input = list(a=a,b=b,d=d,e=e))
-	#bedr.plot.region(input = list(a=a,b=b,d=d,e=e,f=f))
+	# basic venn diagrams
+	bedr.plot.region(input = list(a=a,b=b))
+	bedr.plot.region(input = list(a=a,b=b,d=d))
+	bedr.plot.region(input = list(a=a,b=b,d=d,e=e))
+	bedr.plot.region(input = list(a=a,b=b,d=d,e=e,f=f))
 
 	### change venn parameters
-	#bedr.plot.region(
-	#	input = list(a=a,b=b,d=d),
-	#	params = list(lty = 2, label.col = "black", main = "Region Overlap")
-	#	)
+	bedr.plot.region(
+		input = list(a=a,b=b,d=d),
+		params = list(lty = 2, label.col = "black", main = "Region Overlap")
+		)
 
 	### try with different 
 	#bedr.plot.region(input = list(a=a,b=b), feature = "gene")
@@ -85,7 +83,7 @@ if (check.binary("bedtools")) {
 	#bedr.plot.region(input = list(a=a,b=b), feature = "cluster")
 	#bedr.plot.region(input = list(a=a,b=b), feature = "bp")
 
-	#dev.off()
+	dev.off()
 	}
 }
 
