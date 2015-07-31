@@ -67,8 +67,8 @@ if (check.binary("bedtools")) {
 	# basic venn diagrams
 	bedr.plot.region(input = list(a=a,b=b))
 	bedr.plot.region(input = list(a=a,b=b,d=d))
-	bedr.plot.region(input = list(a=a,b=b,d=d,e=e))
-	bedr.plot.region(input = list(a=a,b=b,d=d,e=e,f=f))
+	#bedr.plot.region(input = list(a=a,b=b,d=d,e=e))
+	#bedr.plot.region(input = list(a=a,b=b,d=d,e=e,f=f))
 
 	### change venn parameters
 	bedr.plot.region(
