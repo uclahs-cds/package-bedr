@@ -229,7 +229,6 @@ Example Workflow 1: Compare Variant Callers
 The example workflow below reads two VCF files from different variant callers, further limiting to structural variants only and finally identifying common calls.
 
 ```{r, results = "hold", message = TRUE, eval = TRUE, errors = TRUE}
-options("warn" = -1);
 
 VALID.SV.TYPES <- c('BND', 'CNV', 'DEL', 'DUP', 'INS', 'INV');
 POSITION.COLUMNS <- c('CHROM', 'POS', 'END');
