@@ -293,7 +293,7 @@ This example builds on the `Example Workflow 1`, and annotates the structural va
 if (check.binary("bedtools")) {
 
 	# get Human RefSeq genes (Hg19) in BED format
-	refseq.file <- system.file("extdata/ucsc.hg19.RefSeq.txt.gz", package = "bedr");
+	refseq.file <- system.file("extdata/ucsc.hg19.RefSeq.chr1-2.txt.gz", package = "bedr");
 	refseq <- read.table(refseq.file, header = FALSE, stringsAsFactors = FALSE);
 
 	# limit to genes on chr1 and sort Refseq
