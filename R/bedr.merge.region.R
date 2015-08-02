@@ -15,8 +15,22 @@ catv("MERGING\n")
 
 	if (is.vector(x) || ncol(x)<4) {list.names=FALSE}
 
-	list.names.param <- ifelse(list.names, "-nms", "");
-	number     <- ifelse(number, "-n", "");
+	if (list.names && number) {
+		list.names.param <- "-c 4,1 -o collapse,count"
+		}
+	else if (list.names) {
+		list.names.param <- "-c 4 -o collapse"
+		}
+	else if (number) {
+		list.names.param <- "-c 1 -o count"
+		}
+	else {
+		list.names.param <- ""
+		}
+
+	# deprecated
+	# list.names.param <- ifelse(list.names, "-nms", "");
+	# number     <- ifelse(number, "-n", "");
 
 	if(is.vector(x, mode = "character")) {
 		n.rec.before <- length(x)
@@ -41,14 +55,14 @@ catv("MERGING\n")
 
 	# should the collapsing be done within groups i.e. genes
 	if (is.null(stratify.by)) {
-		x <- bedr(engine = "bedtools", input = list(i = x), method = "merge", params = paste("-d", distance, list.names.param, number), check.zero.based = FALSE, check.chr = FALSE, check.valid = FALSE, check.merge = FALSE, check.sort = FALSE, verbose = verbose);
+		x <- bedr(engine = "bedtools", input = list(i = x), method = "merge", params = paste("-d", distance, list.names.param), check.zero.based = FALSE, check.chr = FALSE, check.valid = FALSE, check.merge = FALSE, check.sort = FALSE, verbose = verbose);
 		}
 	else {
 		if (!stratify.by %in% colnames(x)) {
 			catv("ERROR: the statified column does not exist \n");
 			return(1);
 			}
-		x <- by(x, x[,stratify.by], function(x) {bedr(engine = "bedtools", input = list(i = x), method = "merge", params = paste("-d", distance, list.names.param, number), check.zero.based = FALSE, check.chr = FALSE, check.valid = FALSE, check.merge = FALSE, check.sort = FALSE, verbose = verbose)});
+		x <- by(x, x[,stratify.by], function(x) {bedr(engine = "bedtools", input = list(i = x), method = "merge", params = paste("-d", distance, list.names.param), check.zero.based = FALSE, check.chr = FALSE, check.valid = FALSE, check.merge = FALSE, check.sort = FALSE, verbose = verbose)});
 		x <- do.call(rbind, x);
 		}
 

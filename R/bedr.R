@@ -13,7 +13,7 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 
 	# default parameters
 	if (is.null(params)) params <- "";
-	
+
 	# check binary is in path
 	if(!check.binary(engine, verbose = FALSE)) {
 		catv(paste0("ERROR: missing binary/executable ", engine))
@@ -182,15 +182,13 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 				b.colnames <- gsub("chr", "chr.b", b.colnames);
 				b.colnames <- gsub("start", "start.b", b.colnames);
 				b.colnames <- gsub("end", "end.b", b.colnames);
-				colnames(output)[(ncol(output)-length(b.colnames)+1):ncol(output)] <- b.colnames;
+				colnames(output)[(length(a.colnames)+1):(length(a.colnames)+length(b.colnames))] <- b.colnames;
 				}
 			else {
 				#b.col.start <- ;
 				#colnames(output)[b.col.start:b.col.start+2] <- c("chr","start", "end");
 				}
-
 			}
-
 		}
 	else {
 		}
