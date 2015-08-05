@@ -20,7 +20,7 @@ if (check.binary("bedtools", verbose = TRUE)) {
 		regions$b <- bedr.sort.region(regions$b)
 		a.b.overlap <- c(F,T,T,T,F,T,T,F)
 		b.a.overlap <- c(F,T,F,F,F,T,F)
-		a.b.overlap.pc0 <- c(T,T,T,T,T,T,T,F)
+		a.b.overlap.pc0 <- c(F,T,T,T,F,T,T,F)
 		a.b.overlap.pc5 <- c(F,T,T,T,F,F,T,F)
 		a.b.overlap.pc1 <- c(F,F,T,T,F,F,T,F)
 		a.b.overlap.sorted <- c(F,T,T,T,F,T,T,F)
@@ -37,7 +37,7 @@ if (check.binary("bedtools", verbose = TRUE)) {
 		expect_equal(in.region(regions$b, regions$a, verbose = F), b.a.overlap);
 
 		# vary the proportion over overlap
-		expect_equal(in.region(regions$a, regions$b, proportion.overlap = 0, verbose = F), a.b.overlap.pc0);
+		expect_equal(in.region(regions$a, regions$b, proportion.overlap = 0.1, verbose = F), a.b.overlap.pc0);
 		expect_equal(in.region(regions$a, regions$b, proportion.overlap = .5, verbose = F), a.b.overlap.pc5);
 		expect_equal(in.region(regions$a, regions$b, proportion.overlap = 1, verbose = F), a.b.overlap.pc1);
 	
