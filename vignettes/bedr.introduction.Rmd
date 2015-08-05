@@ -53,10 +53,11 @@ General Region Utilities
 * get.RegionSize
 * get.fastaRegion
 * read.vcf
+* groupby
 * jaccard & reldist
 
 
-### Load bedr
+### Load bedr library
 Loading of bedr package will indicate the presensece of bedtools, bedops and tabix libraries on your system. If these are not present, there is very little value in using bedr package. If you have installed these in a non-standard path/directory of your computer, please add these to PATH environment variable.
 
 ```{r, results = "hold", message = TRUE, eval = TRUE, errors = TRUE}
@@ -149,7 +150,7 @@ if (check.binary("bedtools")) {
 
 ### Subtract Region
 
-The subtract utility identifies regions exclusive to one (first) set of regions.
+The subtract utility identifies regions exclusive to one (first) set of regions. For instance, one might be interested in removing non-coding regions from gene regions.
 
 ```{r, results = "hold", message = TRUE, eval = TRUE, errors = TRUE}
 if (check.binary("bedtools")) {
@@ -172,7 +173,7 @@ if (check.binary("bedtools")) {
 
 ### in Region
 
-Finding genomic regions which overlap partially with another set of regions is an extremely useful requirement for various sequence analysis related tasks e.g finding gene/SNPS which may fall in particular segments (e.g chromosomal bands).
+Finding genomic regions which overlap partially with another set of regions is an extremely useful requirement for various sequence analysis tasks e.g finding gene/SNPS which may fall in particular segments (e.g chromosomal bands).
 
 ```{r, results = "hold", message = TRUE, eval = TRUE, errors = TRUE}
 if (check.binary("bedtools")) {
@@ -215,13 +216,39 @@ if (check.binary("bedtools")) {
 	}
 ```
 
-```{r, results = "hide", message = FALSE, eval = FALSE}
-### groupby 
-# note the "g" column number is based on bed format i.e. first three columns chr, start, stop
-# note the use of first, first, last on the region columns i.e. the union of the regions
-# note currently missing values are note dealt with in bedtools.  also the 5th column is assumed to be "score" and gets a default "-1" not a "."
-#cnv.gene <- bedr(input = list(i=cnv.gene), method = "groupby", params = paste("-g 16 -c ", paste(1:15, collapse = ","), " -o ", "first,first,last,", paste(rep("sum",12), collapse = ","), sep = ""));
+### GroupBy
 
+For multiple genomic features/regions mapping to the exact locus (e.g SNPs), it is often useful to collapse their additional annotations into a single record. To collapse, one may be interested in using quantitative operations such as sum, mean, median (see bedtools for all the options) or simple concatenate multiple entries.
+
+```{r, results = "hold", message = TRUE, eval = TRUE, errors = TRUE}
+if (check.binary("bedtools")) {
+
+	# read example regions file
+	regions.file <- system.file("extdata/example-a-region.bed", package = "bedr");
+	a <- read.table(regions.file, header = FALSE, stringsAsFactors = FALSE);
+	colnames(a) <- c("a.CHROM", "a.START", "a.END", "Score");
+
+	# sort
+	a <- bedr.sort.region(a);
+
+	# group by (on first three columns) the score in column 4. Concatenate scores
+	a.collapsed <- bedr(
+		input = list(i = a), 
+		method = "groupby", 
+		params = "-g 1,2,3 -c 4 -o collapse"
+		);
+
+	# group by (on first three columns) the score in column 4. Compute mean
+	a.mean <- bedr(
+		input = list(i = a), 
+		method = "groupby", 
+		params = "-g 1,2,3 -c 4 -o mean"
+		);
+
+	# print
+	cat(" REGION a groupby (collapsed): \n"); print(a.collapsed); cat("\n");
+	cat(" REGION a groupby (mean): \n"); print(a.mean); cat("\n");
+	}
 ```
 
 Example Workflow 1: Compare Variant Callers
@@ -281,6 +308,7 @@ if (check.binary("bedtools")) {
 
 	# print
 	cat(" OVERLAPPING PAIRS: \n"); print(head(overlapping.pairs)); cat("\n");
+
 	}
 ```
 
@@ -325,35 +353,66 @@ if (check.binary("bedtools")) {
         'Gene.CHROM', 'Gene.POS', 'Gene.END', 'Gene', 'Overlap'
         );
 
+	# reinstate chr prefix to chromosome names
+	callerA.annotated$a.CHROM <- paste('chr', callerA.annotated$a.CHROM, sep = "");
+	callerB.annotated$b.CHROM <- paste('chr', callerB.annotated$b.CHROM, sep = "");
+
 	# print
-	cat(" CALLER A GENES (chr 1): \n"); print(head(callerA.annotated)); cat("\n");
-	cat(" CALLER B GENES (chr 1): \n"); print(head(callerB.annotated)); cat("\n");
+	cat(" CALLER A GENES (chr 1,2): \n"); print(head(callerA.annotated)); cat("\n");
+	cat(" CALLER B GENES (chr 1,2): \n"); print(head(callerB.annotated)); cat("\n");
+
 	}
 ```
 
-Adding gene names via join
+Next, you may want to collapse multiple gene entries in one row. This can be done using groupby operation of bedtools.
 
-Candidate gene list extract with in.region
+```{r, results = "hide", message = FALSE, eval = TRUE, errors = TRUE}
+if (check.binary("bedtools")) {
 
-identify regions with overlapping features ":"
+	callerA.annotated.grouped <- bedr(
+		input = list(i = callerA.annotated), 
+		method = "groupby", 
+		params = "-g 1,2,3 -c 7 -o collapse"
+		);
 
-Filter for non overlapping features and try again
+	callerB.annotated.grouped <- bedr(
+		input = list(i = callerB.annotated), 
+		method = "groupby", 
+		params = "-g 1,2,3 -c 7 -o collapse"
+		);
 
-Plot distribution of capture sizes
-
-Plot venn of capture bed vs gene
-
+	# print
+	cat(" CALLER A GENES (chr 1,2) GROUPED: \n"); print(head(callerA.annotated.grouped)); cat("\n");
+	cat(" CALLER B GENES (chr 1,2) GROUPED: \n"); print(head(callerB.annotated.grouped)); cat("\n");
+	}
 ```
-### example 1
-###  workflow adding gene names to exome sequencing target file
-# download refseq genes from ucsc or query biomart for ensemble gene names.  format them in basic bed format.
-# sort, merge target
-# sort, merge -nms target.  Overlapping genes/features get merged.  this may not be ideal if there are some really big features.
-# intersect -loj target, genes.
-# alternatively, do not merge the target and apply the merge after the intersect.  this will provide precision a the level of the exon.
+
+```{r, results = "hide", message = FALSE, eval = TRUE, errors = TRUE, fig.width = 7, fig.height = 7}
+if (check.binary("bedtools")) {
+
+	# merge and plot overlapping regions between the two callers with genes 
+	# on chromosome 1 and 2
+	callerA.merged <- callerA.annotated[, c('a.CHROM', 'a.POS', 'a.END')];
+	callerB.merged <- callerB.annotated[, c('b.CHROM', 'b.POS', 'b.END')];
+	callerA.merged <- bedr.merge.region(callerA.merged);
+	callerB.merged <- bedr.merge.region(callerB.merged);
+
+	# plot (sub-regions exclusive to a and b, and sub-regions in common)
+	bedr.plot.region(
+		input = list(
+			a = callerA.merged, 
+			b = callerB.merged
+			),
+		params = list(lty = 2, label.col = "black", main = "Genes Overlap"),
+		feature = 'interval',
+		verbose = FALSE
+		);
+	}
 ```
 
-Example 2: Copy Number Recurrence
+The venn diagram shows the number of sub-regions on chromosome 1 and 2 which are common between the two callers, and the ones which are exclusive to the callers.
+
+Example Workflow 3: Copy Number Recurrence
 ----------------------------
 
 check 

@@ -157,8 +157,10 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 		# try and add column names when the ouptut is the same number of columns as the first input
 		if (!attr(input.files[[1]], "is.file") && ncol.output == ncol(data.frame(input[[1]]))) {
 			if (engine == "bedtools" && method == "groupby") {
-				# groups coluns are moved to front of dataset so need to move some things around
-				group.columns    <- as.numeric(gsub(" ", "",gsub(".*-g(.*?)-.*", "\\1" , params)));
+				# groups columns are moved to front of dataset so need to move some things around
+				group.columns    <- as.numeric(
+					unlist(strsplit(gsub(" ", "",gsub(".*-g(.*?)-.*", "\\1" , params)), ","))
+					);
 				group.colnames   <- c(colnames(input[[1]])[group.columns], colnames(input[[1]])[-group.columns]);
 				colnames(output) <- group.colnames;
 				}
