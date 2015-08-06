@@ -189,7 +189,7 @@ if (check.binary("bedtools")) {
 
 ### <a id = "in-Region"></a> in Region
 
-Finding genomic regions which overlap partially with another set of regions is an extremely useful requirement for various sequence analysis tasks e.g finding gene/SNPS which may fall in particular segments (e.g chromosomal bands).
+Finding genomic regions which overlap partially with another set of regions is an extremely useful requirement for various sequence analysis tasks e.g finding genes/SNPs which may fall in particular segments (e.g chromosomal bands).
 
 ```{r, results = "hold", message = TRUE, eval = TRUE, errors = TRUE}
 if (check.binary("bedtools")) {
@@ -346,7 +346,6 @@ if (check.binary("bedtools")) {
 
 	# print
 	cat(" OVERLAPPING PAIRS: \n"); print(head(overlapping.pairs)); cat("\n");
-
 	}
 ```
 
@@ -397,13 +396,13 @@ if (check.binary("bedtools")) {
 	# print
 	cat(" CALLER A GENES (chr 1,2): \n"); print(head(callerA.annotated)); cat("\n");
 	cat(" CALLER B GENES (chr 1,2): \n"); print(head(callerB.annotated)); cat("\n");
-
 	}
 ```
 
 Next, you may want to collapse multiple gene entries in one row. This can be done using `groupby` utility.
 
-```{r, results = "hide", message = FALSE, eval = TRUE, errors = TRUE}
+```{r, results = "hold", message = FALSE, warnings = FALSE, eval = TRUE, errors = TRUE}
+options("warn" = -1);
 if (check.binary("bedtools")) {
 
 	# collapse column 7 (Gene) against unique composite key (column 1, 2 and 3)
