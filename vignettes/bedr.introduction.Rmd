@@ -253,7 +253,7 @@ if (check.binary("bedtools")) {
 
 ### Statisically Quantify Regions' Similarity (jaccard and reldist)
 
-When comparing (pairwise) the extent of overlap between a large collection of genomic regions, it becomes necessary to report the similarity (intersect) using a single quantitative measure. Bedtools implements two such statitics; `jaccard` and `reldist` ([Favorov A et al.]([docs](http://www.ncbi.nlm.nih.gov/pubmed/22693437))) which can be called through `bedr` as shown below:
+When comparing (pairwise) the extent of overlap between a large collection of genomic regions, it becomes necessary to report the similarity (intersect) using a single quantitative measure. Bedtools implements two such statitics; [`jaccard`](http://bedtools.readthedocs.org/en/latest/content/tools/jaccard.html) and [`reldist`](http://bedtools.readthedocs.org/en/latest/content/tools/reldist.html) ([Favorov A et al.](http://www.ncbi.nlm.nih.gov/pubmed/22693437)) which can be called through `bedr` as shown below:
 
 ```{r, results = "hold", message = TRUE, eval = TRUE, errors = TRUE}
 if (check.binary("bedtools")) {
