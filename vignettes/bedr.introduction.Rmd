@@ -54,7 +54,7 @@ General Region Utilities
 * get.fastaRegion
 * read.vcf
 * groupby
-* jaccard & reldist
+* test.region.similarity (jaccard & reldist)
 
 
 ### Load bedr library
@@ -251,6 +251,29 @@ if (check.binary("bedtools")) {
 	}
 ```
 
+### Statisically Quantify Regions' Similarity (jaccard and reldist)
+
+When comparing (pairwise) the extent of overlap between a large collection of genomic regions, it becomes necessary to report the similarity (intersect) using a single quantitative measure. Bedtools implements two such statitics; `jaccard` and `reldist` ([Favorov A et al.]([docs](http://www.ncbi.nlm.nih.gov/pubmed/22693437))) which can be called through `bedr` as shown below:
+
+```{r, results = "hold", message = TRUE, eval = TRUE, errors = TRUE}
+if (check.binary("bedtools")) {
+
+	# compare a and b set of sequences
+	jaccard.stats <- jaccard(a.sort, b.sort);
+	reldist.stats <- reldist(a.sort, b.sort);
+
+	# print
+	cat(" JACCARD a & b: \n"); print(jaccard.stats); cat("\n");
+	cat(" RELDIST a & b: \n"); print(reldist.stats); cat("\n");
+
+	# even better way to run both jaccard and reldist, as well as estimate P value through random permutations
+	jaccard.reldist.stats <- test.region.similarity(a.sort, b.sort, n = 40);
+
+	cat(" JACCARD/RELDIST a & b: \n"); print(jaccard.reldist.stats); cat("\n");
+	}
+```
+
+
 Example Workflow 1: Compare Variant Callers
 ----------------------------
 The example workflow below reads two VCF files from different variant callers, further limiting to structural variants only and finally identifying common calls.
@@ -364,17 +387,19 @@ if (check.binary("bedtools")) {
 	}
 ```
 
-Next, you may want to collapse multiple gene entries in one row. This can be done using groupby operation of bedtools.
+Next, you may want to collapse multiple gene entries in one row. This can be done using `groupby` utility.
 
 ```{r, results = "hide", message = FALSE, eval = TRUE, errors = TRUE}
 if (check.binary("bedtools")) {
 
+	# collapse column 7 (Gene) against unique composite key (column 1, 2 and 3)
 	callerA.annotated.grouped <- bedr(
 		input = list(i = callerA.annotated), 
 		method = "groupby", 
 		params = "-g 1,2,3 -c 7 -o collapse"
 		);
 
+	# collapse column 7 (Gene) against unique composite key (column 1, 2 and 3)
 	callerB.annotated.grouped <- bedr(
 		input = list(i = callerB.annotated), 
 		method = "groupby", 
@@ -386,6 +411,8 @@ if (check.binary("bedtools")) {
 	cat(" CALLER B GENES (chr 1,2) GROUPED: \n"); print(head(callerB.annotated.grouped)); cat("\n");
 	}
 ```
+
+You may also want to summarise counts of overlapping and unique sub-regions. This can be done by `bedr.plot.region` method which displays the summary as a venn diagram.
 
 ```{r, results = "hide", message = FALSE, eval = TRUE, errors = TRUE, fig.width = 7, fig.height = 7}
 if (check.binary("bedtools")) {
@@ -415,47 +442,9 @@ The venn diagram shows the number of sub-regions on chromosome 1 and 2 which are
 Example Workflow 3: Copy Number Recurrence
 ----------------------------
 
-check 
 
-Merge multiple samples
-
-Filter problematic regions (telomeres, centromeres, encode blacklist)
-
-merge to gene and then merge different platforms
-
-Add some flank and calculate the similarity via jaccard
-
-plot a heatmap with jaccard as the intersample distance metric
-
-calculate reldist kw.test. multiple line plot for outliers.
-
-summarize genes with highest proportion of CN gain/loss
-
-calculate the pga and do a barplot.
-
-
-Example 3. ClinVar Summarizing
+Summary
 ----------------------------
-
-tabix to get some bed data i.e. acmg genes
-
-read.vcf to load some clinical data annotation
-
-read.vcf to load some variants, 1kg??
-
-summarize counts, type, consequence, ti-tv
-
-stacked barplot
-
-
-Example 4. Cosmic Munging
-----------------------------
-
-read.vcf
-
-getfasta triplet nucleotide around variant
-
-20-20 rule to id some TS and Onc's
-
+In a nutshell, bedr offers an R-style interface to bedtools and bedops, and therefore, the extensive use cases and workflows manipulating genomic intervals using these tools can be implemented using bedr. If you would like to contribute a use case or have a feature request, please do not hesitate to contact Paul.Boutros@oicr.on.ca.
 
 
