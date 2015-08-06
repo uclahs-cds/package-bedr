@@ -11,11 +11,29 @@ vignette: >
 ---
 <link href="GitHub2.css" rel="stylesheet">
 
-# An Introduction to bedr package
+## Introduction to bedr package
+### Author(s): Daryl Waggott, Syed Haider, Emilie Lalonde, Clement Fung, Paul C. Boutros
+### Dated: `r Sys.Date()`
 
-Introduction
-------------
+## Table of Contents
+  * [Introduction](#Introduction)
+  * [Third Party Tools](#Third-Party-Tools)
+  * [General Region Utilities](#General-Region-Utilities)
+  	* [Load bedr Library](#Load-bedr-Library)
+  	* [Validate Region](#Validate-Region)
+  	* [Sort Region](#Sort-Region)
+  	* [Merge Regions](#Merge-Regions)
+  	* [Subtract Region](#Subtract-Region)
+  	* [in Region](#in-Region)
+  	* [Intersect/Join Regions](#Intersect-Join-Regions)
+  	* [Statisically Quantify Regions' Similarity (jaccard and reldist)](#jaccard-and-reldist)
+  	* [GroupBy](#GroupBy)
+  * [Example Workflow 1: Compare Variant Callers](#Example-Workflow-1)
+  * [Example Workflow 2: Exome Target Processing](#Example-Workflow-2)
+  * [Example Workflow 3: Copy Number Recurrence](#Example-Workflow-3)
+  * [Summary](#Summary)
 
+## <a id = "Introduction"></a> Introduction
 
 The  **bedr** package is a suite of tools for genomic interval processing.  The philosophy is to wrap existing best practice bioinformatic software in order to provide a unifying analysis environment within R.  **bedr** should be considered complimentary to native implementations of interval processing such genomicRanges.  
 
@@ -28,9 +46,7 @@ The advantages to this approach include:
 * **Visualization.** bedr outputs are standardised and readily support various genomic visualisations such as genomic tracks and euler diagrams.
 * **Abstraction.** The existing utilities are only a subset of the native functionality found within each of the engines.  To directly access the full extent of options one can directly call the `bedr` including the required methods and parameters.  
 
-
-Third Party Tools
-----------------------------
+## <a id = "Third-Party-Tools"></a> Third Party Tools 
 
 The current implementation focuses on three excellent tools.  For specifics on functionality please visit there online documentation, primary citation and [biostar](http://www.biostars.org/show/tag/bedtools/) posts.  To gain the functionality of these analytical engines you will need to have the programs installed and in your default PATH.  In future versions the source code for these dependencies may be distributed together.
 
@@ -39,8 +55,7 @@ The current implementation focuses on three excellent tools.  For specifics on f
 2. bedops [docs](https://bedops.readthedocs.org/en/latest/) and [source](https://github.com/bedops/bedops)
 3. tabix [docs](http://www.htslib.org/doc/tabix.html) and [source](http://sourceforge.net/projects/samtools/files/tabix/)
 
-General Region Utilities
-----------------------------
+## <a id = "General-Region-Utilities"></a> General Region Utilities
 
 * is.valid.region
 * bedr.sort.region & is.sorted.region
@@ -57,7 +72,7 @@ General Region Utilities
 * test.region.similarity (jaccard & reldist)
 
 
-### Load bedr library
+### <a id = "Load-bedr-Library"></a> Load bedr Library
 Loading of bedr package will indicate the presensece of bedtools, bedops and tabix libraries on your system. If these are not present, there is very little value in using bedr package. If you have installed these in a non-standard path/directory of your computer, please add these to PATH environment variable.
 
 ```{r, results = "hold", message = TRUE, eval = TRUE, errors = TRUE}
@@ -65,7 +80,7 @@ Loading of bedr package will indicate the presensece of bedtools, bedops and tab
 library("bedr");
 ```
 
-### Validate Region
+### <a id = "Validate-Region"></a> Validate Region
 
 First check if the regions are valid.  This involves checking for "chr" prefix, data types, end > start position and for compliance to bed formats zero based start position.  All checks can be turned off as required.  The "chr" check is useful due to various human reference formats (NCBI vs UCSC) having different standards.  This can result in unexpected results if comapring across specifications.  Similarly, bed format uses a zero based start postion, but vcf's use a one based position.  Therefore, a snp at position 100 would be chr1:100-100 in one based but chr1:99-100 in zero based format.  Another common mistake relates to overlaps between adjacent intervals, for example in zero based setups chr1:10-100 does not intersect with chr1:100-110. 
 
@@ -90,7 +105,8 @@ if (check.binary("bedtools")) {
 	}
 ```
 
-### Sort Region
+### <a id = "Sort-Region"></a> Sort Region
+
 Generally, it's a good idea to confirm that you've sorted your inputs to avoid unexpected results and take advantage of optimized algorithms.  For example merging and clustering require adjacent intervals.  `is.sorted.region` is convenient for explicit evaluation although it's done internally for core operations.
 
 ```{r, results = "hold", message = TRUE, eval = TRUE, errors = TRUE}
@@ -120,7 +136,7 @@ if (check.binary("bedtools")) {
 	}
 ```
 
-### Merge Regions
+### <a id = "Merge-Regions"></a> Merge Regions
 
 Similarly, merging adjacent or overlapping regions is often required to avoid redundancy.  Performing an intersection/join when you have redundant regions can cause unexpected results and hence best is to merge redundant regions.
 
@@ -148,7 +164,7 @@ if (check.binary("bedtools")) {
 	}
 ```
 
-### Subtract Region
+### <a id = "Subtract-Region"></a> Subtract Region
 
 The subtract utility identifies regions exclusive to one (first) set of regions. For instance, one might be interested in removing non-coding regions from gene regions.
 
@@ -171,7 +187,7 @@ if (check.binary("bedtools")) {
 	}
 ```
 
-### in Region
+### <a id = "in-Region"></a> in Region
 
 Finding genomic regions which overlap partially with another set of regions is an extremely useful requirement for various sequence analysis tasks e.g finding gene/SNPS which may fall in particular segments (e.g chromosomal bands).
 
@@ -189,7 +205,7 @@ if (check.binary("bedtools")) {
 	}
 ```
 
-### Intersect/Join Regions
+### <a id = "Intersect-Join-Regions"></a> Intersect/Join Regions
 
 The intersect/join function identifies sub-regions of first set which overlap with the second set of regions, and returns a table with chromosome name along with coordinates of overlapping sub-region. The `bedr.join.multiple.region` function creates an intersect table for multiple regions displaying the overlapping regions along with a fast access truth table for all versus all regions.
 
@@ -216,7 +232,29 @@ if (check.binary("bedtools")) {
 	}
 ```
 
-### GroupBy
+### <a id = "jaccard-and-reldist"></a> Statisically Quantify Regions' Similarity (jaccard and reldist)
+
+When comparing (pairwise) the extent of overlap between a large collection of genomic regions, it becomes necessary to report the similarity (intersect) using a single quantitative measure. Bedtools implements two such statitics; [`jaccard`](http://bedtools.readthedocs.org/en/latest/content/tools/jaccard.html) and [`reldist`](http://bedtools.readthedocs.org/en/latest/content/tools/reldist.html) ([Favorov A et al.](http://www.ncbi.nlm.nih.gov/pubmed/22693437)) which can be called through `bedr` as shown below:
+
+```{r, results = "hold", message = TRUE, eval = TRUE, errors = TRUE}
+if (check.binary("bedtools")) {
+
+	# compare a and b set of sequences
+	jaccard.stats <- jaccard(a.sort, b.sort);
+	reldist.stats <- reldist(a.sort, b.sort);
+
+	# print
+	cat(" JACCARD a & b: \n"); print(jaccard.stats); cat("\n");
+	cat(" RELDIST a & b: \n"); print(reldist.stats); cat("\n");
+
+	# even better way to run both jaccard and reldist, as well as estimate P value through random permutations
+	jaccard.reldist.stats <- test.region.similarity(a.sort, b.sort, n = 40);
+
+	cat(" JACCARD/RELDIST a & b: \n"); print(jaccard.reldist.stats); cat("\n");
+	}
+```
+
+### <a id = "GroupBy"></a> GroupBy
 
 For multiple genomic features/regions mapping to the exact locus (e.g SNPs), it is often useful to collapse their additional annotations into a single record. To collapse, one may be interested in using quantitative operations such as sum, mean, median (see bedtools for all the options) or simple concatenate multiple entries.
 
@@ -251,31 +289,8 @@ if (check.binary("bedtools")) {
 	}
 ```
 
-### Statisically Quantify Regions' Similarity (jaccard and reldist)
+## <a id = "Example-Workflow-1"></a> Example Workflow 1: Compare Variant Callers
 
-When comparing (pairwise) the extent of overlap between a large collection of genomic regions, it becomes necessary to report the similarity (intersect) using a single quantitative measure. Bedtools implements two such statitics; [`jaccard`](http://bedtools.readthedocs.org/en/latest/content/tools/jaccard.html) and [`reldist`](http://bedtools.readthedocs.org/en/latest/content/tools/reldist.html) ([Favorov A et al.](http://www.ncbi.nlm.nih.gov/pubmed/22693437)) which can be called through `bedr` as shown below:
-
-```{r, results = "hold", message = TRUE, eval = TRUE, errors = TRUE}
-if (check.binary("bedtools")) {
-
-	# compare a and b set of sequences
-	jaccard.stats <- jaccard(a.sort, b.sort);
-	reldist.stats <- reldist(a.sort, b.sort);
-
-	# print
-	cat(" JACCARD a & b: \n"); print(jaccard.stats); cat("\n");
-	cat(" RELDIST a & b: \n"); print(reldist.stats); cat("\n");
-
-	# even better way to run both jaccard and reldist, as well as estimate P value through random permutations
-	jaccard.reldist.stats <- test.region.similarity(a.sort, b.sort, n = 40);
-
-	cat(" JACCARD/RELDIST a & b: \n"); print(jaccard.reldist.stats); cat("\n");
-	}
-```
-
-
-Example Workflow 1: Compare Variant Callers
-----------------------------
 The example workflow below reads two VCF files from different variant callers, further limiting to structural variants only and finally identifying common calls.
 
 ```{r, results = "hold", message = TRUE, eval = TRUE, errors = TRUE}
@@ -335,8 +350,7 @@ if (check.binary("bedtools")) {
 	}
 ```
 
-Example Workflow 2: Exome Target Processing
-----------------------------
+## <a id = "Example-Workflow-2"></a> Example Workflow 2: Exome Target Processing
 
 This example builds on the `Example Workflow 1`, and annotates the structural variants with RefSeq gene identifiers if the variant falls within the gene body for instance. Limiting to chromosome 1 and 2 only. Lastly compare which genes were commmon between the calls generated by two variant callers.
 
@@ -439,12 +453,11 @@ if (check.binary("bedtools")) {
 
 The venn diagram shows the number of sub-regions on chromosome 1 and 2 which are common between the two callers, and the ones which are exclusive to the callers.
 
-Example Workflow 3: Copy Number Recurrence
-----------------------------
+## <a id = "Example-Workflow-3"></a> Example Workflow 3: Copy Number Recurrence
 
 
-Summary
-----------------------------
-In a nutshell, bedr offers an R-style interface to bedtools and bedops, and therefore, the extensive use cases and workflows manipulating genomic intervals using these tools can be implemented using bedr. If you would like to contribute a use case or have a feature request, please do not hesitate to contact Paul.Boutros@oicr.on.ca.
+## <a id = "Summary"></a> Summary
+
+In a nutshell, bedr offers an R-style interface to bedtools and bedops, and therefore, the extensive use cases and workflows manipulating genomic intervals using these tools can be implemented using bedr. If you would like to contribute a use case or have a feature request, please do not hesitate to [contact us](https://cran.r-project.org/package=bedr).
 
 
