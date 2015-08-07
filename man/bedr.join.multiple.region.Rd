@@ -5,7 +5,7 @@
 join multiple region objects
 }
 \description{
-join two multiple objects
+join multiple objects
 
 }
 \usage{
