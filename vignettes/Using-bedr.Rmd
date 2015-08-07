@@ -456,7 +456,7 @@ The venn diagram shows the number of sub-regions on chromosome 1 and 2 which are
 
 ## <a id = "Example-Workflow-3"></a> Example Workflow 3: Copy Number Recurrence
 
-In this example, we show bedr can be used to annotate copy number segmented (regions) data with gene identifiers. The copy-number data is a subset of TCGA COAD dataset. Next we will demonstrate how to... The example will be limited to data on chromosome 1 and 2 only.
+In this example, we show bedr can be used to process CNA segmented data to estimate percent genome altered and identify minimal common regions. The copy-number data used is a subset of TCGA COAD study. 
 Note: For efficiency reason, this is a very coarse example of calling recurrent copy number regions, and only to demonstrate how bedr can be used alongside other copy number tools.
 
 ```{r, results = "hide", message = TRUE, eval = TRUE, errors = TRUE}
