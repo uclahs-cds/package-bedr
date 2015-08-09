@@ -10,5 +10,4 @@ Depends: R (>= 3.0),
 Suggests: knitr (>= 1.4)
 VignetteBuilder: knitr
 License: GPL-2
-LinkingTo: Rcpp, RcppArmadillo
 Imports: testthat (>= 0.7.1), VennDiagram (>= 1.6.4), data.table (>= 1.8.11), yaml (>= 2.1.10), parallel, grid
