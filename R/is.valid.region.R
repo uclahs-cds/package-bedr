@@ -13,7 +13,6 @@ is.valid.region <- function(x, check.zero.based = TRUE, check.chr = TRUE, throw.
 	# vector index (0), bed (1), index in first column (2), rownmames are index (3), unrecognized(4)
 
 	catv("VALIDATE REGIONS\n");
-
 	is.error <- FALSE;
 	# check if input type has already been determined
 	input.type <- attr(x, "input.type"); 

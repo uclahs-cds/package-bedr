@@ -86,7 +86,7 @@ if (check.binary("bedtools")) {
 # get the sequence for a set of regions as a data.frame
 index <- get.example.regions();
 a <- index[[1]];
-b <- get.fasta(a);
+b <- get.fasta(bedr.sort.region(a));
 
 # this time output a fasta
 d <- get.fasta(a, output.fasta = TRUE);

@@ -42,15 +42,20 @@ is.valid.ref(
 Daryl Waggott
 }
 
-
 %\seealso{
 
 \examples{
 
-cosmic.path <- system.file("extdata/CosmicCodingMuts_v66_20130725_ex.vcf.gz", package = "bedr");
-cosmic      <- read.vcf(cosmic.path);
+vcf.path <- system.file("extdata/callerA.vcf.gz", package = "bedr");
+vcf.data <- read.vcf(vcf.path, split.info = TRUE);
+vcf.data$vcf <- vcf.data$vcf[, 
+	c("CHROM", "POS", "END", setdiff(colnames(vcf.data$vcf), c("CHROM", "POS", "END")))
+	];
+vcf.data$vcf$CHROM <- paste("chr", vcf.data$vcf$CHROM, sep = "");
 
-#is.valid.ref(cosmic);
-
+\dontrun{
+	# need reference sequence FASTA and index file to run this, as 'fasta' parameter
+	is.valid.ref(vcf.data);
+	}
 }
 \keyword{sequence }

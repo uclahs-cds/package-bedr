@@ -26,7 +26,7 @@ vignette: >
   	* [Subtract Region](#Subtract-Region)
   	* [in Region](#in-Region)
   	* [Intersect/Join Regions](#Intersect-Join-Regions)
-  	* [Statisically Quantify Regions' Similarity (jaccard and reldist)](#jaccard-and-reldist)
+  	* [Statistically Quantify Regions' Similarity (jaccard and reldist)](#jaccard-and-reldist)
   	* [GroupBy](#GroupBy)
   * [Example Workflow 1: Compare Variant Callers](#Example-Workflow-1)
   * [Example Workflow 2: Exome Target Processing](#Example-Workflow-2)
@@ -234,7 +234,7 @@ if (check.binary("bedtools")) {
 	}
 ```
 
-### <a id = "jaccard-and-reldist"></a> Statisically Quantify Regions' Similarity (jaccard and reldist)
+### <a id = "jaccard-and-reldist"></a> Statistically Quantify Regions' Similarity (jaccard and reldist)
 
 When comparing (pairwise) the extent of overlap between a large collection of genomic regions, it becomes necessary to report the similarity (intersect) using a single quantitative measure. Bedtools implements two such statitics; [`jaccard`](http://bedtools.readthedocs.org/en/latest/content/tools/jaccard.html) and [`reldist`](http://bedtools.readthedocs.org/en/latest/content/tools/reldist.html) ([Favorov A et al.](http://www.ncbi.nlm.nih.gov/pubmed/22693437)) which can be called through `bedr` as shown below:
 
