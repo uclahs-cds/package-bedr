@@ -36,7 +36,8 @@ read.vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 	if (grepl(".gz$", x)) {
 		x.basename <- basename(x);
 		x.tmp      <- tempfile(pattern = paste(x.basename, "_", sep = ""));
-		system(paste0("gunzip -c ", x, " > ", x.tmp));
+		# system(paste0("gunzip -c ", x, " > ", x.tmp));
+		gunzip(filename = x, destname = x.tmp, overwrite = TRUE, remove = FALSE);
 		x <- x.tmp;
 		}
 

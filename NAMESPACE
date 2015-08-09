@@ -49,6 +49,7 @@ import(
 	'data.table',
 	'VennDiagram',
 	'testthat',
+	'R.utils',
 	'yaml',
 	'parallel',
 	'grid'

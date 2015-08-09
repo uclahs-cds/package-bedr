@@ -104,7 +104,8 @@ query.ucsc <- function(x, mirror = "http://hgdownload.soe.ucsc.edu/goldenPath/hg
 	else {
 		data.file.basename <- basename(data.file);
 		data.file.tmp      <- tempfile(pattern = paste(data.file.basename, "_", sep = ""));
-		system(paste0("gunzip -c ", data.file, " > ", data.file.tmp));
+		# system(paste0("gunzip -c ", data.file, " > ", data.file.tmp));
+		gunzip(filename = data.file, destname = data.file.tmp, overwrite = TRUE, remove = FALSE);
 		data.file <- data.file.tmp;
 		#ucsc.table <- read.table(data.file, as.is = TRUE, sep = "\t", col.names = table.names, colClasses = var.types );
         ucsc.table <- try(fread(data.file, stringsAsFactors = FALSE, sep = "\t", colClasses = var.types), silent = TRUE);
