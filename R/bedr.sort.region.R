@@ -28,7 +28,17 @@ catv("SORTING\n");
 
 	x       <- convert2bed(x, set.type = FALSE, check.zero.based = FALSE, check.chr = FALSE, check.valid = FALSE, check.sort = FALSE, check.merge = FALSE, verbose = FALSE);
 	is.unix <- .Platform$OS.type == "unix";
-	if (is.unix) {sort.version <- as.numeric(strsplit(system("sort --version", intern = TRUE), split = " ")[[1]][4]);}
+	if (is.unix) {
+		# handle Solaris as its non GNU, and hence no --version option
+		if (grepl('SunOS', Sys.info()['sysname'])) {
+			sort.version <- 1;
+			}
+		else{
+			sort.version <- as.numeric(
+				strsplit(system("sort --version", intern = TRUE), split = " ")[[1]][4]
+				);
+			}
+		}
 
 	# check engine
 	if (!engine %in% c("unix", "bedtools", "bedops", "R")) {

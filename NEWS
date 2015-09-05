@@ -1,4 +1,9 @@
-# bedr 0.0.1
+# bedr 1.0.1
+==========================
+
+- Fixed sort --version command as Solaris does not support --version which is GNU specific
+
+# bedr 1.0.0
 ==========================
 
 - Added bedr's first release
