@@ -1,3 +1,8 @@
+# bedr 1.0.2
+==========================
+
+- Fixed compatibility with data.table >= v1.9.6 for data.table::fread() call 
+
 # bedr 1.0.1
 ==========================
 
