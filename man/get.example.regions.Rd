@@ -19,11 +19,7 @@ get.example.regions()
 
 %}
 %\value{
-
- 
-
-
-
+A list with three example regions
 %}
 \author{
 Daryl Waggott

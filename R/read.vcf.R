@@ -37,7 +37,7 @@ read.vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 		x.basename <- basename(x);
 		x.tmp      <- tempfile(pattern = paste(x.basename, "_", sep = ""));
 		# system(paste0("gunzip -c ", x, " > ", x.tmp));
-		gunzip(filename = x, destname = x.tmp, overwrite = TRUE, remove = FALSE);
+		R.utils::gunzip(filename = x, destname = x.tmp, overwrite = TRUE, remove = FALSE);
 		x <- x.tmp;
 		}
 
@@ -58,8 +58,7 @@ read.vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 			x.header <- c(x.header, x.header.tmp)
 		}
 	}
-
-		
+	
 	close(con);
 	catv("   Done\n");
 
@@ -81,7 +80,6 @@ read.vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 		
 	# read data.  fread is much faster than read.table but imports into a data.table
 	catv(" * Reading vcf body...\n")
-	
 
 	# default colClasses
 	colClasses <- c("character","integer", "character","character","character","numeric","character", "character");
@@ -93,7 +91,7 @@ read.vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 
 	# check the number of columns match the column names
     # (read past the header and column names, if present)
-	x.firstline <- fread(x, header = FALSE, sep = "\t", skip = header.length + colnames.in.file, nrows = 1);
+	x.firstline <- data.table::fread(x, header = FALSE, sep = "\t", skip = header.length + colnames.in.file, nrows = 1);
 	if (length(x.firstline) != length(x.colnames)) {
 		catv(" * There looks to be more columns than column names.  Please fix!\n");
 		if ( length(x.firstline) > length(x.colnames) ) {
@@ -102,12 +100,12 @@ read.vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 		}
 
     # read in content after the header and column names (if present)
-    x.df <- fread(x, header = FALSE, sep = "\t", stringsAsFactors = TRUE, na.strings = ".", colClasses = colClasses, skip = header.length + colnames.in.file, nrows = nrows);
+    x.df <- data.table::fread(x, header = FALSE, sep = "\t", stringsAsFactors = FALSE, na.strings = ".", colClasses = colClasses, skip = header.length + colnames.in.file, nrows = nrows);
 
 	catv("   Done\n");
 
 	# add colnames
-	setnames(x.df, x.colnames);
+	data.table::setnames(x.df, x.colnames);
 
 	# add header as attribute
 	catv(" * Parse vcf header...\n");
