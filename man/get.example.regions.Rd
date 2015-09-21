@@ -18,9 +18,9 @@ get.example.regions()
 %\details{
 
 %}
-%\value{
+\value{
 A list with three example regions
-%}
+}
 \author{
 Daryl Waggott
 }
