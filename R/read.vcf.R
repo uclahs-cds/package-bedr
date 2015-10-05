@@ -131,7 +131,7 @@ read.vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 
 		# combine into matrix
 		x.info.split <- as.data.frame(do.call(rbind, x.info.split), stringsAsFactors = FALSE);
-		setnames(x.info.split, x.header.parsed$INFO[,"ID"]);
+		colnames(x.info.split) <- x.header.parsed$INFO[,"ID"];
 
 		# apply the data types to the info
 		for (i in 1:nrow(x.header.parsed$INFO)) {
@@ -165,7 +165,7 @@ read.vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 		split.vcf.sample <- function(x, format.string) {
 			x[x == "./."] <- paste(rep(".", length(format.string)), collapse = ":"); # yuck
 			x.sample.split   <- as.data.frame(matrix(hash2vec(x, split.char = ":"), ncol = length(format.string), byrow = TRUE),  stringsAsFactors = FALSE);
-			setnames(x.sample.split, format.string);
+			colnames(x.sample.split) <- format.string;
 		
 			x.sample.split;
 			}
