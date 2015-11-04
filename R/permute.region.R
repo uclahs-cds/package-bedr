@@ -43,15 +43,13 @@ permute.region <- function(x, stratify.by.chr = FALSE, species = "human", build 
 	if (mask.repeats) {
 		if (is.null(repeats.file)) {
 			catv("The repeats.file is NULL. reading default repeats file (Homo sapiens)\n");
-			catv("~/bedr/data/rmsk.txt.gz\n");
-			if (!file.exists("~/bedr/data/rmsk.txt.gz")) {
-				catv("The repeatMasker file does not exist.  Either run download.datasets() or query.ucsc(rmsk)\n");
-				}
-			else {
-				repeats <- query.ucsc("~/bedr/data/rmsk.txt.gz", columns.keep = c("genoName", "genoStart","genoEnd"));
-				colnames(repeats)[1:3] <- c("chr","start","end");
-				}
+			repeats.file <- system.file("extdata/rmsk.txt.gz", package = "bedr");
 			}
+		repeats <- query.ucsc(
+		    repeats.file, 
+		    columns.keep = c("genoName", "genoStart","genoEnd")
+		);
+		colnames(repeats)[1:3] <- c("chr","start","end");
 		}
 
 	# create the mask bed file
