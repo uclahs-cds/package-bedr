@@ -11,11 +11,13 @@
 
 query.ucsc <- function(x, mirror = "http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database", download = TRUE, overwrite.local = FALSE, columns.keep = NULL, verbose = TRUE) {
 
-	# first check if it's already been downloaded
-	bedr.data.path <- paste0(Sys.getenv("HOME"),"/bedr/data/");
-	if (!overwrite.local && file.exists(paste0(bedr.data.path, x,".txt.gz"))) {
-		x <- paste0(bedr.data.path, x,".txt.gz");
-		}
+	# first check if it's already been downloaded, either if x is a full file path, or look in /bedr/data  
+    if(! file.exists(x)){
+    	bedr.data.path <- paste0(Sys.getenv("HOME"),"/bedr/data/");
+    	if (!overwrite.local && file.exists(paste0(bedr.data.path, x,".txt.gz"))) {
+    		x <- paste0(bedr.data.path, x,".txt.gz");
+    		}
+        }
 	
 
 	# set the mirror to null if the file has an extension
