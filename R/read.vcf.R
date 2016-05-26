@@ -27,7 +27,7 @@ read.vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 	catv(" * Reading vcf header...\n")
 	con <- file(x);
 	open(con);
-	end.of.header <- FALSE;
+	no.body <- FALSE;
 	x.header <- NULL;
 	x.colnames <- NULL;
 
@@ -43,21 +43,27 @@ read.vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 
 
 	# loop over header 
-	while (!end.of.header) {
+	while (TRUE) {
 		x.header.tmp <- readLines(con, n = 1);
-		if (grepl("^#[Cc]", x.header.tmp)) {
+		if (0 == length(x.header.tmp)) {
+			# no more lines to read in, there is no body content
+			no.body <- TRUE;
+			break;
+			}
+		else if (!grepl("^#", x.header.tmp)) {
+			# line does not start with the comment character,
+			# so assume have read past the header 
+			break;
+			}
+		else if (grepl("^#[Cc]", x.header.tmp)) {
+			# parse the column names
 			x.colnames    <- unlist(strsplit(x.header.tmp, split = "\t| +"));
 			x.colnames[1] <- gsub("^#", "", x.colnames[1])
-		}
-		else if (!grepl("^#", x.header.tmp)) {
-            # line does not start with the comment character,
-            # so assume have read past the header 
-			end.of.header <- TRUE;
 			}
 		else {
 			x.header <- c(x.header, x.header.tmp)
+			}
 		}
-	}
 	
 	close(con);
 	catv("   Done\n");
@@ -67,7 +73,7 @@ read.vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 		header.length <- 0;
 		}
 	else {
-		header.length <- length(x.header)
+		header.length <- length(x.header);
 		}
 
     colnames.in.file <- !is.null(x.colnames);
@@ -78,34 +84,48 @@ read.vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 		x.colnames <- c("CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO");
 		}
 		
-	# read data.  fread is much faster than read.table but imports into a data.table
-	catv(" * Reading vcf body...\n")
+	if (no.body) {
+		# create an empty data frame for the body since 
+		# no body content was found 
+		x.df <- data.frame(matrix(nrow = 0, ncol = length(x.colnames)));
+		colnames(x.df) <- x.colnames;
 
-	# default colClasses
-	colClasses <- c("character","integer", "character","character","character","numeric","character", "character");
+		# since there's no body, there's no info or sample content to split
+		split.info <- FALSE;
+		split.samples <- FALSE;
+	} else {	
+		# read data.  fread is much faster than read.table but imports into a data.table
+		catv(" * Reading vcf body...\n")
 
-	# add columns for additional samples
-	if (length(x.colnames) > 8) {
-		colClasses <- c(colClasses, rep("character", length(x.colnames)-8));
-		}
+		# default colClasses
+		colClasses <- c("character","integer", "character","character","character","numeric","character", "character");
 
-	# check the number of columns match the column names
-    # (read past the header and column names, if present)
-	x.firstline <- data.table::fread(x, header = FALSE, sep = "\t", skip = header.length + colnames.in.file, nrows = 1);
-	if (length(x.firstline) != length(x.colnames)) {
-		catv(" * There looks to be more columns than column names.  Please fix!\n");
-		if ( length(x.firstline) > length(x.colnames) ) {
-			colClasses <- c(colClasses, rep("NULL", length(x.firstline)-length(x.colnames)) );
+		# add columns for additional samples
+		if (length(x.colnames) > 8) {
+			colClasses <- c(colClasses, rep("character", length(x.colnames)-8));
 			}
+
+		# check the number of columns match the column names
+		# (read past the header and column names, if present)
+		x.firstline <- data.table::fread(x, header = FALSE, sep = "\t", skip = header.length + colnames.in.file, nrows = 1);
+		if (length(x.firstline) != length(x.colnames)) {
+			catv(" * There looks to be more columns than column names.  Please fix!\n");
+			if ( length(x.firstline) > length(x.colnames) ) {
+				colClasses <- c(colClasses, rep("NULL", length(x.firstline)-length(x.colnames)) );
+				}
+			}
+
+		# read in content after the header and column names (if present)
+		x.df <- data.table::fread(x, header = FALSE, sep = "\t", stringsAsFactors = FALSE, na.strings = ".", colClasses = colClasses, skip = header.length + colnames.in.file, nrows = nrows);
+
+		catv("   Done\n");
+
+		# add colnames
+		colnames(x.df)[1:length(x.colnames)] <- x.colnames;
+
+		# get the updated (complete) list of column names
+		x.colnames <- colnames(x.df); 
 		}
-
-    # read in content after the header and column names (if present)
-    x.df <- data.table::fread(x, header = FALSE, sep = "\t", stringsAsFactors = FALSE, na.strings = ".", colClasses = colClasses, skip = header.length + colnames.in.file, nrows = nrows);
-
-	catv("   Done\n");
-
-	# add colnames
-	data.table::setnames(x.df, x.colnames);
 
 	# add header as attribute
 	catv(" * Parse vcf header...\n");
