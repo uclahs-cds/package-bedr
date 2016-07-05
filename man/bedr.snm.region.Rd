@@ -1,5 +1,5 @@
-\name{snm}
-\alias{snm}
+\name{bedr.snm.region}
+\alias{bedr.snm.region}
 
 \title{
 sort a region file
@@ -8,7 +8,7 @@ sort a region file
 Sort and merge regions object in one step
 }
 \usage{
-snm(
+bedr.snm.region(
 	x,
 	method = "lexicographical",
 	distance = 0,
@@ -37,7 +37,7 @@ snm(
  
 %}
 \value{
-Sorted and merged and regions object 
+Sorted and merged regions object 
 }
 \author{
 Daryl Waggott
@@ -49,7 +49,7 @@ index <- get.example.regions();
 
 a <- index[[1]];
 
-b <- snm(a);
+b <- bedr.snm.region(a);
 
 }
 }

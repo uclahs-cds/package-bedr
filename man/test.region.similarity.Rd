@@ -88,8 +88,8 @@ refgene.nm <- refgene[grepl("^NM",refgene$name),];
 refgene.nr <- refgene[grepl("^NR",refgene$name),];
 
 # sort and merge
-refgene.nm <- snm(refgene.nm,check.chr = FALSE);
-refgene.nr <- snm(refgene.nr,check.chr = FALSE);
+refgene.nm <- bedr.snm.region(refgene.nm,check.chr = FALSE);
+refgene.nr <- bedr.snm.region(refgene.nr,check.chr = FALSE);
 
 test.region.similarity(refgene.nm, refgene.nr, mask.unmapped = TRUE );
 

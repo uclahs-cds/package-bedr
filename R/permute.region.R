@@ -60,7 +60,7 @@ permute.region <- function(x, stratify.by.chr = FALSE, species = "human", build 
 		mask <- repeats;
 		}
 	else if (mask.gaps && mask.repeats) {
-		mask <- snm(rbind(gaps,repeats), check.chr = FALSE, check.zero.based = FALSE, check.valid = FALSE, verbose = FALSE);
+		mask <- bedr.snm.region(rbind(gaps,repeats), check.chr = FALSE, check.zero.based = FALSE, check.valid = FALSE, verbose = FALSE);
 		}
 	else {
 		mask <- NULL;

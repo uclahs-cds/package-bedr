@@ -44,7 +44,7 @@ download.datasets <- function(datasets = "all", data.dir = paste0(Sys.getenv("HO
 		chr <- paste0("chr", c(1:22,"X","Y"));
 		refgene.nm <- refgene.nm[refgene.nm[,1] %in% chr,]
 		# sort and merge
-		refgene.nm <- snm(refgene.nm,check.chr = FALSE);
+		refgene.nm <- bedr.snm.region(refgene.nm,check.chr = FALSE);
 		# remove genes with multiple positions
 		duplicated.gene <- duplicated(refgene.nm[,4]) | duplicated(rev(refgene.nm[,4]));
 		refgene.nm <- refgene.nm[!duplicated.gene,];

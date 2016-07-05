@@ -9,7 +9,7 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-snm <- function(x, method = "lexicographical", distance = 0, list.names = TRUE, number = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE,  verbose = TRUE) {
+bedr.snm.region <- function(x, method = "lexicographical", distance = 0, list.names = TRUE, number = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE,  verbose = TRUE) {
 	x <- bedr.sort.region(x, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid,  check.merge = F, verbose = verbose);
 	x <- bedr.merge.region(x, distance = distance, list.names = list.names, number = number, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid,  check.sort = F, verbose = verbose);
 	return(x);
