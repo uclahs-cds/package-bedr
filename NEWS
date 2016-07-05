@@ -1,3 +1,8 @@
+# bedr 1.0.3
+==========================
+
+- Standardised function name; renamed snm() to bedr.snm.region()
+
 # bedr 1.0.2
 ==========================
 
