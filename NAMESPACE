@@ -13,7 +13,7 @@ export(
 	'bedr.sort.region',
 	'flank.region',
 	'grow.region',
-	'snm',
+	'bedr.snm.region',
 	'strsplit2matrix',
 	'bedr.subtract.region',
 	'convert2bed',
