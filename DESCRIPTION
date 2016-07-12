@@ -2,7 +2,7 @@ Package: bedr
 Type: Package
 Title: Genomic Region Processing using Tools Such as Bedtools, Bedops and Tabix
 Version: 1.0.3
-Date: 2016-07-05
+Date: 2016-07-12
 Author: Daryl Waggott, Syed Haider, Emilie Lalonde, Clement Fung, Paul C. Boutros
 Maintainer: Paul Boutros <Paul.Boutros@oicr.on.ca>
 Description: Genomic region processing using tools such as bedtools, bedops and tabix.

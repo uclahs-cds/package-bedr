@@ -36,7 +36,7 @@ vignette: >
 
 ## <a id = "Introduction"></a> Introduction
 
-The  **bedr** package is a suite of tools for genomic interval processing.  The philosophy is to wrap existing best practice bioinformatic software in order to provide a unifying analysis environment within R.  **bedr** should be considered complimentary to native implementations of interval processing such genomicRanges.  
+The  **bedr** package is a suite of tools for genomic interval processing.  The philosophy is to wrap existing best practice bioinformatic software in order to provide a unifying analysis environment within R.  **bedr** should be considered complimentary to native implementations of interval processing such GenomicRanges.  
 
 The advantages to this approach include:
 
@@ -81,6 +81,7 @@ Loading of bedr package will indicate the presensece of bedtools, bedops and tab
 # load bedr library
 library("bedr");
 ```
+N.B. Log info printed through `verbose = T` (default, in almost all bedr methods) should be carefully assessed. Often, status=FAIL may just highlight a potential problem, and hence code continues to execute without a graceful failure. Therefore, please do read the log messages carefully.
 
 ### <a id = "Validate-Region"></a> Validate Region
 
