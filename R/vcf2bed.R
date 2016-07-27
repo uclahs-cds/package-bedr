@@ -14,7 +14,7 @@
 # add length of alt as end
 # if - as ref then need to go to fasta
 
-vcf2bed <- function(x, filename = NULL, other = NULL, verbose = TRUE) {
+vcf2bed <- function(x, filename = NULL, header = FALSE, other = NULL, verbose = TRUE) {
 
 	catv("CONVERT VCF TO BED\n")
 
@@ -46,7 +46,14 @@ vcf2bed <- function(x, filename = NULL, other = NULL, verbose = TRUE) {
 		}
 
 	if (!is.null(filename)) {
-		write.table(bed,filename, row.names = FALSE, sep = "\t", quote = FALSE);
+		# no header as default
+		if (header) {
+			write.table(bed,filename, row.names = FALSE, sep = "\t", quote = FALSE);
+		}
+		else {
+			write.table(bed,filename, row.names = FALSE, col.names = FALSE, sep = "\t", quote = FALSE);
+		}
+
 		}
 	else {
 		return(bed);

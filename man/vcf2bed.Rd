@@ -7,11 +7,12 @@ convert a vcf to a bed file
 Convert a vcf to a bed file.  Currently, it needs to read into R via read.vcf
 }
 \usage{
-vcf2bed(x, filename = NULL, other = NULL, verbose = TRUE)
+vcf2bed(x, filename = NULL, header = FALSE, other = NULL, verbose = TRUE)
 }
 \arguments{
   \item{x}{a vcf object}
   \item{filename}{the name of file if you want it exported}
+  \item{header}{indicate if the bed file has header or not when exported}
   \item{other}{fields to include apart from chr, start, end.}
   \item{verbose}{more words}
 }
