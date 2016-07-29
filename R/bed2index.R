@@ -10,7 +10,13 @@
 # credit be given to OICR scientists, as scientifically appropriate.
 
 bed2index <- function(x, sort = TRUE) {
-	index <- paste(x[,c(1,2,3)], collapse = ":");
+	index <- paste0(
+		x[, 1],
+		':',
+		x[, 2],
+		'-',
+		x[, 3]
+		);
 	if (sort) {
 		index <- bedr.sort.region(index);
 		}
