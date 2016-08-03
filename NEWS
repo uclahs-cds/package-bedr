@@ -3,6 +3,7 @@
 
 - Standardised function name; renamed snm() to bedr.snm.region()
 - Listed SystemRequirements to the package metadata
+- Added support for Human hg38 genome assembly
 
 # bedr 1.0.2
 ==========================
