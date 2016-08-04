@@ -34,7 +34,7 @@ vcf2bed <- function(x, filename = NULL, header = FALSE, other = NULL, verbose = 
 	for (i in 1:length(x$ALT)){
 
 		if (grepl(',', x$ALT[i])) {
-			#warn if ALT has a comma (ambigous SNP or heterozygous)
+			#warn if ALT has a comma (ambiguous SNP or heterozygous)
 			warning("ALT contains a comma and the variant length was decided based on the first element of ALT.")
 			
 			ALT.list <- strsplit(x$ALT[i],',');
