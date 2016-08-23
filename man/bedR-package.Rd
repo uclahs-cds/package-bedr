@@ -13,7 +13,7 @@ A bedtools wrapper that allows using a mix of internal R objects and external R 
 Package: \tab bedr\cr
 Type: \tab Package\cr
 Version: \tab 1.0.3\cr
-Date: \tab 2016-08-03\cr
+Date: \tab 2016-08-23\cr
 License: \tab GPL2\cr
 }
 }
