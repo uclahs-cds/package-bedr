@@ -32,6 +32,10 @@ permute.region <- function(x, stratify.by.chr = FALSE, species = "human", build 
 		if (is.null(gaps.file)) {
 			catv("The gaps.file is NULL. reading default gaps file (Homo sapiens)\n");
 			gaps.file <- system.file("extdata/gap.txt.gz", package = "bedr");
+			if ('' == gaps.file) {
+				# file wasn't included with package, indicate dataset to get
+				gaps.file <- 'gap';
+				}
 			}
 		gaps <- query.ucsc(
 			gaps.file, 
@@ -44,6 +48,10 @@ permute.region <- function(x, stratify.by.chr = FALSE, species = "human", build 
 		if (is.null(repeats.file)) {
 			catv("The repeats.file is NULL. reading default repeats file (Homo sapiens)\n");
 			repeats.file <- system.file("extdata/rmsk.txt.gz", package = "bedr");
+			if ('' == repeats.file) {
+				# file wasn't included with package, indicate dataset to get
+				repeats.file <- 'rmsk';
+				}
 			}
 		repeats <- query.ucsc(
 		    repeats.file, 
