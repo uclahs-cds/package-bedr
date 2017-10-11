@@ -147,7 +147,7 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 		# replace output with index if input was index
 		output <- new.index;	
 		}
-	else if (ncol.output > 3 && attr(input.files[[1]],"is.index") && !method %in% c("jaccard","reldist")) {
+	else if (ncol.output > 3 && attr(input.files[[1]], "is.index") && !method %in% c("jaccard","reldist")) {
 		# if index specifed delete added chr, start, stop
 		output <- data.frame(index = new.index, output[,-c(chr.column:(chr.column+2)), drop = FALSE], stringsAsFactors = FALSE);
 		}

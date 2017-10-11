@@ -12,9 +12,9 @@
 process.input <- function(input, tmpDir = NULL, include.names = TRUE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, check.sort = TRUE, check.merge = TRUE, verbose = TRUE) {
 # takes list of input and creates tmp files for input and returns string of paths
 
-	file.extensions <- c("bed","vcf", "gff","bam", "sam", "csv", "tsv", "txt", "gz")
+	file.extensions <- c("bed", "vcf", "gff", "bam", "sam", "csv", "tsv", "txt", "gz")
 	input.files   <- list();
-	
+
 	if (is.vector(input, mode = "character") || is.data.frame(input)) {
 		input  <- list(input);
 		}
@@ -34,14 +34,15 @@ process.input <- function(input, tmpDir = NULL, include.names = TRUE, check.zero
 					catv(paste("ERROR:", input[[i]], "does not exist"));
 					stop();
 					}
-				input.file  <- input[[i]];
+				input.file <- input[[i]];
+				attr(input.file, "is.index") <- FALSE;
 				}
 			else {
 				# convert to bed format
 				input[[i]] <- convert2bed(input[[i]], set.type = FALSE, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = verbose);
 
 				# create tmp file
-				input.file   <- create.tmp.bed.file(input[[i]], names(input)[i], tmpDir);
+				input.file <- create.tmp.bed.file(input[[i]], names(input)[i], tmpDir);
 				}
 
 			attr(input.file, "is.file") <- is.file;
@@ -50,9 +51,9 @@ process.input <- function(input, tmpDir = NULL, include.names = TRUE, check.zero
 
 		# paste the input files together
 		if (include.names) {
-			commandString  <-  paste(paste(paste("-", names(input), sep = ""), input.files), collapse = " ");
-			commandString  <-  gsub(" - ", " ", commandString);
-			commandString  <-  gsub("^- ", "", commandString);
+			commandString <- paste(paste(paste("-", names(input), sep = ""), input.files), collapse = " ");
+			commandString <- gsub(" - ", " ", commandString);
+			commandString <- gsub("^- ", "", commandString);
 			}
 		else {
 			commandString <- paste(input.files, collapse = " ");
