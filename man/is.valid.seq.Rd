@@ -37,22 +37,22 @@ is.valid.seq(
 
 %}
 \value{
-	a logical vector the length of the input
+	a logical vector the length of the input querySeq
 }
 %\references{
 %}
 \author{
-Daryl Waggott
+Daryl Waggott, Syed Haider
 }
 
 %\seealso{
 
 \examples{
 if (check.binary("bedtools")) {
-# index <- get.example.regions();
-# a <- index[[1]];
-# a <- get.fasta(a);
-# is.valid.seq(a)
+  index <- get.example.regions();
+  a <- index[[1]];
+  a <- get.fasta(bedr.sort.region(a));
+  is.valid.seq(x = a, querySeq = a$sequence);
 }
 }
 \keyword{sequence }

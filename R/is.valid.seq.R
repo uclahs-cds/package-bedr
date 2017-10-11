@@ -13,5 +13,5 @@ is.valid.seq <- function(x, querySeq, fasta = NULL, strand = FALSE, check.zero.b
 
 	fastaSeq <- get.fasta(x, fasta = fasta, strand = strand, check.zero.based = check.zero.based, check.chr = check.chr, check.valid = check.valid, check.sort = check.sort, check.merge = check.merge, verbose = verbose);
 
-	querySeq == fastaSeq;
+	querySeq == fastaSeq$sequence;
 	}
