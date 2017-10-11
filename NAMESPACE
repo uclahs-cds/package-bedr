@@ -42,7 +42,8 @@ export(
 	'bedr.setup',
 	'permute.region',
 	'test.region.similarity',
-	'process.input'
+	'process.input',
+	'bed2index'
 	);
 
 import(
