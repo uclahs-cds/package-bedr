@@ -16,6 +16,8 @@ test.region.similarity(
 	build = "hg19",
 	mask.gaps = FALSE,
 	mask.repeats = FALSE,
+	gaps.file = NULL,
+	repeats.file = NULL,
 	check.zero.based = TRUE,
 	check.chr = TRUE,
 	check.valid = TRUE,
@@ -31,6 +33,8 @@ test.region.similarity(
   \item{build}{the build of the reference}
   \item{mask.gaps}{should the gaps (Ns) in the human reference be ignored as potential start points.  This drammatically increases memory and run time but is more appropriate in almost all settings.  By default it's off.}
   \item{mask.repeats}{should the repeats from repeatMasker be ignored as potential start points.  This drammatically increases memory and run time but is more appropriate in almost all settings.  By default it's off.}
+  \item{gaps.file}{database file of gaps. Defaults to Homo sapiens Hg19 gap.txt.gz file available through UCSC}
+  \item{repeats.file}{database file of repeats as supplied by UCSC containing RepMasker data e.g rmsk.txt.gz}
   \item{check.zero.based}{should 0 based coordinates be checked}
   \item{check.chr}{should chr prefix be checked}
   \item{check.valid}{should the region be checkded for integerity}

@@ -2,6 +2,10 @@
 ==========================
 
 - Added rmarkdown in Suggests section
+- Parameterised test.region.similarity() with gaps.file and repeats.file to support custom files
+- Fixed bug when bedtools 'coverage' output is post-processed in bedr
+- Fixed is.valid.seq() to comply with inputs and outputs as described in docs
+- Exposed utility function bed2index() via NAMESPACE to support its direct usage
 
 # bedr 1.0.3
 ==========================
