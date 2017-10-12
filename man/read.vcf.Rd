@@ -23,7 +23,7 @@ Split the sample into columns.  If multiple samples then a list matrices will be
 The the number of rows to be read.  Set to 0 to parse the header.
 }
   \item{verbose}{
-Lots of words?
+print progress
 }
 }
 \details{
@@ -47,23 +47,25 @@ multiSample.vcf.example  <- system.file("extdata/multiSampleOICR_example.vcf.gz"
 # read a subset of NCBI clinVar vcf.  Note this has no samples.
 vcf1.a <- read.vcf(clinVar.vcf.example)
 vcf1.b <- read.vcf(clinVar.vcf.example, split.info = TRUE)
-# same as above b/c no sample
+
+\dontrun{
+
+# same as above but split multiple samples
 vcf1.c <- read.vcf(clinVar.vcf.example, split.info = TRUE, split.sample = TRUE) 
 
 # read a single-sample VCF
 system.time(
   vcf2.a <- read.vcf(singleSample.vcf.example, split.info = TRUE, split.sample = TRUE)
   )
-\dontrun{
-  options("cores"=9);
-  system.time(
-    vcf2.a <- read.vcf(singleSample.vcf.example, split.info = TRUE, split.sample = TRUE)
-    )
-  options("cores"=1);
-  }
 
-# read  a multi-sample VCF
+# read a multi-sample VCF
 vcf3.a <- read.vcf(multiSample.vcf.example, split.info = FALSE, split.sample = TRUE);
 
+# multi core example
+options("cores"=9);
+vcf2.a <- read.vcf(singleSample.vcf.example, split.info = TRUE, split.sample = TRUE)
+options("cores"=1);
+
+}
 }
 \keyword{ vcf }
