@@ -29,6 +29,4 @@ Daryl Waggott
 modifyList
 }
 
-%\examples{
-%}
 %\keyword{ }

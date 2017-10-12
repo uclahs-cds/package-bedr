@@ -28,6 +28,8 @@ Daryl Waggott
 %\seealso{
 %}
 \examples{
-#download.datasets("cosmic")
+\dontrun{
+  download.datasets("cosmic");
+  }
 }
 \keyword{ data }

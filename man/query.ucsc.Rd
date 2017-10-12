@@ -37,8 +37,9 @@ Daryl Wagott
 }
 
 \examples{
-# query.ucsc("refGene")
-
+\dontrun{
+  query.ucsc("refGene");
+  }
 }
 
 \keyword{ ucsc }

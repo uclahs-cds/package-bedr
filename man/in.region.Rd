@@ -66,7 +66,6 @@ b <- bedr(engine = "bedtools", input = list(i = b), method = "sort", params = ""
 d <- in.region(a,b);
 
 # alternative calling
-
 d <- a \%in.region\% b
 
 }

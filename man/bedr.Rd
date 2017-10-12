@@ -106,25 +106,33 @@ a.int3 <- bedr.join.region(a.merge1, b.merge1);
 d <- get.random.regions(100, chr="chr1", sort = TRUE);
 a.mult <- bedr.join.multiple.region(x = list(a.merge1,b.merge1,bedr.sort.region(d)));
 
-### groupby 
-# note the "g" column number is based on bed format i.e. first three columns chr, start, stop
-# note the use of first, first, last on the region columns i.e. the union of the regions
-# note currently missing values are not dealt with in bedtools.  also the 5th column is 
-# assumed to be "score" and gets a default "-1" not a "."
-#cnv.gene <- bedr(input = list(i=cnv.gene), method = "groupby", params = paste("-g 16 -c ", 
-#paste(1:15, collapse = ","), " -o ", "first,first,last,", 
-#paste(rep("sum",12), collapse = ","), sep = ""));
+\dontrun{
+  ### groupby 
+  # note the "g" column number is based on bed format i.e. first three columns chr, start, stop
+  # note the use of first, first, last on the region columns i.e. the union of the regions
+  # note currently missing values are not dealt with in bedtools.  also the 5th column is 
+  # assumed to be "score" and gets a default "-1" not a "."
+  cnv.gene <- bedr(
+    input = list(i=cnv.gene), method = "groupby", params = paste(
+      "-g 16 -c ", 
+      paste(1:15, collapse = ","), 
+      " -o ", "first,first,last, ", 
+      paste(rep("sum",12), collapse = ","), 
+      sep = ""
+      )
+    );
 
-### example 1
-###  workflow adding gene names to exome sequencing target file
-# download refseq genes from ucsc or query biomart for ensemble gene names.  
-#format them in basic bed format.
-# sort, merge target
-# sort, merge -nms target.  Overlapping genes/features get merged.  
-#this may not be ideal if there are some really big features.
-# intersect -loj target, genes.
-# alternatively, do not merge the target and apply the merge after the intersect.  
-#this will provide precision at the level of the exon.
+  ### example 1
+  ###  workflow adding gene names to exome sequencing target file
+  # download refseq genes from ucsc or query biomart for ensemble gene names.  
+  # format them in basic bed format.
+  # sort, merge target
+  # sort, merge -nms target.  Overlapping genes/features get merged.  
+  # this may not be ideal if there are some really big features.
+  # intersect -loj target, genes.
+  # alternatively, do not merge the target and apply the merge after the intersect.  
+  # this will provide precision at the level of the exon.
+  }
 }
 }
 

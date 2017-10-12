@@ -27,12 +27,17 @@ Returns a logical vector the length of x.
 Daryl Waggott
 }
 \examples{
+if (check.binary("bedtools")) {
 
 index <- get.example.regions();
 
 a <- index[[1]];
 b <- index[[2]];
-# d <- a \%in.region\% b
+a <- bedr.sort.region(a);
+b <- bedr.sort.region(b);
 
+d <- a \%in.region\% b
+
+}
 }
 \keyword{in}

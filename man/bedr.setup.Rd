@@ -26,6 +26,8 @@ Daryl Waggott
 }
 
 \examples{
-#bedr.setup()
+\dontrun{
+  bedr.setup()
+  }
 }
 \keyword{ config }

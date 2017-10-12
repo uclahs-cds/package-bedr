@@ -28,6 +28,8 @@ Daryl Waggott
 %}
 
 \examples{
-#df2list(data.frame(a = 1:10, b = 11:20));
+\dontrun{
+  df2list(data.frame(a = 1:10, b = 11:20));
+  }
 }
 %\keyword{ }

@@ -35,11 +35,10 @@ build of the genome in fasta format
 \author{
 Daryl Waggott
 }
-
-%\seealso{
-%}
 \examples{
-# bed2vcf(x)
+\dontrun{
+  bed2vcf(x)
+  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

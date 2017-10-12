@@ -32,8 +32,10 @@ Daryl Waggott
 
 vcf  <- read.vcf(system.file("extdata/clinvar_dbSNP138_example.vcf.gz", package = "bedr"));
 vcf$header <- c(vcf$header, NOTE="vcf processed by bedr")
-# write.vcf(vcf, filename = "bedr.example.vcf");
 
+\dontrun{
+  write.vcf(vcf, filename = paste(tempdir(), "/bedr.example.vcf", sep = ""));
+  }
 }
 
 \keyword{vcf}

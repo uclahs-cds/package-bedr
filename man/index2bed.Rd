@@ -24,6 +24,11 @@ index2bed(x, set.type = TRUE)
 Daryl Waggott
 }
 \examples{
-#a.bed <- index2bed(x) 
+if (check.binary("bedtools")) {
+
+index <- get.example.regions();
+a <- index[[1]];
+a.bed <- index2bed(a);
+}
 }
 \keyword{bedtools}

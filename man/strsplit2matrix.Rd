@@ -27,6 +27,8 @@ strsplit2matrix(x, split, fixed = FALSE, perl = FALSE)
 Daryl Waggott
 }
 \examples{
-# a.bed <- strSplitToMatrix(x) 
+\dontrun{
+  a.bed <- strSplitToMatrix(x);
+  }
 }
 \keyword{bedtools}

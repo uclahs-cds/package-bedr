@@ -27,9 +27,9 @@ tabix(
 }
 
 \arguments{
-	\item{region}{The regions to query the tabix'd file}
-	\item{file.name}{The name of the bzipped/indexed tabix file to query}
-	\item{params}{A string that includes all the extra parameters and arguments to the bedtools commmand.  For example if you wanted to do a left outer join you would specificy method as intersect and use params = c("-loj -header"). If you leave input and method as defaults then this is this string represents the full command.}
+  \item{region}{The regions to query the tabix'd file}
+  \item{file.name}{The name of the bzipped/indexed tabix file to query}
+  \item{params}{A string that includes all the extra parameters and arguments to the bedtools commmand.  For example if you wanted to do a left outer join you would specificy method as intersect and use params = c("-loj -header"). If you leave input and method as defaults then this is this string represents the full command.}
   \item{tmpDir}{The directory to be used for writing files}
   \item{deleteTmpDir}{Should tmp files be deleted.  helpful for diagnostics.}
   \item{outputDir}{The output directory.  Only used if outputFile is specified.  It defaults to the current working directory.}
@@ -50,8 +50,6 @@ The output of command with some parsing to keep it consistent with the input.
 \author{
 Daryl Waggott
 }
-
-
 \seealso{
 genomicRanges
 }

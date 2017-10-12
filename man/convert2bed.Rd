@@ -40,6 +40,8 @@ Returns x converted to bedformat, as a data frame
 Daryl Waggott
 }
 \examples{
-# a.bed <- convert.to.bed(a) 
+\dontrun{
+  a.bed <- convert.to.bed(a) 
+  }
 }
 \keyword{bed}

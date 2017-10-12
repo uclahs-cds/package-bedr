@@ -52,20 +52,18 @@ vcf1.c <- read.vcf(clinVar.vcf.example, split.info = TRUE, split.sample = TRUE)
 
 # read a single-sample VCF
 system.time(
-vcf2.a <- read.vcf(singleSample.vcf.example, split.info = TRUE, split.sample = TRUE)
-)
-
-
-#options("cores"=9);
-#system.time(
-#vcf2.a <- read.vcf(singleSample.vcf.example, split.info = TRUE, split.sample = TRUE)
-#)
-#options("cores"=1);
+  vcf2.a <- read.vcf(singleSample.vcf.example, split.info = TRUE, split.sample = TRUE)
+  )
+\dontrun{
+  options("cores"=9);
+  system.time(
+    vcf2.a <- read.vcf(singleSample.vcf.example, split.info = TRUE, split.sample = TRUE)
+    )
+  options("cores"=1);
+  }
 
 # read  a multi-sample VCF
 vcf3.a <- read.vcf(multiSample.vcf.example, split.info = FALSE, split.sample = TRUE);
-
-# other useful vcfs (cosmic, clinvar, 1kg)
 
 }
 \keyword{ vcf }
