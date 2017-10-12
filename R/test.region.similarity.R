@@ -9,7 +9,7 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-test.region.similarity <- function (x, y, n = 1e3, stratify.by.chr = FALSE, species = "human", build = "hg19", mask.gaps = FALSE, mask.repeats = FALSE, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, verbose = TRUE) {
+test.region.similarity <- function (x, y, n = 1e3, stratify.by.chr = FALSE, species = "human", build = "hg19", mask.gaps = FALSE, mask.repeats = FALSE, gaps.file = NULL, repeats.file = NULL, check.zero.based = TRUE, check.chr = TRUE, check.valid = TRUE, verbose = TRUE) {
 
 #	is.valid.region(x, check.zero.based = check.zero.based, check.chr = check.chr, verbose = verbose);
 #	is.valid.region(y, check.zero.based = check.zero.based, check.chr = check.chr, verbose = verbose);
@@ -65,7 +65,7 @@ test.region.similarity <- function (x, y, n = 1e3, stratify.by.chr = FALSE, spec
 
 		# send batches of permutations
 
-		perm.results <- mclapply(list(1:n.batches), iterate.perm, x.region = x, y.region = y, batch.size = batch.size, jaccard.orig = jaccard.orig, reldist.orig.median = reldist.orig.median, reldist.orig.fraction.zero = reldist.orig.fraction.zero, reldist.orig.fraction.fifty = reldist.orig.fraction.fifty, stratify.by.chr = stratify.by.chr, species = species, build = build, mask.gaps = mask.gaps, mask.repeats = mask.repeats);
+		perm.results <- mclapply(list(1:n.batches), iterate.perm, x.region = x, y.region = y, batch.size = batch.size, jaccard.orig = jaccard.orig, reldist.orig.median = reldist.orig.median, reldist.orig.fraction.zero = reldist.orig.fraction.zero, reldist.orig.fraction.fifty = reldist.orig.fraction.fifty, stratify.by.chr = stratify.by.chr, species = species, build = build, mask.gaps = mask.gaps, mask.repeats = mask.repeats, gaps.file = gaps.file, repeats.file = repeats.file);
   
 #		if (i == 100 ) {
 #			if (jaccard.perm.gt > 20 && reldist.perm.median.lt > 20) break;
@@ -89,7 +89,7 @@ test.region.similarity <- function (x, y, n = 1e3, stratify.by.chr = FALSE, spec
 
 # permute region and compare with original
 # function used for parrallelization
-iterate.perm <- function(x, x.region, y.region, batch.size, jaccard.orig, reldist.orig.median, reldist.orig.fraction.zero, reldist.orig.fraction.fifty, stratify.by.chr, species, build, mask.gaps, mask.repeats) {
+iterate.perm <- function(x, x.region, y.region, batch.size, jaccard.orig, reldist.orig.median, reldist.orig.fraction.zero, reldist.orig.fraction.fifty, stratify.by.chr, species, build, mask.gaps, mask.repeats, gaps.file, repeats.file) {
 
 	jaccard.perm.gt <- integer(batch.size);
 	reldist.perm.median.lt <- integer(batch.size);  
@@ -97,7 +97,7 @@ iterate.perm <- function(x, x.region, y.region, batch.size, jaccard.orig, reldis
 	reldist.perm.fraction.fifty.gt <- integer(batch.size);
 	
 	for (i in 1:batch.size) {
-		x.perm       <- permute.region(x.region, stratify.by.chr = stratify.by.chr, species = species, build = build, mask.gaps = mask.gaps, mask.repeats = mask.repeats, is.checked = TRUE, sort.output = TRUE);
+		x.perm       <- permute.region(x.region, stratify.by.chr = stratify.by.chr, species = species, build = build, mask.gaps = mask.gaps, mask.repeats = mask.repeats, gaps.file = gaps.file, repeats.file = repeats.file, is.checked = TRUE, sort.output = TRUE);
 		jaccard.perm <- jaccard(x.perm, y.region, check.chr = FALSE, check.valid = FALSE, check.sort = FALSE, check.merge = FALSE, verbose = FALSE)[1,3];
 		reldist.perm <- reldist(x.perm, y.region, check.chr = FALSE, check.valid = FALSE, check.sort = FALSE, check.merge = FALSE, verbose = FALSE);
 
