@@ -1,3 +1,8 @@
+# bedr 1.0.5
+==========================
+
+- fixed incorrect ordering of chromosome table returned by get.chr.length()
+
 # bedr 1.0.4
 ==========================
 

@@ -18,7 +18,7 @@ get.chr.length <- function(chr = NULL, species = "human", build = "hg19") {
 	x <- read.table(file.name, header = TRUE, sep = "\t", as.is = TRUE);
 	
 	if (!is.null(chr)) {
-		x <- x[x$chr %in% chr,];
+		x <- x[unique(chr) %in% x$chr,];
 		}
 
 	return(x)

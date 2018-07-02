@@ -6,7 +6,7 @@ gets the length of each chromosome for a species/build
 }
 \description{
 
-Gets the length of each chromosome for a species/build.  Choices are human (hg18, hg19), mouse(mm9, mm10)
+Gets the length of each chromosome for a species/build.  Choices are human (hg18, hg19, hg38), mouse(mm9, mm10)
 }
 \usage{
 get.chr.length(chr = NULL, species = "human", build = "hg19")
@@ -18,8 +18,7 @@ get.chr.length(chr = NULL, species = "human", build = "hg19")
 }
 %\details{
 %}
-%\value{
-%}
+\value{A dataframe with chromosome annotations}
 \author{
 Daryl Waggott
 }

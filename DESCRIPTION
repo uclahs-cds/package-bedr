@@ -1,8 +1,8 @@
 Package: bedr
 Type: Package
 Title: Genomic Region Processing using Tools Such as 'BEDTools', 'BEDOPS' and 'Tabix'
-Version: 1.0.4
-Date: 2017-10-12
+Version: 1.0.5
+Date: 2018-07-02
 Authors@R: c(
   person("Daryl", "Waggott", role = "aut"),
   person("Syed", "Haider", role = "aut"),
