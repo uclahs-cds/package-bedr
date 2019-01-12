@@ -39,9 +39,10 @@ tabix <- function(region, file.name, params = NULL, tmpDir = NULL, deleteTmpDir 
 
 	tabix.output <- NULL;
 
-	params <- paste(params, "-B");
+	# -B is deprecated by tabix after release v1.1 and replaced with -R switch below
+	# params <- paste(params, "-B");
 
-	command <- paste("bash -c 'tabix", params, file.name, region.file[[1]], "'");
+	command <- paste("bash -c 'tabix", params, file.name, "-R", region.file[[1]], "'");
 	
 	# print the command
 	catv(paste0("\n", command,"\n"));
