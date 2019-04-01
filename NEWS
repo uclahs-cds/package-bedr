@@ -1,3 +1,9 @@
+# bedr 1.0.7
+==========================
+
+- forced vcf2bed not to print genomic coordinates in R scientific notation for 
+	interoperability with other processors
+
 # bedr 1.0.6
 ==========================
 

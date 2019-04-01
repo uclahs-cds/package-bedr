@@ -27,4 +27,3 @@ Daryl Waggott
 \examples{
 index <- get.example.regions()
 }
-\keyword{ ~kwd1 }

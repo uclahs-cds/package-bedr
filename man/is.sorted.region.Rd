@@ -45,4 +45,3 @@ b <- is.sorted.region(a);
 }
 }
 
-\keyword{ ~kwd1 }

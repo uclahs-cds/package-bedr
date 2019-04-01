@@ -61,6 +61,10 @@ vcf2bed <- function(x, filename = NULL, header = FALSE, other = NULL, verbose = 
 		}
 
 	if (!is.null(filename)) {
+
+		# disable scientific notation
+		options(scipen=999);
+
 		# no header as default
 		if (header) {
 			write.table(bed,filename, row.names = FALSE, sep = "\t", quote = FALSE);
@@ -69,6 +73,8 @@ vcf2bed <- function(x, filename = NULL, header = FALSE, other = NULL, verbose = 
 			write.table(bed,filename, row.names = FALSE, col.names = FALSE, sep = "\t", quote = FALSE);
 		}
 
+		# revert back to default
+		options(scipen=0);
 		}
 	else {
 		return(bed);

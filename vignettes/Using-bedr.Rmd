@@ -12,7 +12,7 @@ vignette: >
 <link href="GitHub2.css" rel="stylesheet">
 
 ## Introduction to bedr package
-### Author(s): Daryl Waggott, Syed Haider, Emilie Lalonde, Clement Fung, Paul C. Boutros
+### Author(s): Syed Haider, Daryl Waggott, Emilie Lalonde, Clement Fung, Paul C. Boutros
 ### Dated: `r Sys.Date()`
 
 ## Table of Contents
