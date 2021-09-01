@@ -75,7 +75,7 @@ vcf2bedpe <- function(x, filename = NULL, header = FALSE, other = NULL, verbose 
   simple_bp <- subset(x, SVTYPE != 'BND' & is.na(x$MATEID))
   
   if (nrow(simple_bp) > 0) {
-    print('PROCESSING SIMPLE BREAKENDS')
+    catv('PROCESSING SIMPLE BREAKENDS\n')
     coordsA <- adjust_coordinates(simple_bp, 'CIPOS', simple_bp$POS, simple_bp$POS)
     coordsB <- adjust_coordinates(simple_bp, 'CIEND', simple_bp$END, simple_bp$END)
     name <- get_name(simple_bp)
@@ -99,27 +99,44 @@ vcf2bedpe <- function(x, filename = NULL, header = FALSE, other = NULL, verbose 
   
   bnd_bp <- subset(x, SVTYPE == 'BND')
   if (nrow(bnd_bp > 0)) {
-    print('PROCESSING BND BREAKENDS')
+    catv('PROCESSING BND BREAKENDS\n')
     
     rownames(bnd_bp) <- bnd_bp$ID
     
     if ('MATEID' %in% names(bnd_bp)) {
       bnd_bp <- subset(bnd_bp, !is.na(MATEID))
-      mates <- bnd_bp[bnd_bp$MATEID,]
-
-      coordsA <- adjust_coordinates(bnd_bp, 'CIPOS', bnd_bp$POS,  bnd_bp$POS)
-      coordsB <- adjust_coordinates(bnd_bp, 'CIPOS', mates$POS, mates$POS)
       name <- get_name(bnd_bp)
-      strandA <- get_strand(bnd_bp)
+      bnd_pair <- list()
+      #sec_bnds <- vector("list", length(unique(name)))
+        
+      for (id in rownames(bnd_bp)) {
+        if (!id %in% bnd_pair) {
+          bnd_pair[[id]] <- bnd_bp[id, 'MATEID']
+        } 
+      }
+      
+      var <- bnd_bp[names(bnd_pair), ] 
+      mates <- bnd_bp[unlist(unname(bnd_pair)),]
+      
+      if (!'STRAND' %in% names(bnd_bp) & 'MATESTRAND' %in% names(bnd_bp)) {
+        # for delly v0.7.8 bc the INFO:MATESTRAND is read while the INFO:STRAND is not 
+        # STRAND is not in the header so its not read by bedr
+        var$STRAND <- mates$MATESTRAND
+        mates$STRAND <- var$MATESTRAND
+      }
+      
+      coordsA <- adjust_coordinates(var, 'CIPOS', var$POS,  var$POS)
+      coordsB <- adjust_coordinates(mates, 'CIPOS', mates$POS, mates$POS)
+      strandA <- get_strand(var)
       strandB <- get_strand(mates)
-      svtype <- ifelse(!is.null(bnd_bp$SIMPLE_TYPE), bnd_bp$SIMPLE_TYPE, 'BND')
+      svtype <- ifelse(!is.null(var$SIMPLE_TYPE), var$SIMPLE_TYPE, 'BND')
 
-      bnd_bedpe <- data.frame(CHROM_A = bnd_bp$CHROM, START_A = coordsA$start, END_A = coordsA$end,
+      bnd_bedpe <- data.frame(CHROM_A = var$CHROM, START_A = coordsA$start, END_A = coordsA$end,
                               CHROM_B = mates$CHROM, START_B = coordsB$start, END_B = coordsB$end,
-                              ID = name, QUAL = bnd_bp$QUAL, STRAND_A = strandA, STRAND_B = strandB,
+                              ID = name, QUAL = var$QUAL, STRAND_A = strandA, STRAND_B = strandB,
                               SVTYPE = svtype)
-      bnd_bedpe <- remove_duplicate_bnds(bnd_bedpe) 
-    } else {
+
+          } else {
       stop('MATEID is not present in the VCF file INFO field')
     }
   }
@@ -139,32 +156,15 @@ vcf2bedpe <- function(x, filename = NULL, header = FALSE, other = NULL, verbose 
   return(bedpe_df)
 }
 
-remove_duplicate_bnds <- function(bedpe) {
-  bedpe$CHR_A_INT <- as.integer(factor(bedpe$CHROM_A, level = unique(bedpe$CHROM_A)))
-  bedpe$CHR_B_INT <- as.integer(factor(bedpe$CHROM_B, level = unique(bedpe$CHROM_B)))
-  
-  bedpe2 <- subset(bedpe, CHR_A_INT < CHR_B_INT)
-  bedpe3 <- subset(bedpe, CHR_A_INT == CHR_B_INT & START_A < START_B)
-  #bedpe3 <- subset(bedpe, CHROM_A == CHROM_B) %>%
-  #  subset(bedpe, START_A < START_B)
-  # check if same chr and same start exist
-  same <- subset(bedpe, CHROM_A == CHROM_B & START_A == START_B)
-  if (nrow(same) != 0) {
-    warning('The following rows have the same CHROM and START value \n')
-    print(same)
-  }
-  return(subset(bedpe2, select = -c(CHR_A_INT, CHR_B_INT)))
-  #return(rbind(bedpe2, bedpe3))
-}
 
 get_strand <- function(df) {
   strand <- rep('+', nrow(df))
-  if ('STRAND' %in% names(df)) {
+  if ('STRAND' %in% names(df)) { 
     strand <- df$STRAND
   } else if (any(grepl('\\]|\\[', df$ALT))) {
     strand[grepl('\\[.*\\[', df$ALT)] <- '-'
   } else {
-    warning('STRAND information is not recorded in INFO:STRAND or ALT field. Returning default: + ')
+    print('STRAND information is not recorded in INFO:STRAND or ALT field. Returning default: + ')
   }
   return(strand)
 } 
