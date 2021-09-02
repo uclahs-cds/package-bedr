@@ -1,7 +1,7 @@
 library(devtools)
 
-setwd('/projects/rmorin_scratch/hwinata/test_bedr/public-R-bedr/')
-devtools::install()
+#setwd('/projects/rmorin_scratch/hwinata/test_bedr/public-R-bedr/')
+#devtools::install()
 
 library('bedr')
 
@@ -72,6 +72,12 @@ vcf2bedpe <- function(x, filename = NULL, header = FALSE, other = NULL, verbose 
   if (!'SVTYPE' %in% names(x)) {
     stop('SVTYPE column must exist in VCF file')
   }
+  bedpe_cols <- data.frame(CHROM_A = character(0), START_A = numeric(0), END_A = numeric(0),
+                           CHROM_B = character(0), START_B = numeric(0), END_B = numeric(0),
+                           ID = character(0), QUAL = character(0), STRAND_A = character(0), STRAND_B = character(0),
+                           SVTYPE = character(0))
+  
+
   simple_bp <- subset(x, SVTYPE != 'BND' & is.na(x$MATEID))
   
   if (nrow(simple_bp) > 0) {
@@ -95,6 +101,8 @@ vcf2bedpe <- function(x, filename = NULL, header = FALSE, other = NULL, verbose 
                                STRAND_A = rep('+', length(simple_bp$CHROM)),
                                STRAND_B = rep('_', length(simple_bp$CHR2)),
                                SVTYPE = simple_bp$SVTYPE)
+  } else {
+    simple_bedpe <- bedpe_cols
   }
   
   bnd_bp <- subset(x, SVTYPE == 'BND')
@@ -139,6 +147,8 @@ vcf2bedpe <- function(x, filename = NULL, header = FALSE, other = NULL, verbose 
           } else {
       stop('MATEID is not present in the VCF file INFO field')
     }
+  } else {
+    bnd_bedpe <- bedpe_cols
   }
   
   bedpe_df <- rbind(simple_bedpe, bnd_bedpe) 
@@ -175,7 +185,7 @@ get_name <- function(df) {
   if ('EVENT' %in% names(df)) {
     name <- df$EVENT
   } else if (any(grepl('^Manta', name))) {
-    name <- do.call(rbind, str_split(df$ID , ':.$'))[,1]
+    name <- gsub(':.$', '', df$ID) # do.call(rbind, str_split(df$ID , ':.$'))[,1]
   } else if (any(grepl('_[12]$', name))) {
     name <- gsub('_[12]$', '', df$ID)
   }
@@ -193,7 +203,7 @@ adjust_coordinates <- function(df, info_tag, start, end) {
     return(list('start' = df$start, 'end' = df$end))
   }
   
-  df[[info_tag]] <- str_split(df[[info_tag]], ',')
+  df[[info_tag]] <- strsplit(df[[info_tag]], ',')
   df$valid_ci <-  lapply(df[[info_tag]], length) == 2
   
   df[[info_tag]][!df$valid_ci] <- 0
