@@ -1,6 +1,6 @@
 # vcf2bedpe
 
-vcf2bedpe <- function(x, filename = NULL, header = FALSE, other = NULL, verbose = TRUE) {
+vcf2bedpe <- function(x, filename = NULL, header = FALSE) {
   catv('CONVERT VCF TO BEDPE\n')
   if (!is.null(attr(x, 'vcf')) && attr(x, 'vcf') && all(names(x) == c('header','vcf'))) {
     x <- x$vcf;
@@ -105,7 +105,7 @@ vcf2bedpe <- function(x, filename = NULL, header = FALSE, other = NULL, verbose 
   if (!is.null(filename)) {
     write.table(bedpe_df,
                 file = filename,
-                col.names = TRUE,
+                col.names = header,
                 row.names = FALSE,
                 sep = '\t',
                 quote = FALSE
