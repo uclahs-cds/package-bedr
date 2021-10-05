@@ -7,7 +7,7 @@ convert a vcf to a bedpe file
 Convert a vcf to a bedpe file. Currently, it needs to read into R via read.vcf
 }
 \usage{
-vcf2bedpe(x, filename = NULL, header = FALSE, other = NULL, verbose = TRUE)
+vcf2bedpe(x, filename = NULL, header = FALSE)
 }
 \arguments{
   \item{x}{a vcf object}
@@ -29,7 +29,7 @@ Helena Winata
 \examples{
 delly.vcf.example <- system.file("extdata/dellySV.vcf.gz", package = "bedr")
 x <- read.vcf(delly.vcf.example)
-x.bedpe <- vcf2bed(x)
+x.bedpe <- vcf2bedpe(x)
 }
 \keyword{ vcf }
-
+\keyword{ bedpe }

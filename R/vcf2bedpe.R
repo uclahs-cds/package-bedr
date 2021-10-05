@@ -34,23 +34,25 @@ vcf2bedpe <- function(x, filename = NULL, header = FALSE) {
     catv('PROCESSING SIMPLE BREAKENDS\n')
     coordsA <- adjust.coordinates(simple.bp, 'CIPOS', simple.bp$POS, simple.bp$POS);
     coordsB <- adjust.coordinates(simple.bp, 'CIEND', simple.bp$END, simple.bp$END);
-    name <- get.name(simple.bp);
+    name <- get.bedpe.id(simple.bp);
     if (!'CHR2' %in% names(simple.bp)) {
+      # simple breakpoints are intrachromosomal; CHR2 = CHROM
       simple.bp$CHR2 <- simple.bp$CHROM;
     }
     
-    simple.bedpe <- data.frame(CHROM_A = simple.bp$CHROM,
-                               START_A = coordsA$start,
-                               END_A = coordsA$end,
-                               CHROM_B = gsub('chr', '', simple.bp$CHR2),
-                               START_B = coordsB$start,
-                               END_B = coordsB$end,
-                               ID = name,
-                               QUAL = ifelse(is.na(simple.bp$QUAL), '.', simple.bp$QUAL),
-                               STRAND_A = rep('+', length(simple.bp$CHROM)),
-                               STRAND_B = rep('_', length(simple.bp$CHR2)),
-                               SVTYPE = simple.bp$SVTYPE
-                               );
+    simple.bedpe <- data.frame(
+      CHROM_A = simple.bp$CHROM,
+      START_A = coordsA$start,
+      END_A = coordsA$end,
+      CHROM_B = gsub('chr', '', simple.bp$CHR2),
+      START_B = coordsB$start,
+      END_B = coordsB$end,
+      ID = name,
+      QUAL = ifelse(is.na(simple.bp$QUAL), '.', simple.bp$QUAL),
+      STRAND_A = rep('+', length(simple.bp$CHROM)),
+      STRAND_B = rep('_', length(simple.bp$CHR2)),
+      SVTYPE = simple.bp$SVTYPE
+      );
   } else {
     # assign empty bedpe
     simple.bedpe <- bedpe.cols;
@@ -62,7 +64,7 @@ vcf2bedpe <- function(x, filename = NULL, header = FALSE) {
     rownames(bnd.bp) <- bnd.bp$ID;
     if ('MATEID' %in% names(bnd.bp)) {
       bnd.bp <- subset(bnd.bp, !is.na(MATEID));
-      name <- get.name(bnd.bp);
+      name <- get.bedpe.id(bnd.bp);
       bnd_pair <- list();
       for (id in rownames(bnd.bp)) {
         if (!id %in% bnd_pair) {
@@ -113,51 +115,4 @@ vcf2bedpe <- function(x, filename = NULL, header = FALSE) {
   }
   return(bedpe_df);
 }
-
-# get STRAND from INFO or ALT field
-get.strand <- function(df) {
-  strand <- rep('+', nrow(df));
-  if ('STRAND' %in% names(df)) { 
-    strand <- df$STRAND;
-  } else if (any(grepl('\\]|\\[', df$ALT))) {
-    strand[grepl('\\[.*\\[', df$ALT)] <- '-';
-  } else {
-    catv('STRAND information is not recorded in INFO:STRAND or ALT field. Returning default: + ')
-  }
-  return(strand);
-} 
-
-# get BEDPE ID column from VCF
-get.name <- function(df) {
-  name <- df$ID;
-  if ('EVENT' %in% names(df)) {
-    name <- df$EVENT;
-  } else if (any(grepl('^Manta', name))) {
-    name <- gsub(':.$', '', df$ID) # do.call(rbind, str_split(df$ID , ':.$'))[,1];
-  } else if (any(grepl('_[12]$', name))) {
-    name <- gsub('_[12]$', '', df$ID);
-  }
-  return(name);
-}
-
-# adjust coordinates to include confidence interval
-adjust.coordinates <- function(df, info_tag, start, end) {
-  # convert adjustments to numeric
-  df$start <- as.integer(start);
-  df$end <- as.integer(end);
-  if (!info_tag %in% names(df)) {
-    warning(paste0('info tag ', info_tag, ' not found in VCF file. Coordinates are not adjusted'));
-    return(list('start' = df$start, 'end' = df$end));
-  }
-  df[[info_tag]] <- strsplit(df[[info_tag]], ',');
-  df$valid_ci <-  lapply(df[[info_tag]], length) == 2;
-  df[[info_tag]][!df$valid_ci] <- 0;
-  df$ci_start <- do.call(rbind, lapply(df[[info_tag]], as.numeric))[,1];
-  df$ci_end <- do.call(rbind, lapply(df[[info_tag]], as.numeric))[,2];
-  df$start <- df$start + df$ci_start;
-  df$start <- ifelse(df$start >= 0, df$start, 0);
-  df$end <- df$end + df$ci_end;
-  df$end <- ifelse(df$end >= 0, df$end, 0);
-  return(list('start' = df$start, 'end' = df$end));
-}                           
      
