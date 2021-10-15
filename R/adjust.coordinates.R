@@ -11,8 +11,8 @@ adjust.coordinates <- function(df, info_tag, start, end) {
   df[[info_tag]] <- strsplit(df[[info_tag]], ',');
   df$valid_ci <-  lapply(df[[info_tag]], length) == 2;
   df[[info_tag]][!df$valid_ci] <- 0;
-  df$ci_start <- do.call(rbind, lapply(df[[info_tag]], as.numeric))[,1];
-  df$ci_end <- do.call(rbind, lapply(df[[info_tag]], as.numeric))[,2];
+  df$ci_start <- do.call(rbind, lapply(df[[info_tag]], as.numeric))[, 1];
+  df$ci_end <- do.call(rbind, lapply(df[[info_tag]], as.numeric))[, 2];
   df$start <- df$start + df$ci_start;
   df$start <- ifelse(df$start >= 0, df$start, 0);
   df$end <- df$end + df$ci_end;

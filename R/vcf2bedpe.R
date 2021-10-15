@@ -1,11 +1,10 @@
 # vcf2bedpe
 
-vcf2bedpe <- function(x, filename = NULL, header = FALSE) {
+vcf2bedpe <- function(x, filename = NULL, header = FALSE, verbose = TRUE) {
   catv('CONVERT VCF TO BEDPE\n')
   if (!is.null(attr(x, 'vcf')) && attr(x, 'vcf') && all(names(x) == c('header','vcf'))) {
     x <- x$vcf;
-  }
-  else {
+  } else {
     catv(' * This is not an vcf!\n')
     stop();
   }
@@ -16,18 +15,19 @@ vcf2bedpe <- function(x, filename = NULL, header = FALSE) {
     stop('SVTYPE column must exist in VCF file');
   }
   # define columns for bedpe
-  bedpe.cols <- data.frame(CHROM_A = character(0),
-                           START_A = numeric(0),
-                           END_A = numeric(0),
-                           CHROM_B = character(0),
-                           START_B = numeric(0),
-                           END_B = numeric(0),
-                           ID = character(0),
-                           QUAL = character(0),
-                           STRAND_A = character(0),
-                           STRAND_B = character(0),
-                           SVTYPE = character(0)
-                           );
+  bedpe.cols <- data.frame(
+    CHROM_A = character(0),
+    START_A = numeric(0),
+    END_A = numeric(0),
+    CHROM_B = character(0),
+    START_B = numeric(0),
+    END_B = numeric(0),
+    ID = character(0),
+    QUAL = character(0),
+    STRAND_A = character(0),
+    STRAND_B = character(0),
+    SVTYPE = character(0)
+    );
   # Convert simple breakends with no MATEID
   simple.bp <- subset(x, SVTYPE != 'BND' & is.na(x$MATEID));
   if (nrow(simple.bp) > 0) {
@@ -64,7 +64,6 @@ vcf2bedpe <- function(x, filename = NULL, header = FALSE) {
     rownames(bnd.bp) <- bnd.bp$ID;
     if ('MATEID' %in% names(bnd.bp)) {
       bnd.bp <- subset(bnd.bp, !is.na(MATEID));
-      name <- get.bedpe.id(bnd.bp);
       bnd_pair <- list();
       for (id in rownames(bnd.bp)) {
         if (!id %in% bnd_pair) {
@@ -79,23 +78,25 @@ vcf2bedpe <- function(x, filename = NULL, header = FALSE) {
         var$STRAND <- mates$MATESTRAND;
         mates$STRAND <- var$MATESTRAND;
       }
+      name <- get.bedpe.id(var);
       coordsA <- adjust.coordinates(var, 'CIPOS', var$POS,  var$POS);
       coordsB <- adjust.coordinates(mates, 'CIPOS', mates$POS, mates$POS);
       strandA <- get.strand(var);
       strandB <- get.strand(mates);
       svtype <- ifelse(!is.null(var$SIMPLE_TYPE), var$SIMPLE_TYPE, 'BND');
-      bnd.bedpe <- data.frame(CHROM_A = var$CHROM,
-                              START_A = coordsA$start,
-                              END_A = coordsA$end,
-                              CHROM_B = mates$CHROM,
-                              START_B = coordsB$start,
-                              END_B = coordsB$end,
-                              ID = name,
-                              QUAL = var$QUAL,
-                              STRAND_A = strandA,
-                              STRAND_B = strandB,
-                              SVTYPE = svtype
-                              );
+      bnd.bedpe <- data.frame(
+        CHROM_A = var$CHROM,
+        START_A = coordsA$start,
+        END_A = coordsA$end,
+        CHROM_B = mates$CHROM,
+        START_B = coordsB$start,
+        END_B = coordsB$end,
+        ID = name,
+        QUAL = var$QUAL,
+        STRAND_A = strandA,
+        STRAND_B = strandB,
+        SVTYPE = svtype
+        );
       } else {
         stop('MATEID is not present in the VCF file INFO field');
         }
