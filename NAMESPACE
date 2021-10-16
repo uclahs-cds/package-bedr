@@ -44,7 +44,10 @@ export(
     'test.region.similarity',
     'process.input',
     'bed2index',
-    'vcf2bedpe'
+    'vcf2bedpe',
+    'adjust.coordinates',
+    'get.strand',
+    'get.bedpe.id'
     );
 
 import(

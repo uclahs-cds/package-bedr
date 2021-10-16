@@ -1,6 +1,5 @@
-# bedr 1.0.7
+# bedr 1.1.0
 ==========================
-
 - add vcf2bedpe module to convert structural variant calls obtained from Manta, GRIDSS and Delly v0.7.8
 
 
