@@ -20,5 +20,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           path: bedr
+      - run: R -e "install.packages('R.utils')"
+      - run: R -e "install.packages('VennDiagram')"
       - run: R CMD build --compact-vignettes="gs+qpdf" bedr
       - run: R CMD check --as-cran --run-donttest bedr_*.tar.gz
