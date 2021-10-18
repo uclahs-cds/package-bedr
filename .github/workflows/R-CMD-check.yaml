@@ -1,0 +1,24 @@
+---
+name: R-CMD-check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  R-CMD-check:
+    runs-on: ubuntu-latest
+
+    container:
+      image: blcdsdockerregistry/bl-r-devel:latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          path: bedr
+      - run: R CMD build --compact-vignettes="gs+qpdf" bedr
+      - run: R CMD check --as-cran --run-donttest bedr_*.tar.gz
