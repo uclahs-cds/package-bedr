@@ -29,6 +29,7 @@ Helena Winata
 \dontrun{
   name <- get.strand(x.vcf)
   }
+}
 
 \keyword{ vcf }
 \keyword{ bedpe }

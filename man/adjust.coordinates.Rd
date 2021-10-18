@@ -8,7 +8,7 @@ Adjust coordinates for a breakpoint in dataframe using confidence intervals spec
 Used in the `vcf2bedpe` function.
 }
 \usage{
-adjust.coordinate(df, info_tag, start, end)
+adjust.coordinates(df, info_tag, start, end)
 }
 \arguments{
   \item{df}{a dataframe object obtained from a VCF file}
@@ -33,6 +33,7 @@ Helena Winata
   coordsA <- adjust.coordinates(x, 'CIPOS', x$POS, x$POS);
   coordsB <- adjust.coordinates(x, 'CIEND', x$END, x$END)
   }
+}
 
 \keyword{ vcf }
 \keyword{ bedpe }

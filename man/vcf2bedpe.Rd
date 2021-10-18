@@ -7,7 +7,7 @@ convert a vcf to a bedpe file
 Convert a vcf to a bedpe file. Currently, it needs to read into R via read.vcf
 }
 \usage{
-vcf2bedpe(x, filename = NULL, header = FALSE)
+vcf2bedpe(x, filename = NULL, header = FALSE, verbose = TRUE)
 }
 \arguments{
   \item{x}{a vcf object}
