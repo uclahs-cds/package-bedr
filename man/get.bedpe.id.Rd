@@ -29,6 +29,7 @@ Helena Winata
 \dontrun{
   name <- get.bedpe.id(x.vcf)
   }
+}
 
 \keyword{ vcf }
 \keyword{ bedpe }
