@@ -1,2 +1,4 @@
 src/sample_interval.cpp
 .github/
+*.Rproj*
+metadata.yaml
