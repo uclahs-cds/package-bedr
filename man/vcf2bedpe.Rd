@@ -13,6 +13,7 @@ vcf2bedpe(x, filename = NULL, header = FALSE, verbose = TRUE)
   \item{x}{a vcf object}
   \item{filename}{the name of the output bedpe file, if NULL then bedpe is not exported}
   \item{header}{indicate if the bed file has header or not when exported}
+  \item{verbose}{detailed messages}
 }
 %\details{
 %}
@@ -27,8 +28,8 @@ Helena Winata
 %\seealso{
 %}
 \examples{
-delly.vcf.example <- system.file("extdata/dellySV.vcf.gz", package = "bedr")
-x <- read.vcf(delly.vcf.example)
+gridss.vcf.example <- system.file("extdata/gridssSV.vcf.gz", package = "bedr")
+x <- read.vcf(gridss.vcf.example, split.info = TRUE)
 x.bedpe <- vcf2bedpe(x)
 }
 \keyword{ vcf }

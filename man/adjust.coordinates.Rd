@@ -1,5 +1,5 @@
-\name{adjust.coordinate}
-\alias{adjust.coordinate}
+\name{adjust.coordinates}
+\alias{adjust.coordinates}
 \title{
 adjust coordinates for a BEDPE file
 }
