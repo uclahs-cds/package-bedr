@@ -1,1 +1,7 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+
+\.github/
+metadata.yaml
+
 src/sample_interval.cpp
