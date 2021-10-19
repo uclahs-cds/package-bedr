@@ -29,7 +29,7 @@ vcf2bedpe <- function(x, filename = NULL, header = FALSE, verbose = TRUE) {
     SVTYPE = character(0)
     );
   # Convert simple breakends with no MATEID
-  simple.bp <- subset(x, SVTYPE != 'BND' & is.na(x$MATEID));
+  simple.bp <- subset(x, x$SVTYPE != 'BND' & is.na(x$MATEID));
   if (nrow(simple.bp) > 0) {
     catv('PROCESSING SIMPLE BREAKENDS\n')
     coordsA <- adjust.coordinates(simple.bp, 'CIPOS', simple.bp$POS, simple.bp$POS);
@@ -58,12 +58,12 @@ vcf2bedpe <- function(x, filename = NULL, header = FALSE, verbose = TRUE) {
     simple.bedpe <- bedpe.cols;
   }
   # Convert paired breakends with MATEID
-  bnd.bp <- subset(x, SVTYPE == 'BND');
+  bnd.bp <- subset(x, x$SVTYPE == 'BND');
   if (nrow(bnd.bp > 0)) {
     catv('PROCESSING BND BREAKENDS\n')
     rownames(bnd.bp) <- bnd.bp$ID;
     if ('MATEID' %in% names(bnd.bp)) {
-      bnd.bp <- subset(bnd.bp, !is.na(MATEID));
+      bnd.bp <- subset(bnd.bp, !is.na(bnd.bp$MATEID));
       bnd_pair <- list();
       for (id in rownames(bnd.bp)) {
         if (!id %in% bnd_pair) {
