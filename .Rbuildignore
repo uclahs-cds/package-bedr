@@ -1,5 +1,7 @@
-src/sample_interval.cpp
-.github/
+^.*\.Rproj$
+^\.Rproj\.user$
 
-\*.Rproj
+\.github/
 metadata.yaml
+
+src/sample_interval.cpp
