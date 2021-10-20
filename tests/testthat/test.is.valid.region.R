@@ -9,39 +9,15 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-context("tabix")
+test_that('check if region input is valid', {
 
-if (check.binary("tabix", verbose = TRUE)) {
+	regions <- get.example.regions();
 
-	test_that("check tabix", {
-		vcf <- system.file("extdata/CosmicCodingMuts_v66_20130725_ex.vcf.gz", package = "bedr");
-		regions <- get.example.regions()
-		regions$a <- bedr.sort.region(regions$a);
+	# good region
+	expect_equal(is.valid.region(regions$a, verbose = FALSE), c(T, T, T, T, T, T, T, T));
+	expect_equal(is.valid.region('chrY:24052505-24052506', verbose = FALSE), T);
 
-		a.nochr <- gsub("^chr", "", regions$a)
-
-		b <- c("chr1:10-100000","chr10:100-100000")
-		b.nochr <- c("1:10-100000","10:100-100000")
-
-		b.nochr.matrix <- index2bed(b.nochr);
-
-		# bad region
-		expect_error(tabix("meow", vcf, verbose = T));
-
-		# no chr
-		expect_error(tabix(a.nochr, vcf, verbose = T));
-
-		# missing file
-		expect_error(tabix(a.nochr, "meow", check.chr = FALSE, verbose = T));
-
-		# check the length of output
-		expect_equal(nrow(tabix(a.nochr, vcf, verbose = T, check.chr = FALSE)), NULL);
-		expect_equal(nrow(tabix(b.nochr, vcf, verbose = T, check.chr = FALSE)), 6);
-	
-		# check the header is included
-		expect_equal(colnames(tabix(b.nochr, vcf, verbose = T, check.chr = FALSE)), c("CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO")); 
-
-		# check header is correct length
-		expect_equal(length(attributes(tabix(b.nochr, vcf, verbose = T, check.chr = FALSE))$header), 13);
-		})
-}
+	# bad region format (region d has bad)
+	expect_equal(is.valid.region(regions$d, verbose = FALSE), c(T, F, T, F, F, F, F, F));
+	expect_error(is.valid.region(regions$d, throw.error = TRUE, verbose = FALSE));
+	})

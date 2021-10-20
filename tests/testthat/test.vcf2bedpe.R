@@ -9,17 +9,31 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-context("is.sorted.region")
+if (check.binary('vcf2bedpe', verbose = TRUE)) {
 
-if (check.binary("bedtools", verbose = TRUE)) {
+	test_that('check_vcf2bedpe', {
+		for (sv.caller in c('gridss', 'delly', 'manta')){
+			vcf.file <- system.file(paste0('data/', sv.caller, 'SV.vcf.gz'), package = 'bedr');
+			vcf <- read.vcf(vcf.file, split.info = TRUE);
+			bedpe <- vcf2bedpe(vcf);
 
-	test_that("correctly identifies if regions are sorted", {	
-	
-		regions <- get.example.regions()
-		regions.a.sorted <- c("chr1:10-100", "chr1:101-200", "chr1:200-210", "chr1:211-212", "chr10:50-100", "chr2:10-50", "chr2:40-60", "chr20:1-5")
-	
-		expect_equal(is.sorted.region(regions$a), F )
-		expect_equal(is.sorted.region(regions.a.sorted), T )
+			# check bedpe is not empty
+			expect_equal((nrow(bedpe) > 0), TRUE);
 
-		})
+			# check the header is included
+			expect_equal(colnames(bedpe), c('CHROM_A', 'START_A', 'END_A', 'CHROM_B', 'START_B', 'END_B', 'ID', 'QUAL', 'STRAND_A', 'STRAND_B', 'SVTYPE')); 
+
+			# if SVTYPE == BND, must have MATEID
+			if (sv.caller == 'gridss') {
+				vcf$vcf <- subset(vcf$vcf, select = -MATEID);
+				expect_error(vcf2bedpe(vcf));
+			}
+		# expect error if vcf is unpacked 
+		expect_error(vcf2bedpe(vcf$vcf));
+
+		# expect error if VCF doesnt have SVTYPE column
+		vcf$vcf <- subset(vcf$vcf, select = -SVTYPE);
+		expect_error(vcf2bedpe(vcf));	
+		});
+	}
 }

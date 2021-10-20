@@ -9,17 +9,14 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-context("index2bed")
+if (check.binary('bedtools', verbose = TRUE)) {
 
-test_that("check that index to bed conversion is working", {
-
-	regions <- get.example.regions()
-	chr.dat <- c("chr1",  "chr1",  "chr1",  "chr1",  "chr2",  "chr10", "chr2",  "chr20")
-	start.dat <- c(10, 101, 200, 211,  10,  50,  40,   1)
-	end.dat <- c(100, 200, 210, 212,  50, 100,  60,   5)
-	region.a.bed <- data.frame(chr=chr.dat,start=start.dat,end=end.dat, stringsAsFactors=F)
-
-	expect_equal(index2bed(regions$a), region.a.bed)
-
-	})
-
+	test_that('correctly identifies if regions are sorted', {	
+	
+		regions <- get.example.regions();
+		regions.a.sorted <- c('chr1:10-100', 'chr1:101-200', 'chr1:200-210', 'chr1:211-212', 'chr10:50-100', 'chr2:10-50', 'chr2:40-60', 'chr20:1-5');
+	
+		expect_equal(is.sorted.region(regions$a), FALSE);
+		expect_equal(is.sorted.region(regions.a.sorted), TRUE);
+		})
+}

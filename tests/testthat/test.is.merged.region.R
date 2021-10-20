@@ -9,26 +9,15 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-context("process.input")
+if (check.binary('bedtools', verbose = TRUE)) {
 
-if (check.binary("bedtools", verbose = TRUE)) {
-
-	test_that("check input processing i.e. converting to bed and sending to a tmp file", {
+	test_that('correctly identifies if regions are merged', {	
 	
-		regions <- get.example.regions()
-		regions$a <- bedr.sort.region(regions$a)
-
-		# good region
-		expect_equal(length(process.input(regions$a, verbose = F)), 1);
-		expect_equal(attributes(process.input(regions$a, verbose = F)[[1]]), list(is.index=T,is.file=F));
+		regions <- get.example.regions();
+		regions.a.merged <- c('chr1:10-100',  'chr1:101-210', 'chr1:211-212', 'chr10:50-100', 'chr2:10-60', 'chr20:1-5');
+		regions.a.merged.pc0 <- c('chr1:10-100',  'chr1:101-210', 'chr1:211-212', 'chr10:50-100', 'chr2:10-60', 'chr20:1-5');
 	
-		expect_equal(length(process.input(index2bed(regions$a), verbose = F)), 1);
-		expect_equal(attributes(process.input(index2bed(regions$a), verbose = F)[[1]]), list(is.index=F,is.file=F));
-	
-		expect_equal(length(process.input("chrY:24052505-24052506", verbose = F)), 1);
-		expect_equal(attributes(process.input("chrY:24052505-24052506", verbose = F)[[1]]), list(is.index=T,is.file=F));
-
-
+		expect_equal(is.merged.region(regions$a), FALSE);
+		expect_equal(is.merged.region(regions.a.merged), TRUE);
 		})
-
 }

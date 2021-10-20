@@ -9,26 +9,24 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-context("convert2bed")
+if (check.binary('bedtools', verbose = TRUE)) {
 
-if (check.binary("bedtools", verbose = TRUE)) {
-
-	test_that("check converting a region into bed file including file type checking and region verification", {
+	test_that('check input processing i.e. converting to bed and sending to a tmp file', {
 	
-		regions <- get.example.regions()
-		regions$a <- bedr.sort.region(regions$a)
-		regions$b <- bedr.sort.region(regions$b)
-		a.bed <- index2bed(regions$a)
-		b.bed <- index2bed(regions$b)
-
-		# bad region
-		expect_error(convert2bed("meow", verbose = F))
+		regions <- get.example.regions();
+		regions$a <- bedr.sort.region(regions$a);
 
 		# good region
-		expect_equivalent(convert2bed(regions$a, verbose = F), a.bed);
-		expect_equivalent(convert2bed(regions$b, verbose = F), b.bed);
-		expect_equivalent(convert2bed("chrY:24052505-24052506", verbose = F), data.frame(chr="chrY", start=24052505, end=24052506, stringsAsFactors = FALSE));
+		expect_equal(length(process.input(regions$a, verbose = FALSE)), 1);
+		expect_equal(attributes(process.input(regions$a, verbose = FALSE)[[1]]), list(is.index = TRUE, is.file = FALSE));
+	
+		expect_equal(length(process.input(index2bed(regions$a), verbose = FALSE)), 1);
+		expect_equal(attributes(process.input(index2bed(regions$a), verbose = FALSE)[[1]]), list(is.index = FALSE, is.file=FALSE));
+	
+		expect_equal(length(process.input('chrY:24052505-24052506', verbose = FALSE)), 1);
+		expect_equal(attributes(process.input('chrY:24052505-24052506', verbose = FALSE)[[1]]), list(is.index = TRUE, is.file=FALSE));
 
 
 		})
+
 }
