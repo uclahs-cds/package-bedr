@@ -46,7 +46,7 @@ Daryl Waggott
 
 \examples{
 
-vcf.path <- system.file("extdata/callerA.vcf.gz", package = "bedr");
+vcf.path <- system.file("data/callerA.vcf.gz", package = "bedr");
 vcf.data <- read.vcf(vcf.path, split.info = TRUE);
 vcf.data$vcf <- vcf.data$vcf[, 
 	c("CHROM", "POS", "END", setdiff(colnames(vcf.data$vcf), c("CHROM", "POS", "END")))
