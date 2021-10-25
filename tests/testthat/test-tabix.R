@@ -9,10 +9,10 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-if (check.binary('tabix', verbose = TRUE)) {
 
-	test_that('check tabix', {
-		vcf <- system.file('data/CosmicCodingMuts_v66_20130725_ex.vcf.gz', package = 'bedr');
+test_that('check tabix', {
+	if (check.binary('tabix', verbose = TRUE)) {
+		vcf <- system.file('tests/testthat/data/CosmicCodingMuts_v66_20130725_ex.vcf.gz', package = 'bedr');
 		regions <- get.example.regions();
 		regions$a <- bedr.sort.region(regions$a);
 
@@ -41,5 +41,5 @@ if (check.binary('tabix', verbose = TRUE)) {
 
 		# check header is correct length
 		expect_equal(length(attributes(tabix(b.nochr, vcf, verbose = T, check.chr = FALSE))$header), 13);
-		})
-}
+		}
+	})

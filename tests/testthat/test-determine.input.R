@@ -9,10 +9,9 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-if (check.binary('tabix', verbose = TRUE)) {
 
-	test_that('check that input format is correctly identified', {
-
+test_that('check that input format is correctly identified', {
+	if (check.binary('tabix', verbose = TRUE)) {
 		regions <- get.example.regions()
 		region.a.bed.df1 <- index2bed(regions$a)
 		region.a.bed.df2 <- index2bed(regions$a)
@@ -40,5 +39,5 @@ if (check.binary('tabix', verbose = TRUE)) {
 		expect_equal(determine.input(as.matrix(region.a.bed.df2), verbose = FALSE), 4) # matrix with incorrect names fails due to string conversion
 		expect_equal(determine.input(as.matrix(regions$a), verbose = FALSE), 4); # need to be more explicit
 		expect_equal(determine.input(NA, verbose = FALSE), 4) # a vector but it doesn't look like an index
-		})
-}
+		}
+	})

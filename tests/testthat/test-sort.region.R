@@ -11,10 +11,9 @@
 
 context('bedr.sort.region')
 
-if (check.binary('bedtools', verbose = TRUE)) {
 
-	test_that('bedr.sort.region handles parameter input', {	
-	
+test_that('bedr.sort.region handles parameter input', {	
+	if (check.binary('bedtools', verbose = TRUE)) {
 		regions <- get.example.regions();
 		region.a.sorted.lex <- c('chr1:10-100', 'chr1:101-200', 'chr1:200-210', 'chr1:211-212', 'chr10:50-100', 'chr2:10-50',   'chr2:40-60', 'chr20:1-5');
 		region.a.sorted.nat <- c('chr1:10-100', 'chr1:101-200', 'chr1:200-210', 'chr1:211-212', 'chr2:10-50',   'chr2:40-60','chr10:50-100', 'chr20:1-5');
@@ -40,10 +39,10 @@ if (check.binary('bedtools', verbose = TRUE)) {
 		expect_equivalent(bedr.sort.region(region.a.df, verbose = FALSE), region.a.df.sorted);
 	
 		# verbose returns
-		})
-	
-	test_that('bedr.sort.region correctly does lexicographical sorting', {
-	
+		}
+	});
+test_that('bedr.sort.region correctly does lexicographical sorting', {
+	if (check.binary('bedtools', verbose = TRUE)) {
 		regions <- get.example.regions();
 		region.a.sorted.lex <- c('chr1:10-100', 'chr1:101-200', 'chr1:200-210', 'chr1:211-212', 'chr10:50-100', 'chr2:10-50',   'chr2:40-60', 'chr20:1-5');
 
@@ -57,9 +56,10 @@ if (check.binary('bedtools', verbose = TRUE)) {
 	  # bedops
 		expect_equal(bedr.sort.region(regions$a, method = 'lexicographical', engine = 'bedops', verbose = FALSE), region.a.sorted.lex);
 		}
-		})
-
-	test_that('bedr.sort.region correctly does natural sorting', {
+		}
+	});
+test_that('bedr.sort.region correctly does natural sorting', {
+	if (check.binary('bedtools', verbose = TRUE)) {
 		regions <- get.example.regions();
 		region.a.sorted.nat <- c('chr1:10-100', 'chr1:101-200', 'chr1:200-210', 'chr1:211-212','chr2:10-50', 'chr2:40-60', 'chr10:50-100', 'chr20:1-5');
 
@@ -73,5 +73,5 @@ if (check.binary('bedtools', verbose = TRUE)) {
 	  # bedops
 		expect_equal(bedr.sort.region(regions$a, method = 'natural', engine = 'bedops', verbose = FALSE), region.a.sorted.nat);
 		}
-	  })
-}	
+	  }
+	})

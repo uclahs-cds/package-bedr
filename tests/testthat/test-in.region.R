@@ -9,10 +9,9 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-if (check.binary('bedtools', verbose = TRUE)) {
 
-	test_that('check in.region', {
-	
+test_that('check in.region', {
+	if (check.binary('bedtools', verbose = TRUE)) {	
 		regions <- get.example.regions()
 		regions$a <- bedr.sort.region(regions$a)
 		regions$b <- bedr.sort.region(regions$b)
@@ -47,5 +46,5 @@ if (check.binary('bedtools', verbose = TRUE)) {
 
 		# %in.region% gives same results
 		expect_equal(in.region(regions$a,regions$b, verbose = FALSE), regions$a %in.region% regions$b);
-		})
-}	
+		}
+	})

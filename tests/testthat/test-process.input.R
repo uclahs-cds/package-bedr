@@ -9,10 +9,9 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-if (check.binary('bedtools', verbose = TRUE)) {
 
-	test_that('check input processing i.e. converting to bed and sending to a tmp file', {
-	
+test_that('check input processing i.e. converting to bed and sending to a tmp file', {
+	if (check.binary('bedtools', verbose = TRUE)) {
 		regions <- get.example.regions();
 		regions$a <- bedr.sort.region(regions$a);
 
@@ -21,12 +20,9 @@ if (check.binary('bedtools', verbose = TRUE)) {
 		expect_equal(attributes(process.input(regions$a, verbose = FALSE)[[1]]), list(is.index = TRUE, is.file = FALSE));
 	
 		expect_equal(length(process.input(index2bed(regions$a), verbose = FALSE)), 1);
-		expect_equal(attributes(process.input(index2bed(regions$a), verbose = FALSE)[[1]]), list(is.index = FALSE, is.file=FALSE));
+		expect_equal(attributes(process.input(index2bed(regions$a), verbose = FALSE)[[1]]), list(is.index = FALSE, is.file = FALSE));
 	
 		expect_equal(length(process.input('chrY:24052505-24052506', verbose = FALSE)), 1);
-		expect_equal(attributes(process.input('chrY:24052505-24052506', verbose = FALSE)[[1]]), list(is.index = TRUE, is.file=FALSE));
-
-
-		})
-
-}
+		expect_equal(attributes(process.input('chrY:24052505-24052506', verbose = FALSE)[[1]]), list(is.index = TRUE, is.file = FALSE));
+		}
+	})

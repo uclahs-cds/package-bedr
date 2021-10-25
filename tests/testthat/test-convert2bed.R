@@ -9,10 +9,9 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-if (check.binary('bedtools', verbose = TRUE)) {
 
-	test_that('check converting a region into bed file including file type checking and region verification', {
-	
+test_that('check converting a region into bed file including file type checking and region verification', {
+	if (check.binary('bedtools', verbose = TRUE)) {	
 		regions <- get.example.regions()
 		regions$a <- bedr.sort.region(regions$a)
 		regions$b <- bedr.sort.region(regions$b)
@@ -26,5 +25,5 @@ if (check.binary('bedtools', verbose = TRUE)) {
 		expect_equivalent(convert2bed(regions$a, verbose = FALSE), a.bed);
 		expect_equivalent(convert2bed(regions$b, verbose = FALSE), b.bed);
 		expect_equivalent(convert2bed('chrY:24052505-24052506', verbose = FALSE), data.frame(chr = 'chrY', start = 24052505, end = 24052506, stringsAsFactors = FALSE));
-		})
-}
+		}
+	})

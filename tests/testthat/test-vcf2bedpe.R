@@ -10,9 +10,8 @@
 # credit be given to OICR scientists, as scientifically appropriate.
 
 test_that('check_vcf2bedpe', {
-  if (check.binary('vcf2bedpe', verbose = TRUE)) {
   	for (sv.caller in c('gridss', 'delly', 'manta')){
-  		vcf.file <- system.file(paste0('data/', sv.caller, 'SV.vcf.gz'), package = 'bedr');
+  		vcf.file <- system.file(paste0('tests/testthat/data/', sv.caller, 'SV.vcf.gz'), package = 'bedr');
   		vcf <- read.vcf(vcf.file, split.info = TRUE);
   		bedpe <- vcf2bedpe(vcf);
   
@@ -34,6 +33,5 @@ test_that('check_vcf2bedpe', {
     	vcf$vcf <- subset(vcf$vcf, select = -SVTYPE);
     	expect_error(vcf2bedpe(vcf));	
     	}
-    }
-  })
+    })
   
