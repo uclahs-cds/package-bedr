@@ -22,5 +22,6 @@ jobs:
           path: bedr
       - run: R -e "install.packages('R.utils')"
       - run: R -e "install.packages('VennDiagram')"
+      - run: apt update && apt install -y tabix bedtools
       - run: R CMD build --compact-vignettes="gs+qpdf" bedr
       - run: R CMD check --as-cran --run-donttest bedr_*.tar.gz
