@@ -44,7 +44,7 @@ bedr.merge.region(
 Daryl Waggott
 }
 \references{
-\url{http://bedtools.readthedocs.org/en/latest/content/tools/merge.html}
+\url{http://bedtools.readthedocs.io/en/latest/content/tools/merge.html}
 }
 \examples{
 if (check.binary("bedtools")) {

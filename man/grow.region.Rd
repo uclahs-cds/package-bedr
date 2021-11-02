@@ -51,7 +51,7 @@ grow.region(
 
 %}
 \references{
-\url{http://bedtools.readthedocs.org/en/latest/content/tools/slop.html}
+\url{http://bedtools.readthedocs.io/en/latest/content/tools/slop.html}
 }
 \author{
 Daryl Waggott

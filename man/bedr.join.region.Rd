@@ -42,7 +42,7 @@ bedr.join.region(
 %\value{
 %}
 \references{
-\url{http://bedtools.readthedocs.org/en/latest/content/tools/intersect.html}
+\url{http://bedtools.readthedocs.io/en/latest/content/tools/intersect.html}
 }
 \author{
 Daryl Waggott

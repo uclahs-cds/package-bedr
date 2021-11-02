@@ -50,7 +50,7 @@ Daryl Waggott, Syed Haider
 }
 
 \references{
-\url{http://bedtools.readthedocs.org/en/latest/content/tools/getfasta.html}
+\url{http://bedtools.readthedocs.io/en/latest/content/tools/getfasta.html}
 }
 
 \examples{

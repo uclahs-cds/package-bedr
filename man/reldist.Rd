@@ -36,11 +36,11 @@ The frequency of relative distances in bins spanning 0 to 0.5
 %\value{
 %}
 \references{
-\url{http://bedtools.readthedocs.org/en/latest/content/tools/reldist.html}
+\url{https://bedtools.readthedocs.io/en/latest/content/tools/reldist.html}
 }
 \author{
 Daryl Waggott
-}
+} 
 \seealso{
 jaccard
 }
