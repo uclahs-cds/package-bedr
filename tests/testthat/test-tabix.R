@@ -12,7 +12,7 @@
 
 test_that('check tabix', {
 	if (check.binary('tabix', verbose = TRUE)) {
-		vcf <- system.file('data/CosmicCodingMuts_v66_20130725_ex.vcf.gz', package = 'bedr');
+		vcf <- system.file('tests/testthat/data/CosmicCodingMuts_v66_20130725_ex.vcf.gz', package = 'bedr');
 		regions <- get.example.regions();
 		regions$a <- bedr.sort.region(regions$a);
 
