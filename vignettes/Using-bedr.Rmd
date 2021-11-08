@@ -49,7 +49,7 @@ The advantages to this approach include:
 
 ## <a id = "Third-Party-Tools"></a> Third Party Tools 
 
-The current implementation focuses on three excellent tools.  For specifics on functionality please visit there online documentation, primary citation and [biostar](https://www.biostars.org/show/tag/bedtools/) posts.  To gain the functionality of these analytical engines you will need to have the programs installed and in your default PATH.  In future versions the source code for these dependencies may be distributed together.
+The current implementation focuses on three excellent tools.  For specifics on functionality please visit there online documentation, primary citation and [biostar](https://www.biostars.org/tag/Bedtools/) posts.  To gain the functionality of these analytical engines you will need to have the programs installed and in your default PATH.  In future versions the source code for these dependencies may be distributed together.
 
 
 1. bedtools [docs](http://bedtools.readthedocs.io/en/latest/) and [source](https://github.com/arq5x/bedtools2)
