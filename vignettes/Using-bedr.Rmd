@@ -49,7 +49,7 @@ The advantages to this approach include:
 
 ## <a id = "Third-Party-Tools"></a> Third Party Tools 
 
-The current implementation focuses on three excellent tools.  For specifics on functionality please visit there online documentation, primary citation and [biostar](http://www.biostars.org/show/tag/bedtools/) posts.  To gain the functionality of these analytical engines you will need to have the programs installed and in your default PATH.  In future versions the source code for these dependencies may be distributed together.
+The current implementation focuses on three excellent tools.  For specifics on functionality please visit there online documentation, primary citation and [biostar](https://www.biostars.org/tag/Bedtools/) posts.  To gain the functionality of these analytical engines you will need to have the programs installed and in your default PATH.  In future versions the source code for these dependencies may be distributed together.
 
 
 1. bedtools [docs](http://bedtools.readthedocs.org/en/latest/) and [source](https://github.com/arq5x/bedtools2)
@@ -237,7 +237,7 @@ if (check.binary("bedtools")) {
 
 ### <a id = "jaccard-and-reldist"></a> Statistically Quantify Regions' Similarity (jaccard and reldist)
 
-When comparing (pairwise) the extent of overlap between a large collection of genomic regions, it becomes necessary to report the similarity (intersect) using a single quantitative measure. Bedtools implements two such statitics; [`jaccard`](http://bedtools.readthedocs.org/en/latest/content/tools/jaccard.html) and [`reldist`](http://bedtools.readthedocs.org/en/latest/content/tools/reldist.html) ([Favorov A et al.](http://www.ncbi.nlm.nih.gov/pubmed/22693437)) which can be called through `bedr` as shown below:
+When comparing (pairwise) the extent of overlap between a large collection of genomic regions, it becomes necessary to report the similarity (intersect) using a single quantitative measure. Bedtools implements two such statitics; [`jaccard`](http://bedtools.readthedocs.org/en/latest/content/tools/jaccard.html) and [`reldist`](http://bedtools.readthedocs.org/en/latest/content/tools/reldist.html) ([Favorov A et al.](http://pubmed.ncbi.nlm.nih.gov/22693437)) which can be called through `bedr` as shown below:
 
 ```{r, results = "hold", message = TRUE, eval = TRUE, errors = TRUE}
 if (check.binary("bedtools")) {
