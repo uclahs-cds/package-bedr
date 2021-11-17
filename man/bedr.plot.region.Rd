@@ -54,6 +54,7 @@ Plots!
 Daryl Waggott
 }
 \examples{
+\dontrun{
 if (check.binary("bedtools")) {
 	# example data
 	a <- get.random.regions(n = 1000, chr = "chr22", size.mean = 10)
@@ -85,6 +86,7 @@ if (check.binary("bedtools")) {
 
 	dev.off()
 	}
+}
 }
 
 \keyword{ plot }
