@@ -22,8 +22,11 @@ test_that('check converting a region into bed file including file type checking 
 		expect_error(convert2bed('meow', verbose = FALSE))
 
 		# good region
-		expect_equivalent(convert2bed(regions$a, verbose = FALSE), a.bed);
-		expect_equivalent(convert2bed(regions$b, verbose = FALSE), b.bed);
-		expect_equivalent(convert2bed('chrY:24052505-24052506', verbose = FALSE), data.frame(chr = 'chrY', start = 24052505, end = 24052506, stringsAsFactors = FALSE));
+		# expect_equivalent(convert2bed(regions$a, verbose = FALSE), a.bed);
+		# expect_equivalent(convert2bed(regions$b, verbose = FALSE), b.bed);
+		# expect_equivalent(convert2bed('chrY:24052505-24052506', verbose = FALSE), data.frame(chr = 'chrY', start = 24052505, end = 24052506, stringsAsFactors = FALSE));
+		expect_equal(convert2bed(regions$a, verbose = FALSE), a.bed, ignore_attr = TRUE);
+		expect_equal(convert2bed(regions$b, verbose = FALSE), b.bed, ignore_attr = TRUE);
+		expect_equal(convert2bed('chrY:24052505-24052506', verbose = FALSE), data.frame(chr = 'chrY', start = 24052505, end = 24052506, stringsAsFactors = FALSE), ignore_attr = TRUE);
 		}
 	})

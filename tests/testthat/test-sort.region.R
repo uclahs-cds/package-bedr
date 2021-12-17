@@ -9,7 +9,7 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-context('bedr.sort.region')
+# context('bedr.sort.region')
 
 
 test_that('bedr.sort.region handles parameter input', {	
@@ -29,15 +29,17 @@ test_that('bedr.sort.region handles parameter input', {
 		expect_equal(bedr.sort.region(regions$a, verbose = FALSE), region.a.sorted.lex);
 
 		expect_error(bedr.sort.region(as.data.frame(regions$a), verbose = FALSE)); # b/c it's a factor
-		expect_equivalent(bedr.sort.region(data.frame(index = regions$a, stringsAsFactors=FALSE), verbose = FALSE), as.data.frame(region.a.sorted.lex, stringsAsFactors = FALSE));
+		#expect_equivalent(bedr.sort.region(data.frame(index = regions$a, stringsAsFactors=FALSE), verbose = FALSE), as.data.frame(region.a.sorted.lex, stringsAsFactors = FALSE));
+		expect_equal(bedr.sort.region(data.frame(index = regions$a, stringsAsFactors=FALSE), verbose = FALSE), as.data.frame(region.a.sorted.lex, stringsAsFactors = FALSE), ignore_attr = TRUE);
 
 		# index vs bed format
 		region.a.matrix.sorted <- as.matrix(index2bed(region.a.sorted.lex));
 		region.a.df <- as.data.frame(index2bed(regions$a), stringsAsFactors = FALSE);
 		region.a.df.sorted <- as.data.frame(index2bed(region.a.sorted.lex), stringsAsFactors = FALSE, row.names = region.a.sorted.lex);
 		expect_error(bedr.sort.region(region.a.matrix, verbose = FALSE)); # matrix / string conversion messes up regions 
-		expect_equivalent(bedr.sort.region(region.a.df, verbose = FALSE), region.a.df.sorted);
-	
+		#expect_equivalent(bedr.sort.region(region.a.df, verbose = FALSE), region.a.df.sorted);
+		expect_equal(bedr.sort.region(region.a.df, verbose = FALSE), region.a.df.sorted, ignore_attr = TRUE);
+
 		# verbose returns
 		}
 	});
