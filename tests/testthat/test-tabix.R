@@ -12,7 +12,6 @@
 
 test_that('check tabix', {
 	if (check.binary('tabix', verbose = TRUE)) {
-		# vcf <- system.file('../tests/testthat/data/CosmicCodingMuts_v66_20130725_ex.vcf.gz', package = 'bedr');
 		vcf <- paste0(getwd(), '/data/CosmicCodingMuts_v66_20130725_ex.vcf.gz')
 		print(vcf)
 		regions <- get.example.regions();

@@ -10,13 +10,8 @@
 # credit be given to OICR scientists, as scientifically appropriate.
 
 test_that('check_vcf2bedpe', {
-	print(getwd());
   	for (sv.caller in c('gridss', 'delly', 'manta')) {
 		vcf.file <- paste0(getwd(), '/data/', sv.caller, 'SV.vcf.gz')
-		file.exists(vcf.file)
-		# vcf.file <- system.file('../tests/testthat/data', paste0(sv.caller, 'SV.vcf.gz'), package = 'bedr');
-		# vcf.file <- base::system.file('../tests/testthat/data', package = 'bedr') #, paste0(sv.caller, 'SV.vcf.gz'), package = 'bedr');
-		print(vcf.file)
   		vcf <- read.vcf(vcf.file, split.info = TRUE);
   		bedpe <- vcf2bedpe(vcf);
   
