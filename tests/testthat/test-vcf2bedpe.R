@@ -11,7 +11,7 @@
 
 test_that('check_vcf2bedpe', {
   	for (sv.caller in c('gridss', 'delly', 'manta')) {
-		vcf.file <- paste0(getwd(), '/data/', sv.caller, 'SV.vcf.gz')
+		vcf.file <- testthat::test_path(paste0('data/', sv.caller, 'SV.vcf.gz'));
   		vcf <- read.vcf(vcf.file, split.info = TRUE);
   		bedpe <- vcf2bedpe(vcf);
   
