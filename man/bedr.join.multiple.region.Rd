@@ -45,7 +45,7 @@ bedr.join.multiple.region(
 %\value{
 %}
 \references{
-\url{http://bedtools.readthedocs.org/en/latest/content/tools/multiinter.html}
+\url{http://bedtools.readthedocs.io/en/latest/content/tools/multiinter.html}
 }
 \author{
 Daryl Waggott

@@ -9,18 +9,15 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-context("is.merged.region")
+test_that('check if region input is valid', {
 
-if (check.binary("bedtools", verbose = TRUE)) {
+	regions <- get.example.regions();
 
-	test_that("correctly identifies if regions are merged", {	
-	
-		regions <- get.example.regions()
-		regions.a.merged <- c("chr1:10-100",  "chr1:101-210", "chr1:211-212", "chr10:50-100", "chr2:10-60", "chr20:1-5")
-		regions.a.merged.pc0 <- c("chr1:10-100",  "chr1:101-210", "chr1:211-212", "chr10:50-100", "chr2:10-60", "chr20:1-5")
-	
-		expect_equal(is.merged.region(regions$a), F )
-		expect_equal(is.merged.region(regions.a.merged), T )
+	# good region
+	expect_equal(is.valid.region(regions$a, verbose = FALSE), c(T, T, T, T, T, T, T, T));
+	expect_equal(is.valid.region('chrY:24052505-24052506', verbose = FALSE), T);
 
-		})
-}
+	# bad region format (region d has bad)
+	expect_equal(is.valid.region(regions$d, verbose = FALSE), c(T, F, T, F, F, F, F, F));
+	expect_error(is.valid.region(regions$d, throw.error = TRUE, verbose = FALSE));
+	})

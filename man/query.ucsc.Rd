@@ -25,7 +25,7 @@ query.ucsc(
   \item{verbose}{more words}
 }
 \details{
-tables can be found at \url{http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database}
+tables can be found at \url{http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/}
 }
 \value{
 A data.frame

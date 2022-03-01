@@ -40,7 +40,7 @@ bedr.subtract.region(
 Regions exclusive to one object of regions.
 }
 \references{
-\url{http://bedtools.readthedocs.org/en/latest/content/tools/subtract.html}
+\url{http://bedtools.readthedocs.io/en/latest/content/tools/subtract.html}
 }
 \author{
 Daryl Waggott

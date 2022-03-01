@@ -45,7 +45,7 @@ bedr.sort.region(
 
 %}
 \references{
-\url{http://bedtools.readthedocs.org/en/latest/content/tools/sort.html}
+\url{http://bedtools.readthedocs.io/en/latest/content/tools/sort.html}
 }
 \author{
 Daryl Waggott

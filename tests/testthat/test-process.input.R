@@ -9,17 +9,20 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-context("index2bed")
 
-test_that("check that index to bed conversion is working", {
+test_that('check input processing i.e. converting to bed and sending to a tmp file', {
+	if (check.binary('bedtools', verbose = TRUE)) {
+		regions <- get.example.regions();
+		regions$a <- bedr.sort.region(regions$a);
 
-	regions <- get.example.regions()
-	chr.dat <- c("chr1",  "chr1",  "chr1",  "chr1",  "chr2",  "chr10", "chr2",  "chr20")
-	start.dat <- c(10, 101, 200, 211,  10,  50,  40,   1)
-	end.dat <- c(100, 200, 210, 212,  50, 100,  60,   5)
-	region.a.bed <- data.frame(chr=chr.dat,start=start.dat,end=end.dat, stringsAsFactors=F)
-
-	expect_equal(index2bed(regions$a), region.a.bed)
-
+		# good region
+		expect_equal(length(process.input(regions$a, verbose = FALSE)), 1);
+		expect_equal(attributes(process.input(regions$a, verbose = FALSE)[[1]]), list(is.index = TRUE, is.file = FALSE));
+	
+		expect_equal(length(process.input(index2bed(regions$a), verbose = FALSE)), 1);
+		expect_equal(attributes(process.input(index2bed(regions$a), verbose = FALSE)[[1]]), list(is.index = FALSE, is.file = FALSE));
+	
+		expect_equal(length(process.input('chrY:24052505-24052506', verbose = FALSE)), 1);
+		expect_equal(attributes(process.input('chrY:24052505-24052506', verbose = FALSE)[[1]]), list(is.index = TRUE, is.file = FALSE));
+		}
 	})
-

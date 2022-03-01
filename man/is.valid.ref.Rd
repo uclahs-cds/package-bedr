@@ -45,17 +45,18 @@ Daryl Waggott
 %\seealso{
 
 \examples{
+	\dontrun{
+		vcf.path <- system.file("data/callerA.vcf.gz", package = "bedr");
+		vcf.data <- read.vcf(vcf.path, split.info = TRUE);
+		vcf.data$vcf <- vcf.data$vcf[, 
+			c("CHROM", "POS", "END", 
+			setdiff(colnames(vcf.data$vcf), 
+			c("CHROM", "POS", "END")))
+			];
+		vcf.data$vcf$CHROM <- paste("chr", vcf.data$vcf$CHROM, sep = "");
 
-vcf.path <- system.file("extdata/callerA.vcf.gz", package = "bedr");
-vcf.data <- read.vcf(vcf.path, split.info = TRUE);
-vcf.data$vcf <- vcf.data$vcf[, 
-	c("CHROM", "POS", "END", setdiff(colnames(vcf.data$vcf), c("CHROM", "POS", "END")))
-	];
-vcf.data$vcf$CHROM <- paste("chr", vcf.data$vcf$CHROM, sep = "");
-
-\dontrun{
-	# need reference sequence FASTA and index file to run this, as 'fasta' parameter
-	is.valid.ref(vcf.data);
+		# need reference sequence FASTA and index file to run this, as 'fasta' parameter
+		is.valid.ref(vcf.data);
 	}
 }
 \keyword{sequence }

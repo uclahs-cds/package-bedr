@@ -39,7 +39,7 @@ The Jaccard metric is the ratio of intersections to unions.  The process can be 
 A short vector.
 }
 \references{
-\url{http://bedtools.readthedocs.org/en/latest/content/tools/jaccard.html}
+\url{http://bedtools.readthedocs.io/en/latest/content/tools/jaccard.html}
 }
 \author{
 Daryl Waggott

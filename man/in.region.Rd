@@ -51,7 +51,7 @@ Returns a logical vector the length of x.
 Daryl Waggott
 }
 \references{
-\url{http://bedtools.readthedocs.org/en/latest/content/tools/intersect.html}
+\url{http://bedtools.readthedocs.io/en/latest/content/tools/intersect.html}
 }
 \examples{
 if (check.binary("bedtools")) {

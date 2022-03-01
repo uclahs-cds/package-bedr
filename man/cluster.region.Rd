@@ -34,7 +34,7 @@ clusters adjacent features of a specified distance.
 A data.frame in bed format
 }
 \references{
-\url{http://bedtools.readthedocs.org/en/latest/content/tools/cluster.html}
+\url{http://bedtools.readthedocs.io/en/latest/content/tools/cluster.html}
 }
 \author{
 Daryl Waggott

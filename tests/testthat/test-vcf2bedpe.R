@@ -9,18 +9,29 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-context("is.valid.region")
-
-test_that("check if region input is valid", {
-
-	regions <- get.example.regions()
-
-	# good region
-	expect_equal(is.valid.region(regions$a, verbose = FALSE), c(T,T,T,T,T,T,T,T));
-	expect_equal(is.valid.region("chrY:24052505-24052506", verbose = FALSE), T);
-
-	# bad region format (region d has bad)
-	expect_equal(is.valid.region(regions$d, verbose = FALSE), c(T,F,T,F,F,F,F,F));
-	expect_error(is.valid.region(regions$d, throw.error = TRUE, verbose = FALSE));
-
-	})
+test_that('check_vcf2bedpe', {
+  	for (sv.caller in c('gridss', 'delly', 'manta')) {
+		vcf.file <- testthat::test_path(paste0('data/', sv.caller, 'SV.vcf.gz'));
+  		vcf <- read.vcf(vcf.file, split.info = TRUE);
+  		bedpe <- vcf2bedpe(vcf);
+  
+  		# check bedpe is not empty
+  		expect_equal((nrow(bedpe) > 0), TRUE);
+  
+  		# check the header is included
+  		expect_equal(colnames(bedpe), c('CHROM_A', 'START_A', 'END_A', 'CHROM_B', 'START_B', 'END_B', 'ID', 'QUAL', 'STRAND_A', 'STRAND_B', 'SVTYPE')); 
+  
+  		# if SVTYPE == BND, must have MATEID
+  		if (sv.caller == 'gridss') {
+  			vcf$vcf <- subset(vcf$vcf, select = -MATEID);
+  			expect_error(vcf2bedpe(vcf));
+  		}
+    	# expect error if vcf is unpacked 
+    	expect_error(vcf2bedpe(vcf$vcf));
+    
+    	# expect error if VCF doesnt have SVTYPE column
+    	vcf$vcf <- subset(vcf$vcf, select = -SVTYPE);
+    	expect_error(vcf2bedpe(vcf));	
+    	}
+    })
+  

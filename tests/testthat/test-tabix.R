@@ -9,26 +9,37 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-context("convert2bed")
 
-if (check.binary("bedtools", verbose = TRUE)) {
+test_that('check tabix', {
+	if (check.binary('tabix', verbose = TRUE)) {
+		vcf <- testthat::test_path('data/CosmicCodingMuts_v66_20130725_ex.vcf.gz');
+		regions <- get.example.regions();
+		regions$a <- bedr.sort.region(regions$a);
 
-	test_that("check converting a region into bed file including file type checking and region verification", {
-	
-		regions <- get.example.regions()
-		regions$a <- bedr.sort.region(regions$a)
-		regions$b <- bedr.sort.region(regions$b)
-		a.bed <- index2bed(regions$a)
-		b.bed <- index2bed(regions$b)
+		a.nochr <- gsub('^chr', '', regions$a);
+
+		b <- c('chr1:10-100000','chr10:100-100000');
+		b.nochr <- c('1:10-100000','10:100-100000');
+
+		b.nochr.matrix <- index2bed(b.nochr);
 
 		# bad region
-		expect_error(convert2bed("meow", verbose = F))
+		expect_error(tabix('meow', vcf, verbose = TRUE));
 
-		# good region
-		expect_equivalent(convert2bed(regions$a, verbose = F), a.bed);
-		expect_equivalent(convert2bed(regions$b, verbose = F), b.bed);
-		expect_equivalent(convert2bed("chrY:24052505-24052506", verbose = F), data.frame(chr="chrY", start=24052505, end=24052506, stringsAsFactors = FALSE));
+		# no chr
+		expect_error(tabix(a.nochr, vcf, verbose = TRUE));
 
+		# missing file
+		expect_error(tabix(a.nochr, 'meow', check.chr = FALSE, verbose = TRUE));
 
-		})
-}
+		# check the length of output
+		expect_equal(nrow(tabix(a.nochr, vcf, verbose = T, check.chr = FALSE)), NULL);
+		expect_equal(nrow(tabix(b.nochr, vcf, verbose = T, check.chr = FALSE)), 6);
+	
+		# check the header is included
+		expect_equal(colnames(tabix(b.nochr, vcf, verbose = T, check.chr = FALSE)), c('CHROM', 'POS', 'ID', 'REF', 'ALT', 'QUAL', 'FILTER', 'INFO')); 
+
+		# check header is correct length
+		expect_equal(length(attributes(tabix(b.nochr, vcf, verbose = T, check.chr = FALSE))$header), 13);
+		}
+	})

@@ -9,6 +9,9 @@
 # If publications result from research using this SOFTWARE, we ask that the Ontario Institute for Cancer Research be acknowledged and/or
 # credit be given to OICR scientists, as scientifically appropriate.
 
-library("testthat")
-library("bedr")
-test_package("bedr")
+Sys.setenv("R_TESTS" = "")
+
+library('testthat')
+library('bedr')
+
+test_check('bedr')

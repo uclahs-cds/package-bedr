@@ -197,8 +197,7 @@ bedr <- function(engine = "bedtools", params = NULL, input = list(), method = NU
 
 	# only delete tmp files if they exist
 	input.files <- Filter(function(x){grepl("Rtmp",x)}, input.files);
-
-	if (length(input.files) != 0 && all(input.files != "" && deleteTmpDir == TRUE)) {
+	if (length(input.files) != 0 && all(any(input.files != "") && deleteTmpDir == TRUE)) {
 		file.remove(unlist(input.files));
 		}
 
