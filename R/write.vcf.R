@@ -34,8 +34,10 @@ write.vcf <- function(x, filename = NULL, verbose = TRUE) {
 				}
 			}
 		else {
-			
 			x$header[[i]] <- apply(x$header[[i]], 1, function(x,name) {x[grepl(" ", x)]  <- dQuote(x[grepl(" ", x)]); paste0(name, "=", x)}, colnames(x$header[[i]]));
+			if (is.null(dim(x$header[[i]]))) {
+				x$header[[i]] <- t(as.data.frame(x$header[[i]]));
+				}
 			x$header[[i]] <- apply(x$header[[i]], 2, function(x,name) {paste0("##",name,"=<", paste(x, collapse=","),">")}, names(x$header)[i]);
 			write.table(x$header[[i]], filename, quote = FALSE, sep = "", row.names = FALSE, col.names = FALSE, append = TRUE);
 			}
