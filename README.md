@@ -33,7 +33,7 @@ devtools::install_github('uclahs-cds/public-R-bedr');
 
 ## Resources
 
-Available resources for bedr include the package [CRAN page](https://cran.r-project.org/web/packages/bedr/index.html), [reference manual](https://cran.r-project.org/web/packages/bedr/index.html) and [vignette](https://cran.r-project.org/web/packages/bedr/vignettes/Using-bedr.html).
+Available resources for bedr include the package [CRAN page](https://cran.r-project.org/web/packages/bedr/index.html), [reference manual](https://cran.r-project.org/web/packages/bedr/bedr.pdf) and [vignette](https://cran.r-project.org/web/packages/bedr/vignettes/Using-bedr.html).
 
 ## Getting help
 
