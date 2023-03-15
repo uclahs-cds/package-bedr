@@ -4,8 +4,9 @@
 2. [Installation](#installation)
 3. [Resources](#resources)
 4. [Getting help](#getting-help)
-5. [Citation information](#citation-information)
-6. [License](#license)
+5. [Contributors](#contributors)
+6. [Citation information](#citation-information)
+7. [License](#license)
 
 ## Description
 
@@ -42,6 +43,10 @@ See [Issues](https://github.com/uclahs-cds/public-R-bedr/issues) to submit bugs,
 
 [Pull requests](https://github.com/uclahs-cds/public-R-bedr/pulls) are also open for discussion.
 
+## Contributors
+
+Contributors to this package can be viewed [here](https://github.com/uclahs-cds/public-R-bedr/graphs/contributors) on GitHub.
+
 ## Citation information
 
 To cite package `bedr` in publications, use:
@@ -68,7 +73,7 @@ A BibTeX entry for LaTeX users is:
 
 ## License
 
-Author: Syed Haider, Daryl Waggott, Emilie Lalonde, Clement Fung & Paul C. Boutros (PBoutros@mednet.ucla.edu)
+Author: Syed Haider, Daryl Waggott, Emilie Lalonde, Clement Fung, Helena Winata, Dan Knight, Takafumi Yamaguchi, Nicholas Wang & Paul C. Boutros (PBoutros@mednet.ucla.edu)
 
 bedr is licensed under the GNU General Public License version 2. See the file LICENSE.md for the terms of the GNU GPL license.
 
