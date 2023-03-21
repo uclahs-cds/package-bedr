@@ -67,7 +67,7 @@ A BibTeX entry for LaTeX users is:
     month = {December},
     day = {15},
     issn = {1751-0473},
-    author = {Syed Haider and Daryl Waggott and Emilie Lalonde and Clement Fung and Fei-Fei Liu and Paul C. Boutros},
+    author = {Syed Haider and Daryl Waggott and Emilie Lalonde and Clement Fung and Fei-Fei Liu and Paul C. Boutros}
   }
 ```
 
