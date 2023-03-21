@@ -26,7 +26,7 @@ Or to install the latest development version from Github:
 
 ```R
 # If `devtools` is not already installed, run:
-# install.packages("devtools");
+# install.packages('devtools');
 
 devtools::install_github('uclahs-cds/public-R-bedr');
 ```
