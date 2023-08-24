@@ -1,14 +1,15 @@
 Package: bedr
 Type: Package
 Title: Genomic Region Processing using Tools Such as 'BEDTools', 'BEDOPS' and 'Tabix'
-Version: 1.1.0
-Date: 2022-03-01
+Version: 1.1.1
+Date: 2023-08-23
 Authors@R: c(
   person("Syed", "Haider", role = "aut"),
   person("Daryl", "Waggott", role = "aut"),
   person("Emilie", "Lalonde", role = "ctb"),
   person("Clement", "Fung", role = "ctb"),
   person("Helena", "Winata", role = "ctb"),
+  person("Dan", "Knight", role = "ctb"),
   person("Paul", "C. Boutros", role = c("aut", "cre", "cph"), email = "pboutros@mednet.ucla.edu")
   )
 Author: Syed Haider [aut], Daryl Waggott [aut], Emilie Lalonde [ctb], Clement Fung [ctb], Helena Winata [ctb], Paul C. Boutros [aut, cre, cph]
