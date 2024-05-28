@@ -13,15 +13,17 @@
 test_that('check in.region', {
 	if (check.binary('bedtools', verbose = TRUE)) {	
 		regions <- get.example.regions()
-		regions$a <- bedr.sort.region(regions$a)
-		regions$b <- bedr.sort.region(regions$b)
-		a.b.overlap <- c(F, T, T, T, F, T, T, F)
-		b.a.overlap <- c(F, T, F, F, F, T, F)
-		a.b.overlap.pc0 <- c(F, T, T, T, F, T, T, F)
-		a.b.overlap.pc5 <- c(F, T, T, T, F, F, T, F)
-		a.b.overlap.pc1 <- c(F, F, T, T, F, F, T, F)
-		a.b.overlap.sorted <- c(F, T, T, T, F, T, T, F)
-		a.b.overlap.merged <- c(F, T, T, T, F, T, F)
+		regions$a.lexicon <- bedr.sort.region(regions$a)
+		regions$b.lexicon <- bedr.sort.region(regions$b)
+		regions$a <- bedr.sort.region(regions$a, method = 'natural')
+		regions$b <- bedr.sort.region(regions$b, method = 'natural')
+		a.b.overlap <- c(F, T, T, T, T, T, F, F)
+		b.a.overlap <- c(F, T, F, F, T, F, F)
+		a.b.overlap.pc0 <- c(F, T, T, T, T, T, F, F)
+		a.b.overlap.pc5 <- c(F, T, T, T, F, T, F, F)
+		a.b.overlap.pc1 <- c(F, F, T, T, F, T, F, F)
+		a.b.overlap.lexicon <- c(F, T, T, T, F, T, T, F)
+		a.b.overlap.merged <- c(F, T, T, T, T, F, F)
 
 		# bad region
 		expect_error(in.region(regions$a, 'cat', verbose = FALSE));
@@ -38,8 +40,8 @@ test_that('check in.region', {
 		expect_equal(in.region(regions$a, regions$b, proportion.overlap = .5, verbose = FALSE), a.b.overlap.pc5);
 		expect_equal(in.region(regions$a, regions$b, proportion.overlap = 1, verbose = FALSE), a.b.overlap.pc1);
 	
-		# sorted
-		expect_equal(in.region(bedr.sort.region(regions$a, verbose = FALSE), regions$b, verbose = FALSE), a.b.overlap.sorted);
+		# lexicon sorting
+		expect_equal(in.region(regions$a.lexicon, regions$b.lexicon, method = 'lexicographical', verbose = FALSE), a.b.overlap.sorted);
 
 		# merged
 		expect_equal(in.region(bedr.merge.region(regions$a,verbose=F, distance = -1), regions$b, verbose = FALSE), a.b.overlap.merged);
