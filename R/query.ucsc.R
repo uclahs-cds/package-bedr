@@ -111,11 +111,11 @@ query.ucsc <- function(x, mirror = "http://hgdownload.soe.ucsc.edu/goldenPath/hg
 		data.file <- data.file.tmp;
 		#ucsc.table <- read.table(data.file, as.is = TRUE, sep = "\t", col.names = table.names, colClasses = var.types );
         ucsc.table <- try(fread(data.file, stringsAsFactors = FALSE, sep = "\t", colClasses = var.types), silent = TRUE);
-        i.autostart <- 2;
+        i.skip <- 2;
         while (length(ucsc.table)!=length(table.names)) {
-            ucsc.table <- try(fread(data.file, stringsAsFactors = FALSE, sep = "\t", colClasses = var.types, autostart = i.autostart), silent = TRUE);
-            i.autostart <- 2+1;
-            if (i.autostart == 100 ) break
+            ucsc.table <- try(fread(data.file, stringsAsFactors = FALSE, sep = "\t", colClasses = var.types, skip = i.skip), silent = TRUE);
+            i.skip <- 2+1;
+            if (i.skip == 100 ) break
             }
 		ucsc.table <- setNames(ucsc.table, table.names)
 		ucsc.table <- as.data.frame(ucsc.table);
