@@ -5,10 +5,15 @@
 
 - Add LICENSE.md to repository
 - Update DESCRIPTION to include URL and BugReports links
+- Add `method` argument to `in.region` function
 
 ## Changed
 
 - Update changelog to Markdown `NEWS.md` format 
+
+## Fixed
+
+- Replace outdated `autostart` in `fread` with `skip`.
 
 
 # bedr 1.1.1 (2023-08-24)
