@@ -1,4 +1,4 @@
-# bedr 1.1.2
+# bedr 1.1.2 (2025-03-27)
 
 
 ## Added
@@ -11,7 +11,7 @@
 - Update changelog to Markdown `NEWS.md` format 
 
 
-# bedr 1.1.1
+# bedr 1.1.1 (2023-08-24)
 
 
 ## Changed
@@ -23,7 +23,7 @@
 - Remove unnecessary package manual file
 
 
-# bedr 1.1.0
+# bedr 1.1.0 (2022-03-01)
 
 
 ## Added
@@ -31,7 +31,7 @@
 - Add vcf2bedpe module to convert structural variant calls obtained from Manta, GRIDSS and Delly v0.7.8
 
 
-# bedr 1.0.7
+# bedr 1.0.7 (2019-04-01)
 
 
 ## Changed
@@ -39,7 +39,7 @@
 - forced vcf2bed not to print genomic coordinates in R scientific notation for interoperability with other processors
 
 
-# bedr 1.0.6
+# bedr 1.0.6 (2019-01-12)
 
 
 ## Fixed
@@ -55,7 +55,7 @@
 - fixed incorrect ordering of chromosome table returned by get.chr.length() - [rolled back]
 
 
-# bedr 1.0.4
+# bedr 1.0.4 (2017-10-12)
 
 
 ## Changed
@@ -70,7 +70,7 @@
 - Fixed is.valid.seq() to comply with inputs and outputs as described in docs
 
 
-# bedr 1.0.3
+# bedr 1.0.3 (2016-08-23)
 
 
 ## Changed
@@ -80,7 +80,7 @@
 - Added support for Human hg38 genome assembly
 
 
-# bedr 1.0.2
+# bedr 1.0.2 (2015-09-21)
 
 
 ## Fixed
@@ -88,7 +88,7 @@
 - Fixed compatibility with data.table >= v1.9.6 for data.table::fread() call 
 
 
-# bedr 1.0.1
+# bedr 1.0.1 (2015-09-05)
 
 
 ## Fixed
@@ -96,7 +96,7 @@
 - Fixed sort --version command as Solaris does not support --version which is GNU specific
 
 
-# bedr 1.0.0
+# bedr 1.0.0 (2015-09-03)
 
 ## Added
 
