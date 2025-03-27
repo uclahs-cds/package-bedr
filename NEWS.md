@@ -6,6 +6,10 @@
 - Add LICENSE.md to repository
 - Update DESCRIPTION to include URL and BugReports links
 
+## Changed
+
+- Update changelog to Markdown `NEWS.md` format 
+
 
 # bedr 1.1.1
 
@@ -24,7 +28,7 @@
 
 ## Added
 
-- add vcf2bedpe module to convert structural variant calls obtained from Manta, GRIDSS and Delly v0.7.8
+- Add vcf2bedpe module to convert structural variant calls obtained from Manta, GRIDSS and Delly v0.7.8
 
 
 # bedr 1.0.7
