@@ -9,11 +9,12 @@
 
 ## Changed
 
-- Update changelog to Markdown `NEWS.md` format 
+- Update changelog to Markdown `NEWS.md` format
 
 ## Fixed
 
 - Replace outdated `autostart` in `fread` with `skip`.
+- Fix cross-reference format in manual
 
 
 # bedr 1.1.1 (2023-08-24)
