@@ -1,4 +1,4 @@
-# bedr 1.1.2 (2025-03-27)
+# bedr 1.1.2 (2025-04-01)
 
 
 ## Added
@@ -9,7 +9,8 @@
 
 ## Changed
 
-- Update changelog to Markdown `NEWS.md` format 
+- Update changelog to Markdown `NEWS.md` format
+- Use updated `renv` GitHub action for `R CMD check`
 
 ## Fixed
 
