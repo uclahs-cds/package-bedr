@@ -26,7 +26,7 @@ Suggests:
     rmarkdown (>= 0.9.5)
 VignetteBuilder: knitr
 License: GPL-2
-URL: https://github.com/uclahs-cds/public-R-bedr
-BugReports: https://github.com/uclahs-cds/public-R-bedr/issues
+URL: https://github.com/uclahs-cds/pacakage-bedr
+BugReports: https://github.com/uclahs-cds/package-bedr/issues
 Imports: testthat (>= 3.0.0), VennDiagram (>= 1.6.4), data.table (>= 1.8.11), R.utils (>= 2.0.2), yaml (>= 2.1.10), parallel, grid
 Config/testthat/edition: 3
