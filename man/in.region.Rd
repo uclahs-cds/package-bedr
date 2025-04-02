@@ -13,6 +13,7 @@ in.region(
 	x,
 	y,
 	proportion.overlap = 1e-09,
+	method = "natural",
 	reciprocal.overlap = FALSE,
 	check.zero.based = TRUE,
 	check.chr = TRUE,
@@ -27,6 +28,7 @@ in.region(
   \item{x}{first region index in the form chr:start-stop.  regions in this index will be checked for intersection in the values of the second index.}
   \item{y}{second region index.}
   \item{proportion.overlap}{Defaults 1e-9 which is 1 bp.  See details below for the different interpretation between 0 and 1 based overlap}
+  \item{method}{Sorting method ("natural" by default)}
   \item{reciprocal.overlap}{Should the proportion.overlap be reciprocal}
   \item{check.zero.based}{should 0 based coordinates be checked}
   \item{check.chr}{should chr prefix be checked}

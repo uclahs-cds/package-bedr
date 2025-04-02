@@ -1,10 +1,8 @@
-# bedr 1.1.2 (2025-04-01)
+# bedr 1.1.3 (2025-04-01)
 
 
 ## Added
 
-- Add LICENSE.md to repository
-- Update DESCRIPTION to include URL and BugReports links
 - Add `method` argument to `in.region` function
 
 ## Changed
@@ -15,6 +13,17 @@
 ## Fixed
 
 - Replace outdated `autostart` in `fread` with `skip`.
+- Fix cross-reference format in manual
+- Update GitHub links
+
+
+# bedr 1.1.2 (2024-01-24)
+
+
+## Added
+
+- Add LICENSE.md to repository
+- Update DESCRIPTION to include URL and BugReports links
 
 
 # bedr 1.1.1 (2023-08-24)
