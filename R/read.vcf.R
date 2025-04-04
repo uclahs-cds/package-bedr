@@ -132,7 +132,7 @@ read.vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 	attr(x.df, "header") <- x.header;
 
 	# add parsed header as list in item
-	x.header.parsed <- parse.vcf.header(x.header);
+	x.header.parsed <- prep.vcf.header(x.header);
 	x.df <- list(header = x.header.parsed, vcf = x.df);
 	catv("   Done\n");
 
@@ -233,7 +233,7 @@ read.vcf <- function(x, split.info = FALSE, split.samples = FALSE, nrows = -1, v
 
 ###################################################################################################
 
-parse.vcf.header <- function(x) {
+prep.vcf.header <- function(x) {
 ### return the header as a list of key values 
 
 	if (is.null(x)) {return(NULL)}
