@@ -9,6 +9,7 @@
 
 - Update changelog to Markdown `NEWS.md` format
 - Use updated `renv` GitHub action for `R CMD check`
+- Rename internal helper function `parse.vcf.header()` to `prep.vcf.header()` to avoid naming conflict with base R `parse()` S3 method.
 
 ## Fixed
 
