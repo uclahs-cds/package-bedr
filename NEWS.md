@@ -1,3 +1,11 @@
+# bedr 1.1.4 (2025-06-17)
+
+
+## Changed
+
+- Use updated `R CMD check` CI/CD action.
+
+
 # bedr 1.1.3 (2025-04-04)
 
 
