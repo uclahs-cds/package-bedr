@@ -13,4 +13,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: r-lib/actions/setup-tinytex@v2
-      - uses: uclahs-cds/tool-R-CMD-check-action@renv
+      - uses: uclahs-cds/tool-R-CMD-check-action@v2
